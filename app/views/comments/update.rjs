@@ -1,0 +1,7 @@
+if save_succeeded?
+  page["comment_#{current_object.id}_content"].update current_object.render
+else
+  prev = page["comment_#{current_object.id}_preview"]
+  prev.update error_messages_for('comment')
+  prev.show
+end

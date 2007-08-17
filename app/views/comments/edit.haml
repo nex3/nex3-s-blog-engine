@@ -1,0 +1,7 @@
+- remote_form_for :comment, :method => :put, :url => comment_path(@comment.post, @comment) do |f|
+  %div{:id => "comment_#{@comment.id}_content_field"}~ f.text_area :content
+  = f.hidden_field :id
+  = f.hidden_field :user_id
+  = preview_button new_object_path, "comment_#{@comment.id}_preview"
+  = comment_edit_save_button
+.content{:style => 'display: none', :id => "comment_#{@comment.id}_preview"}

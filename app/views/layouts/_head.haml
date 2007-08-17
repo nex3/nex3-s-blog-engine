@@ -1,0 +1,15 @@
+%meta{:content => 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type'}/
+%link{:rel => "icon", :href => image_path('favicon.png'), :type => "image/png"}/
+= stylesheet_link_tag 'main'
+= javascript_include_tag :defaults
+= auto_discovery_link_tag :atom, posts_url + '.atom', :title => 'Blog Posts : Nex3'
+= auto_discovery_link_tag :rss, posts_url + '.rss', :title => 'Blog Posts (RSS) : Nex3'
+%title
+  - if @page_title
+    == #{h @page_title} :
+  Nex3
+/[if lte IE 6]
+  = stylesheet_link_tag 'ie6'
+  <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+/[if IE 7]
+  = stylesheet_link_tag 'ie7'

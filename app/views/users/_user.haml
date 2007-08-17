@@ -1,0 +1,15 @@
+.model[@user]
+  .side_links
+    = delete_link
+    = edit_link
+  %h3= h @user.name
+  - if @user.email
+    .email
+      Email:
+      = link_to h(@user.email), "mailto:#{h @user.email}", :class => 'email'
+  - if @user.link
+    .link
+      Link:
+      = link_to h(@user.link), h(@user.href), :class => 'link'
+  %p.comments
+    == #{@user.comment_count} comments.

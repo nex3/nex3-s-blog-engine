@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Sass</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Sass</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/sass_rb.html">
+                lib/sass.rb
+                </a>
+        <br />
+                <a href="../files/lib/sass/plugin_rb.html">
+                lib/sass/plugin.rb
+                </a>
+        <br />
+                <a href="../files/lib/sass/engine_rb.html">
+                lib/sass/engine.rb
+                </a>
+        <br />
+                <a href="../files/lib/sass/constant_rb.html">
+                lib/sass/constant.rb
+                </a>
+        <br />
+                <a href="../files/lib/sass/error_rb.html">
+                lib/sass/error.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="Sass.html">Sass</a> (Syntactically Awesome StyleSheets)</h1>
+<p>
+<a href="Sass.html">Sass</a> is a meta-language on top of CSS that&#8216;s
+used to describe the style of a document cleanly and structurally, with
+more power than flat CSS allows. <a href="Sass.html">Sass</a> both provides
+a simpler, more elegant syntax for CSS and implements various features that
+are useful for creating manageable stylesheets.
+</p>
+<h2>Features</h2>
+<ul>
+<li>Whitespace active
+
+</li>
+<li>Well-formatted output
+
+</li>
+<li>Elegant input
+
+</li>
+<li>Feature-rich
+
+</li>
+</ul>
+<h2>Using <a href="Sass.html">Sass</a></h2>
+<p>
+<a href="Sass.html">Sass</a> can be used in two ways: As a plugin for Ruby
+on Rails and as a standalone parser. <a href="Sass.html">Sass</a> is
+bundled with <a href="Haml.html">Haml</a>, so if the <a
+href="Haml.html">Haml</a> plugin or RubyGem is installed, <a
+href="Sass.html">Sass</a> will already be installed as a plugin or gem,
+respectively.
+</p>
+<p>
+To install <a href="Haml.html">Haml</a> and <a href="Sass.html">Sass</a> as
+a Ruby on Rails plugin, use the normal Rails plugin installer:
+</p>
+<pre>
+  ./script/plugin install http://svn.hamptoncatlin.com/haml/tags/stable
+</pre>
+<p>
+<a href="Sass.html">Sass</a> templates in Rails don&#8216;t quite function
+in the same way as views, because they don&#8216;t contain dynamic content,
+and so only need to be compiled when the template file has been updated. By
+default (see options, below), &quot;.sass&quot; files are placed in
+public/stylesheets/sass. Then, whenever necessary, they&#8216;re compiled
+into corresponding CSS files in public/stylesheets. For instance,
+public/stylesheets/sass/main.sass would be compiled to
+public/stylesheets/main.css.
+</p>
+<p>
+Using <a href="Sass.html">Sass</a> in Ruby code is very simple. First
+install the <a href="Haml.html">Haml</a>/<a href="Sass.html">Sass</a>
+RubyGem:
+</p>
+<pre>
+  gem install haml
+</pre>
+<p>
+Then you can use it by including the &quot;sass&quot; gem and using <a
+href="Sass/Engine.html">Sass::Engine</a> like so:
+</p>
+<pre>
+  engine = Sass::Engine.new(&quot;#main\n  :background-color #0000ff&quot;)
+  engine.render #=&gt; &quot;#main { background-color: #0000ff; }\n&quot;
+</pre>
+<h2>CSS Rules</h2>
+<p>
+Rules in flat CSS have two elements: the selector (e.g. &quot;main&quot;,
+&quot;div p&quot;, &quot;li a:hover&quot;) and the attributes (e.g.
+&quot;color: 00ff00;&quot;, &quot;width: 5em;&quot;).
+</p>
+<p>
+<a href="Sass.html">Sass</a> has both of these, as well as one additional
+element: nested rules.
+</p>
+<h3>Rules and Selectors</h3>
+<p>
+However, some of the syntax is a little different. The syntax for selectors
+is the same, but instead of using brackets to delineate the attributes that
+belong to a particular rule, <a href="Sass.html">Sass</a> uses two spaces
+of indentation. For example:
+</p>
+<pre>
+  #main p
+    &lt;attribute&gt;
+    &lt;attribute&gt;
+    ...
+</pre>
+<h3>Attributes</h3>
+<p>
+The syntax for attributes is also slightly different. The colon is at the
+beginning of the attribute, rather than between the name and the value, so
+it&#8216;s easier to tell what elements are attributes just by glancing at
+them. Attributes also don&#8216;t have semicolons at the end; each
+attribute is on its own line, so they aren&#8216;t necessary. For example:
+</p>
+<pre>
+  #main p
+    :color #00ff00
+    :width 97%
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main p {
+    color: #00ff00;
+    width: 97% }
+</pre>
+<h3>Nested Rules</h3>
+<p>
+Rules can also be nested within each other. This signifies that the inner
+rule&#8216;s selector is a child of the outer selector. For example:
+</p>
+<pre>
+  #main p
+    :color #00ff00
+    :width 97%
+
+    .redbox
+      :background-color #ff0000
+      :color #000000
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main p {
+    color: #00ff00;
+    width: 97%; }
+    #main p .redbox {
+      background-color: #ff0000;
+      color: #000000; }
+</pre>
+<p>
+This makes insanely complicated CSS layouts with lots of nested selectors
+very simple:
+</p>
+<pre>
+  #main
+    :width 97%
+
+    p, div
+      :font-size 2em
+      a
+        :font-weight bold
+
+    pre
+      :font-size 3em
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    width: 97%; }
+    #main p, #main div {
+      font-size: 2em; }
+      #main p a, #main div a {
+        font-weight: bold; }
+    #main pre {
+      font-size: 3em; }
+</pre>
+<h3>Attribute Namespaces</h3>
+<p>
+CSS has quite a few attributes that are in &quot;namespaces;&quot; for
+instance, &quot;font-family,&quot; &quot;font-size,&quot; and
+&quot;font-weight&quot; are all in the &quot;font&quot; namespace. In CSS,
+if you want to set a bunch of attributes in the same namespace, you have to
+type it out each time. <a href="Sass.html">Sass</a> offers a shortcut for
+this: just write the namespace one, then indent each of the sub-attributes
+within it. For example:
+</p>
+<pre>
+  .funky
+    :font
+      :family fantasy
+      :size 30em
+      :weight bold
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  .funky {
+    font-family: fantasy;
+    font-size: 30em;
+    font-weight: bold; }
+</pre>
+<h2>Constants</h2>
+<p>
+<a href="Sass.html">Sass</a> has support for setting document-wide
+constants. They&#8216;re set using an exclamation mark followed by the
+name, an equals sign, and the value. An attribute can then be set to the
+value of a constant by following it with another equals sign. For example:
+</p>
+<pre>
+  !main_color = #00ff00
+
+  #main
+    :color = !main_color
+    :p
+      :background-color = !main_color
+      :color #000000
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    color: #00ff00; }
+    #main p {
+      background-color: #00ff00;
+      color: #000000; }
+</pre>
+<h3>Arithmetic</h3>
+<p>
+You can even do basic arithmetic with constants. <a
+href="Sass.html">Sass</a> recognizes numbers, colors, lengths (numbers with
+units), and strings (everything that&#8216;s not one of the above), and
+various operators that work on various values. All the normal arithmetic
+operators (+, -, *, /, %, and parentheses for grouping) are defined as
+usual for numbers, colors, and lengths. The &quot;+&quot; operator is also
+defined for Strings as the concatenation operator. For example:
+</p>
+<pre>
+  !main_width = 10
+  !unit1 = em
+  !unit2 = px
+  !bg_color = #a5f39e
+
+  #main
+    :background-color = !bg_color
+    p
+      :background-color = !bg_color + #202020
+      :width = !main_width + !unit1
+    img.thumb
+      :width = (!main_width + 15) + !unit2
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    background-color: #a5f39e; }
+    #main p {
+      background-color: #c5ffbe;
+      width: 10em; }
+    #main img.thumb {
+      width: 25em; }
+</pre>
+<h3>Colors</h3>
+<p>
+Not only can arithmetic be done between colors and other colors, but it can
+be done between colors and normal numbers. In this case, the operation is
+done piecewise one each of the Red, Green, and Blue components of the
+color. For example:
+</p>
+<pre>
+  !main_color = #a5f39e
+
+  #main
+    :background-color = !main_color
+    p
+      :background-color = !bg_color + 32
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    background-color: #a5f39e; }
+    #main p {
+      background-color: #c5ffbe; }
+</pre>
+<h3>Strings</h3>
+<p>
+Strings are the type that&#8216;s used by default when an element in a bit
+of constant arithmetic isn&#8216;t recognized as another type of constant.
+However, they can also be created explicitly be wrapping a section of code
+with quotation marks. Inside the quotation marks, a backslash can be used
+to escape quotation marks that you want to appear in the CSS. For example:
+</p>
+<pre>
+  !content = &quot;Hello, \&quot;Hubert\&quot; Bean.&quot;
+
+  #main
+    :content = &quot;string(&quot; + !content + &quot;)&quot;
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    content: string(Hello, &quot;Hubert&quot; Bean.) }
+</pre>
+<h3>Default Concatenation</h3>
+<p>
+All those plusses and quotes for concatenating strings can get pretty
+messy, though. Most of the time, if you want to concatenate stuff, you just
+want individual values with spaces in between them. Thus, in <a
+href="Sass.html">Sass</a>, when two values are next to each other without
+an operator, they&#8216;re simply joined with a space. For example:
+</p>
+<pre>
+  !font_family = sans-serif
+  !main_font_size = 1em
+
+  #main
+    :font
+      :family = !font-family
+      :size = !main_font_size
+    h6
+      :font = italic small-caps bold (!main_font_size + 0.1em) !font-family
+</pre>
+<p>
+is compiled to:
+</p>
+<pre>
+  #main {
+    font-family: sans-serif;
+    font-size: 1em; }
+    #main h6 {
+      font: italic small-caps bold 1.1em sans-serif; }
+</pre>
+<h2>Output Style</h2>
+<p>
+Although the default CSS style that <a href="Sass.html">Sass</a> outputs is
+very nice, and reflects the structure of the document in a similar way that
+<a href="Sass.html">Sass</a> does, sometimes it&#8216;s good to have other
+formats available.
+</p>
+<p>
+<a href="Sass.html">Sass</a> allows you to choose between three different
+output styles by setting the <tt>:style</tt> option. In Rails, this is done
+by setting <tt>Sass::Template.options[:style]</tt>; outside Rails,
+it&#8216;s done by passing an options hash with
+&lt;/tt&gt;:style&lt;/tt&gt; set.
+</p>
+<h3><tt>:nested</tt></h3>
+<p>
+Nested style is the default <a href="Sass.html">Sass</a> style, because it
+reflects the structure of the document in much the same way <a
+href="Sass.html">Sass</a> does. Each attribute has its own line, but the
+indentation isn&#8216;t constant. Each rule is indented based on how deeply
+it&#8216;s nested. For example:
+</p>
+<pre>
+  #main {
+    color: #fff;
+    background-color: #000; }
+    #main p {
+      width: 10em; }
+
+  .huge {
+    font-size: 10em;
+    font-weight: bold;
+    text-decoration: underline; }
+</pre>
+<p>
+Nested style is very useful when looking at large CSS files for the same
+reason <a href="Sass.html">Sass</a> is useful for making them: it allows
+you to very easily grasp the structure of the file without actually reading
+anything.
+</p>
+<h3><tt>:expanded</tt></h3>
+<p>
+Expanded is the typical human-made CSS style, with each attribute and rule
+taking up one line. Attributes are indented within the rules, but the rules
+aren&#8216;t indented in any special way. For example:
+</p>
+<pre>
+  #main {
+    color: #fff;
+    background-color: #000;
+  }
+  #main p {
+    width: 10em;
+  }
+
+  .huge {
+    font-size: 10em;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+</pre>
+<h3><tt>:compact</tt></h3>
+<p>
+Compact style, as the name would imply, takes up less space than Nested or
+Expanded. However, it&#8216;s also harder to read. Each CSS rule takes up
+only one line, with every attribute defined on that line. Nested rules are
+placed next to each other with no newline, while groups of rules have
+newlines between them. For example:
+</p>
+<pre>
+  #main { color: #fff; background-color: #000; }
+  #main p { width: 10em; }
+
+  .huge { font-size: 10em; font-weight: bold; text-decoration: underline; }
+</pre>
+<h2><a href="Sass.html">Sass</a> Options</h2>
+<p>
+Options can be set by setting the hash <tt><a
+href="Sass/Plugin.html#M000020">Sass::Plugin.options</a></tt> from
+<tt>environment.rb</tt> in Rails, or by passing an options hash to <a
+href="Sass/Engine.html">Sass::Engine</a>. Available options are:
+</p>
+<dl>
+<dt><tt>:style</tt></dt><dd>Sets the style of the CSS output. See the section on Output Style, above.
+
+</dd>
+<dt><tt>:always_update</tt></dt><dd>Whether the CSS files should be updated every time a controller is
+accessed, as opposed to only when the template has been modified. Defaults
+to false. Only has meaning within Ruby on Rails.
+
+</dd>
+<dt><tt>:always_update</tt></dt><dd>Whether a <a href="Sass.html">Sass</a> template should be checked for
+updates every time a controller is accessed, as opposed to only when the
+Rails server starts. If a <a href="Sass.html">Sass</a> template has been
+updated, it will be recompiled and will overwrite the corresponding CSS
+file. Defaults to false if Rails is running in production mode, true
+otherwise. Only has meaning within Ruby on Rails.
+
+</dd>
+<dt><tt>:template_location</tt></dt><dd>The directory where <a href="Sass.html">Sass</a> templates should be read
+from. Defaults to <tt>RAILS_ROOT +
+&quot;/public/stylesheets/sass&quot;</tt>. Only has meaning within Ruby on
+Rails.
+
+</dd>
+<dt><tt>:css_location</tt></dt><dd>The directory where CSS output should be written to. Defaults to
+<tt>RAILS_ROOT + &quot;/public/stylesheets&quot;</tt>. Only has meaning
+within Ruby on Rails.
+
+</dd>
+<dt><tt>:filename</tt></dt><dd>The filename of the file being rendered. This is used solely for reporting
+errors, and is automatically set when using Rails.
+
+</dd>
+</dl>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Sass/Plugin.html" class="link">Sass::Plugin</a><br />
+Class <a href="Sass/Engine.html" class="link">Sass::Engine</a><br />
+Class <a href="Sass/SyntaxError.html" class="link">Sass::SyntaxError</a><br />
+
+    </div>
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

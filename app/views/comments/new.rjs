@@ -1,0 +1,3 @@
+prev = page[params[:comment][:id] ? "comment_#{params[:comment][:id]}_preview" : "preview"]
+prev.update current_object.render
+prev.show

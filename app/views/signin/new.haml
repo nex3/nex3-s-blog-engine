@@ -1,0 +1,10 @@
+#signin_form
+  - form_tag signin_path, :method => :post do
+    .name
+      %label{:for => 'name'} Name
+      = text_field_tag 'name', '', :id => 'name'
+    .password
+      %label{:for => 'pass'} Password
+      = password_field_tag 'pass', '', :id => 'pass'
+    = submit_tag 'Sign in'
+  .glyph= glyph

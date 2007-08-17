@@ -1,0 +1,383 @@
+stubba_acceptance should:
+ - stub class method
+ - stub class method again
+ - stub instance method
+ - stub instance method on any instance of a class
+ - stub instance method on any instance of a class again
+ - stub module method
+ - stub module method again
+ - stub two different class methods
+ - stub two different class methods again
+standalone_acceptance should:
+ - fail mocha test due to unexpected invocation
+ - fail mocha test due to unfulfilled exception
+ - fail mocha test with non matching parameter
+ - fail stubba test
+ - pass mocha test
+ - pass mocha test with matching parameter
+ - pass stubba test
+expected_invocation_count_acceptance should:
+ - fail if method is expected at least once but is never called
+ - fail if method is expected at most once but is called twice
+ - fail if method is expected between two and four times and is called five times
+ - fail if method is expected between two and four times and is called once
+ - fail if method is expected twice but is called once
+ - fail if method is expected twice but is called three times
+ - fail if method is never expected but is called once
+ - fail if method is never expected but is called once even if everything is stubbed
+ - pass if method is expected at least once and is called once
+ - pass if method is expected at least once and is called twice
+ - pass if method is expected at most once and called once
+ - pass if method is expected at most once and is never called
+ - pass if method is expected between two and four times and is called four times
+ - pass if method is expected between two and four times and is called three times
+ - pass if method is expected between two and four times and is called twice
+ - pass if method is expected twice and is called twice
+ - pass if method is never expected and is never called
+ - pass if method is never expected and is never called even if everything is stubbed
+mocked_methods_dispatch_acceptance should:
+ - find later expectation until it stops matching then find earlier stub
+ - find latest expectation which has not stopped matching
+ - find latest expectation with range of expected invocation count which has not stopped matching
+ - find latest matching expectation
+ - keep finding later stub and so never satisfy earlier expectation
+mocha_acceptance should:
+ - step both tracks backward ten steps
+ - step both tracks forward ten steps
+ - step left track backwards five steps and right track forwards five steps
+ - step left track forwards five steps and right track backwards five steps
+parameter_matcher_acceptance should:
+ - match hash parameter with specified entry
+ - match hash parameter with specified key
+ - match hash parameter with specified value
+ - not match hash parameter with specified entry
+ - not match hash parameter with specified key
+ - not match hash parameter with specified value
+expectation_raiser should:
+ - raise exception with specified class and default message
+ - raise exception with specified class and message
+ - raise interrupt exception with default message so it works in ruby 1 8 6
+return_values should:
+ - build single return values for each values
+ - combine two sets of return values
+ - keep returning evaluated single return value
+ - keep returning last of consecutive evaluated single return values
+ - keep returning nil
+ - return consecutive evaluated single return values
+ - return evaluated single return value
+ - return nil
+metaclass should:
+ - return objects singleton class
+single_return_value should:
+ - indicate deprecated use of expectation returns method
+ - return result of calling proc
+ - return value
+array_inspect should:
+ - use inspect
+ - use mocha inspect on each item
+central should:
+ - call verify on all unique mochas
+ - call verify on all unique mocks
+ - collect mocks from all methods
+ - not stub method if already stubbed
+ - record method
+ - return unique mochas
+ - start with empty stubba methods
+ - stub method if not already stubbed
+ - unstub all methods
+no_yield should:
+ - provide parameters for no yields in single invocation
+single_yield should:
+ - provide parameters for single yield in single invocation
+setup_and_teardown should:
+ - instantiate new stubba
+ - not raise exception if no stubba central available
+ - set stubba to nil
+ - unstub all stubbed methods
+ - verify all expectations
+ - yield to block for each assertion
+hash_inspect should:
+ - keep spacing between key value
+ - use mocha inspect on each item
+missing_expectation should:
+ - find similar expectations on mock
+ - not report similar expectations if there are none
+ - report similar expectations
+infinite_range should:
+ - be human readable description for at least
+ - be human readable description for at most
+ - be same as standard to string
+ - include values at or above minimum
+ - include values at or below maximum
+ - not include values above maximum
+ - not include values below minimum
+yield_parameters should:
+ - keep returning multiple yield parameter group
+ - keep returning single yield parameter group
+ - return consecutive multiple yield parameter groups
+ - return consecutive single and multiple yield parameter groups
+ - return consecutive single yield parameter groups
+ - return multiple yield parameter group
+ - return null yield parameter group by default
+ - return single yield parameter group
+expectation should:
+ - allow invocations until expected invocation count is a range from two to three and actual invocation count would be four
+ - allow invocations until expected invocation count is one and actual invocation count would be two
+ - allow invocations until expected invocation count is two and actual invocation count would be three
+ - combine method name and pretty parameters
+ - default backtrace to caller
+ - determine path for mocha lib directory
+ - display expectation message in exception message
+ - exclude mocha locations from backtrace
+ - expect call not to be made
+ - match calls to same method with any parameters
+ - match calls to same method with exactly zero parameters
+ - match calls to same method with expected parameter values
+ - match calls to same method with parameters constrained as expected
+ - not include parameters in message
+ - not match calls to different method with parameters constrained as expected
+ - not match calls to different methods with no parameters
+ - not match calls to same method with more than zero parameters
+ - not match calls to same method with parameters not constrained as expected
+ - not match calls to same method with too few parameters
+ - not match calls to same method with too many parameters
+ - not match calls to same method with unexpected parameter values
+ - not raise error on verify if call expected once and invoked once
+ - not raise error on verify if expected call was made
+ - not raise error on verify if expected call was made at least once
+ - not raise error on verify if expected call was made expected number of times
+ - not yield
+ - raise custom exception
+ - raise custom exception with message
+ - raise error on verify if call expected once but invoked twice
+ - raise error on verify if call expected once but not invoked
+ - raise error on verify if expected call was made too few times
+ - raise error on verify if expected call was made too many times
+ - raise error on verify if expected call was not made at least once
+ - raise error with message indicating which method was expected to be called on which mock object
+ - raise exception then return values
+ - raise runtime exception
+ - raise same instance of custom exception
+ - return evaluated proc
+ - return evaluated proc without using is a method
+ - return nil by default
+ - return nil if no value specified
+ - return same specified value multiple times
+ - return specified value
+ - return specified values on consecutive calls
+ - return specified values on consecutive calls even if values are modified
+ - return values then raise exception
+ - set backtrace on assertion failed error to point where expectation was created
+ - store backtrace from point where expectation was created
+ - store provided backtrace
+ - use the default exception message
+ - yield different parameters on consecutive invocations
+ - yield multiple times for first invocation and once for second invocation
+ - yield multiple times for single invocation
+ - yield no parameters
+ - yield self to block
+ - yield to block before raising exception
+ - yield with specified parameters
+object_inspect should:
+ - return customized string representation of object
+ - return default string representation of object not including instance variables
+ - use underscored id instead of object id or id so that they can be stubbed
+pretty_parameters should:
+ - display numeric arguments as is
+ - not remove curly braces if hash is not the only argument
+ - remove curly braces if hash is only argument
+ - remove outer array braces
+mock should:
+ - be able to extend mock object with module
+ - be able to mock standard object methods
+ - be able to stub standard object methods
+ - be equal
+ - build and store expectations
+ - create and add expectations
+ - create and add stubs
+ - display name for inspect if mock has name
+ - display name for mocha inspect if mock has name
+ - display object id for inspect if mock has no name
+ - display object id for mocha inspect if mock has no name
+ - indicate unexpected method called
+ - invoke expectation and return result
+ - keep returning specified value for expects
+ - keep returning specified value for stubs
+ - match most recent call to expects
+ - match most recent call to expects or stubs
+ - match most recent call to stubs
+ - match most recent call to stubs or expects
+ - not raise error if stubbing everything
+ - not raise no method error if mock is not restricted to respond like a responder
+ - not raise no method error if responder does respond to invoked method
+ - not respond to methods which the responder does not responds to
+ - not respond to unexpected method
+ - not stub everything by default
+ - pass backtrace into expectation
+ - pass backtrace into stub
+ - pass block through to expectations verify method
+ - raise assertion error for unexpected method call
+ - raise no method error if responder does not respond to invoked method
+ - raise no method error with message indicating that mock is constrained to respond like responder
+ - report possible expectations
+ - respond to expected method
+ - respond to methods which the responder does responds to
+ - return itself to allow method chaining
+ - set single expectation
+ - set up multiple expectations with return values
+ - set up multiple stubs with return values
+ - stub everything
+ - verify that all expectations have been fulfilled
+ - yield supplied parameters to block
+any_instance_method should:
+ - call remove new method
+ - call reset mocha
+ - call restore original method
+ - define a new method
+ - hide original method
+ - not hide original method if it is not defined
+ - not restore original method if hidden method not defined
+ - restore original method
+ - return any instance mocha for stubbee
+expectation_list should:
+ - find expectations for the same method no matter what the arguments
+ - find matching expectation
+ - find most recent matching expectation
+ - find most recent matching expectation but give preference to those allowing invocations
+ - find most recent matching expectation if no matching expectations allow invocations
+ - ignore expectations for different methods
+date_time_inspect should:
+ - use include date in seconds
+ - use to s for date
+ - use to s for datetime
+class_method should:
+ - call define new method
+ - call hide original method
+ - call remove new method
+ - call reset mocha
+ - call restore original method
+ - define a new method which should call mocha method missing
+ - hide original method
+ - not hide original method if method not defined
+ - not restore original method if hidden method is not defined
+ - provide hidden version of method name ending with suffix
+ - provide hidden version of method name including original method name
+ - provide hidden version of method name starting with prefix
+ - provide hidden version of method name substituting brackets
+ - provide hidden version of method name substituting equals sign
+ - provide hidden version of method name substituting exclamation mark
+ - provide hidden version of method name substituting plus sign
+ - provide hidden version of method name substituting question mark
+ - remove new method
+ - respond to original method name after original method has been hidden
+ - restore original method
+ - return mock for stubbee
+auto_verify should:
+ - add expectation to stub
+ - add expectations to mock
+ - add expectations to stub that stubs all methods
+ - always build new stub
+ - always build new stub that stubs all methods
+ - always new mock
+ - build mock
+ - build stub
+ - build stub that stubs all methods
+ - create named mock
+ - create named stub
+ - create named stub that stubs all methods
+ - reset mocks on teardown
+ - store each new mock
+ - store each new stub
+ - store each new stub that stubs all methods
+ - verify each mock
+ - yield to block for each assertion
+object should:
+ - build and store class method expectation
+ - build and store expectation
+ - build and store module method expectation
+ - build any instance object
+ - build mocha
+ - pass backtrace into expects
+ - pass backtrace into stubs
+ - reset mocha
+ - return same any instance object
+ - reuse existing mocha
+ - stub class method
+ - stub instance method
+ - stub module method
+ - stub relevant class for any instance
+ - stub self for class
+ - stub self for module
+ - stub self for object
+ - use stubba class method for any instance
+ - use stubba class method for class
+ - use stubba class method for module
+ - use stubba instance method for object
+ - verify expectations
+stub should:
+ - always verify successfully
+ - match successfully for any number of invocations
+string_inspect should:
+ - replace escaped quotes with single quote
+multiple_yields should:
+ - provide parameters for multiple yields in single invocation
+any_of should:
+ - describe matcher
+ - match if any matchers match
+ - not match if no matchers match
+has_entry should:
+ - describe matcher
+ - match hash including specified entry
+ - not match hash not including specified entry
+includes should:
+ - describe matcher
+ - match object including value
+ - not match object that does not include value
+instance_of should:
+ - describe matcher
+ - match object that is an instance of specified class
+ - not match object that is not an instance of specified class
+all_of should:
+ - describe matcher
+ - match if all matchers match
+ - not match if any matcher does not match
+kind_of should:
+ - describe matcher
+ - match object that is a kind of specified class
+ - not match object that is not a kind of specified class
+has_key should:
+ - describe matcher
+ - match hash including specified key
+ - not match hash not including specified key
+anything should:
+ - describe matcher
+ - match anything
+has_value should:
+ - describe matcher
+ - match hash including specified value
+ - not match hash not including specified value
+stubba_test_result_integration should:
+ - display backtrace indicating line number where expects was called
+ - display backtrace indicating line number where failing assertion was called
+ - include assertion failure in failure count
+ - include assertions in assertion count
+ - include expectation verification failure in failure count
+ - include expectation verification in assertion count
+ - not include stubbing expectation verification in assertion count
+stubba_integration should:
+ - leave stubbed class method unchanged after test
+ - leave stubbed instance method unchanged after test
+ - reset class expectations after test
+ - reset instance expectations after test
+ - stub class method within test
+ - stub instance method within test
+mocha_test_result_integration should:
+ - display backtrace indicating line number where expects was called
+ - display backtrace indicating line number where failing assertion was called
+ - display backtrace indicating line number where unexpected method was called
+ - include assertion failure in failure count
+ - include assertions in assertion count
+ - include expectation verification failure in failure count
+ - include expectation verification in assertion count
+ - include unexpected verification failure in failure count
+ - not include stubbing expectation verification in assertion count

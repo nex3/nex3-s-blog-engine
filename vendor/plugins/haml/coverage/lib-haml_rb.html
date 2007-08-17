@@ -1,0 +1,1291 @@
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+      <head>
+        <title>lib/haml.rb - C0 code coverage information</title>
+        <style type='text/css'>body { background-color: rgb(240, 240, 245); }</style>
+        <style type='text/css'>span.cross-ref-title {
+ font-size: 140%;
+}
+span.cross-ref a {
+ text-decoration: none;
+}
+span.cross-ref {
+ background-color:#f3f7fa;
+ border: 1px dashed #333;
+ margin: 1em;
+ padding: 0.5em;
+ overflow: hidden;
+}
+a.crossref-toggle {
+ text-decoration: none;
+}
+span.marked0 {
+ background-color: rgb(185, 210, 200);
+ display: block;
+}
+span.marked1 {
+ background-color: rgb(190, 215, 205);
+ display: block;
+}
+span.inferred0 {
+ background-color: rgb(175, 200, 200);
+ display: block;
+}
+span.inferred1 {
+ background-color: rgb(180, 205, 205);
+ display: block;
+}
+span.uncovered0 {
+ background-color: rgb(225, 110, 110);
+ display: block;
+}
+span.uncovered1 {
+ background-color: rgb(235, 120, 120);
+ display: block;
+}
+span.overview {
+ border-bottom: 8px solid black;
+}
+div.overview {
+ border-bottom: 8px solid black;
+}
+body {
+ font-family: verdana, arial, helvetica;
+}
+div.footer {
+ font-size: 68%;
+ margin-top: 1.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+ margin-bottom: 0.5em;
+}
+h5 {
+ margin-top: 0.5em;
+}
+.hidden {
+ display: none;
+}
+div.separator {
+ height: 10px;
+}
+/* Commented out for better readability, esp. on IE */
+/*
+table tr td, table tr th {
+ font-size: 68%;
+}
+td.value table tr td {
+ font-size: 11px;
+}
+*/
+table.percent_graph {
+ height: 12px;
+ border: #808080 1px solid;
+ empty-cells: show;
+}
+table.percent_graph td.covered {
+ height: 10px;
+ background: #00f000;
+}
+table.percent_graph td.uncovered {
+ height: 10px;
+ background: #e00000;
+}
+table.percent_graph td.NA {
+ height: 10px;
+ background: #eaeaea;
+}
+table.report {
+ border-collapse: collapse;
+ width: 100%;
+}
+table.report td.heading {
+ background: #dcecff;
+ border: #d0d0d0 1px solid;
+ font-weight: bold;
+ text-align: center;
+}
+table.report td.heading:hover {
+ background: #c0ffc0;
+}
+table.report td.text {
+ border: #d0d0d0 1px solid;
+}
+table.report td.value,
+table.report td.lines_total,
+table.report td.lines_code {
+ text-align: right;
+ border: #d0d0d0 1px solid;
+}
+table.report tr.light {
+ background-color: rgb(240, 240, 245);
+}
+table.report tr.dark {
+ background-color: rgb(230, 230, 235);
+}
+</style>
+        <script type='text/javascript'>
+// <![CDATA[
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make cross-references hidden by default
+  document.writeln( "<style type=\"text/css\">span.cross-ref { display: none }</style>" )
+  // ]]>
+</script>
+        <style type='text/css'>span.run0 {
+  background-color: rgb(178, 204, 255);
+  display: block;
+}
+span.run1 {
+  background-color: rgb(178, 206, 255);
+  display: block;
+}
+span.run2 {
+  background-color: rgb(178, 209, 255);
+  display: block;
+}
+span.run3 {
+  background-color: rgb(178, 211, 255);
+  display: block;
+}
+span.run4 {
+  background-color: rgb(178, 214, 255);
+  display: block;
+}
+span.run5 {
+  background-color: rgb(178, 218, 255);
+  display: block;
+}
+span.run6 {
+  background-color: rgb(178, 220, 255);
+  display: block;
+}
+span.run7 {
+  background-color: rgb(178, 223, 255);
+  display: block;
+}
+span.run8 {
+  background-color: rgb(178, 225, 255);
+  display: block;
+}
+span.run9 {
+  background-color: rgb(178, 228, 255);
+  display: block;
+}
+span.run10 {
+  background-color: rgb(178, 232, 255);
+  display: block;
+}
+span.run11 {
+  background-color: rgb(178, 234, 255);
+  display: block;
+}
+span.run12 {
+  background-color: rgb(178, 237, 255);
+  display: block;
+}
+span.run13 {
+  background-color: rgb(178, 239, 255);
+  display: block;
+}
+span.run14 {
+  background-color: rgb(178, 242, 255);
+  display: block;
+}
+span.run15 {
+  background-color: rgb(178, 246, 255);
+  display: block;
+}
+span.run16 {
+  background-color: rgb(178, 248, 255);
+  display: block;
+}
+span.run17 {
+  background-color: rgb(178, 251, 255);
+  display: block;
+}
+span.run18 {
+  background-color: rgb(178, 253, 255);
+  display: block;
+}
+span.run19 {
+  background-color: rgb(178, 255, 253);
+  display: block;
+}
+span.run20 {
+  background-color: rgb(178, 255, 249);
+  display: block;
+}
+span.run21 {
+  background-color: rgb(178, 255, 247);
+  display: block;
+}
+span.run22 {
+  background-color: rgb(178, 255, 244);
+  display: block;
+}
+span.run23 {
+  background-color: rgb(178, 255, 242);
+  display: block;
+}
+span.run24 {
+  background-color: rgb(178, 255, 239);
+  display: block;
+}
+span.run25 {
+  background-color: rgb(178, 255, 235);
+  display: block;
+}
+span.run26 {
+  background-color: rgb(178, 255, 233);
+  display: block;
+}
+span.run27 {
+  background-color: rgb(178, 255, 230);
+  display: block;
+}
+span.run28 {
+  background-color: rgb(178, 255, 228);
+  display: block;
+}
+span.run29 {
+  background-color: rgb(178, 255, 225);
+  display: block;
+}
+span.run30 {
+  background-color: rgb(178, 255, 221);
+  display: block;
+}
+span.run31 {
+  background-color: rgb(178, 255, 219);
+  display: block;
+}
+span.run32 {
+  background-color: rgb(178, 255, 216);
+  display: block;
+}
+span.run33 {
+  background-color: rgb(178, 255, 214);
+  display: block;
+}
+span.run34 {
+  background-color: rgb(178, 255, 211);
+  display: block;
+}
+span.run35 {
+  background-color: rgb(178, 255, 207);
+  display: block;
+}
+span.run36 {
+  background-color: rgb(178, 255, 205);
+  display: block;
+}
+span.run37 {
+  background-color: rgb(178, 255, 202);
+  display: block;
+}
+span.run38 {
+  background-color: rgb(178, 255, 200);
+  display: block;
+}
+span.run39 {
+  background-color: rgb(178, 255, 197);
+  display: block;
+}
+span.run40 {
+  background-color: rgb(178, 255, 193);
+  display: block;
+}
+span.run41 {
+  background-color: rgb(178, 255, 191);
+  display: block;
+}
+span.run42 {
+  background-color: rgb(178, 255, 188);
+  display: block;
+}
+span.run43 {
+  background-color: rgb(178, 255, 186);
+  display: block;
+}
+span.run44 {
+  background-color: rgb(178, 255, 183);
+  display: block;
+}
+span.run45 {
+  background-color: rgb(178, 255, 179);
+  display: block;
+}
+span.run46 {
+  background-color: rgb(179, 255, 178);
+  display: block;
+}
+span.run47 {
+  background-color: rgb(182, 255, 178);
+  display: block;
+}
+span.run48 {
+  background-color: rgb(184, 255, 178);
+  display: block;
+}
+span.run49 {
+  background-color: rgb(187, 255, 178);
+  display: block;
+}
+span.run50 {
+  background-color: rgb(191, 255, 178);
+  display: block;
+}
+span.run51 {
+  background-color: rgb(193, 255, 178);
+  display: block;
+}
+span.run52 {
+  background-color: rgb(196, 255, 178);
+  display: block;
+}
+span.run53 {
+  background-color: rgb(198, 255, 178);
+  display: block;
+}
+span.run54 {
+  background-color: rgb(201, 255, 178);
+  display: block;
+}
+span.run55 {
+  background-color: rgb(205, 255, 178);
+  display: block;
+}
+span.run56 {
+  background-color: rgb(207, 255, 178);
+  display: block;
+}
+span.run57 {
+  background-color: rgb(210, 255, 178);
+  display: block;
+}
+span.run58 {
+  background-color: rgb(212, 255, 178);
+  display: block;
+}
+span.run59 {
+  background-color: rgb(215, 255, 178);
+  display: block;
+}
+span.run60 {
+  background-color: rgb(219, 255, 178);
+  display: block;
+}
+span.run61 {
+  background-color: rgb(221, 255, 178);
+  display: block;
+}
+span.run62 {
+  background-color: rgb(224, 255, 178);
+  display: block;
+}
+span.run63 {
+  background-color: rgb(226, 255, 178);
+  display: block;
+}
+span.run64 {
+  background-color: rgb(229, 255, 178);
+  display: block;
+}
+span.run65 {
+  background-color: rgb(233, 255, 178);
+  display: block;
+}
+span.run66 {
+  background-color: rgb(235, 255, 178);
+  display: block;
+}
+span.run67 {
+  background-color: rgb(238, 255, 178);
+  display: block;
+}
+span.run68 {
+  background-color: rgb(240, 255, 178);
+  display: block;
+}
+span.run69 {
+  background-color: rgb(243, 255, 178);
+  display: block;
+}
+span.run70 {
+  background-color: rgb(247, 255, 178);
+  display: block;
+}
+span.run71 {
+  background-color: rgb(249, 255, 178);
+  display: block;
+}
+span.run72 {
+  background-color: rgb(252, 255, 178);
+  display: block;
+}
+span.run73 {
+  background-color: rgb(255, 255, 178);
+  display: block;
+}
+span.run74 {
+  background-color: rgb(255, 252, 178);
+  display: block;
+}
+span.run75 {
+  background-color: rgb(255, 248, 178);
+  display: block;
+}
+span.run76 {
+  background-color: rgb(255, 246, 178);
+  display: block;
+}
+span.run77 {
+  background-color: rgb(255, 243, 178);
+  display: block;
+}
+span.run78 {
+  background-color: rgb(255, 240, 178);
+  display: block;
+}
+span.run79 {
+  background-color: rgb(255, 238, 178);
+  display: block;
+}
+span.run80 {
+  background-color: rgb(255, 234, 178);
+  display: block;
+}
+span.run81 {
+  background-color: rgb(255, 232, 178);
+  display: block;
+}
+span.run82 {
+  background-color: rgb(255, 229, 178);
+  display: block;
+}
+span.run83 {
+  background-color: rgb(255, 226, 178);
+  display: block;
+}
+span.run84 {
+  background-color: rgb(255, 224, 178);
+  display: block;
+}
+span.run85 {
+  background-color: rgb(255, 220, 178);
+  display: block;
+}
+span.run86 {
+  background-color: rgb(255, 218, 178);
+  display: block;
+}
+span.run87 {
+  background-color: rgb(255, 215, 178);
+  display: block;
+}
+span.run88 {
+  background-color: rgb(255, 212, 178);
+  display: block;
+}
+span.run89 {
+  background-color: rgb(255, 210, 178);
+  display: block;
+}
+span.run90 {
+  background-color: rgb(255, 206, 178);
+  display: block;
+}
+span.run91 {
+  background-color: rgb(255, 204, 178);
+  display: block;
+}
+span.run92 {
+  background-color: rgb(255, 201, 178);
+  display: block;
+}
+span.run93 {
+  background-color: rgb(255, 198, 178);
+  display: block;
+}
+span.run94 {
+  background-color: rgb(255, 196, 178);
+  display: block;
+}
+span.run95 {
+  background-color: rgb(255, 192, 178);
+  display: block;
+}
+span.run96 {
+  background-color: rgb(255, 189, 178);
+  display: block;
+}
+span.run97 {
+  background-color: rgb(255, 187, 178);
+  display: block;
+}
+span.run98 {
+  background-color: rgb(255, 184, 178);
+  display: block;
+}
+span.run99 {
+  background-color: rgb(255, 182, 178);
+  display: block;
+}
+span.run100 {
+  background-color: rgb(255, 178, 178);
+  display: block;
+}
+</style>
+      </head>
+      <body>
+        <h3>C0 code coverage information</h3>
+        <p>Generated on Thu Mar 29 18:37:40 -0700 2007 with <a href='http://eigenclass.org/hiki.rb?rcov'>rcov 0.8.0</a>
+        </p>
+        <hr /><pre><span class='marked0'>Code reported as executed by Ruby looks like this...
+</span><span class='marked1'>and this: this line is also marked as covered.
+</span><span class='inferred0'>Lines considered as run by rcov, but not reported by Ruby, look like this,
+</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).
+</span><span class='uncovered0'>Finally, here&apos;s a line marked as not executed.
+</span></pre>                       
+    <table class='report'>
+      <thead>
+        <tr>
+          <td class='heading'>Name</td>
+          <td class='heading'>Total lines</td>
+          <td class='heading'>Lines of code</td>
+          <td class='heading'>Total coverage</td>
+          <td class='heading'>Code coverage</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='light'>
+          <td>
+            <a href='lib-haml_rb.html'>lib/haml.rb</a>
+          </td>
+          <td class='lines_total'>
+            <tt>660</tt>
+          </td>
+          <td class='lines_code'>
+            <tt>4</tt>
+          </td>
+          <td>
+            <table cellspacing='0' cellpadding='0' align='right'>
+              <tr>
+                <td>
+                  <tt class='coverage_total'>100.0%</tt>&nbsp;</td>
+                <td>
+                  <table cellspacing='0' class='percent_graph' cellpadding='0' width='100'>
+                    <tr>
+                      <td class='covered' width='100' />
+                      <td class='uncovered' width='0' />
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table cellspacing='0' cellpadding='0' align='right'>
+              <tr>
+                <td>
+                  <tt class='coverage_code'>100.0%</tt>&nbsp;</td>
+                <td>
+                  <table cellspacing='0' class='percent_graph' cellpadding='0' width='100'>
+                    <tr>
+                      <td class='covered' width='100' />
+                      <td class='uncovered' width='0' />
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table><pre><span class="marked1"><a name="line1" />  1 dir = File.dirname(__FILE__)
+</span><span class="marked0"><a name="line2" />  2 $LOAD_PATH &lt;&lt; dir unless $LOAD_PATH.include?(dir)
+</span><span class="inferred1"><a name="line3" />  3 
+</span><span class="inferred0"><a name="line4" />  4 # = Haml (XHTML Abstraction Markup Language)
+</span><span class="inferred1"><a name="line5" />  5 # 
+</span><span class="inferred0"><a name="line6" />  6 # Haml is a markup language
+</span><span class="inferred1"><a name="line7" />  7 # that's used to cleanly and simply describe the XHTML of any web document,
+</span><span class="inferred0"><a name="line8" />  8 # without the use of inline code.
+</span><span class="inferred1"><a name="line9" />  9 # Haml functions as a replacement
+</span><span class="inferred0"><a name="line10" /> 10 # for inline page templating systems such as PHP, ERB, and ASP. 
+</span><span class="inferred1"><a name="line11" /> 11 # However, Haml avoids the need for explicitly coding XHTML into the template, 
+</span><span class="inferred0"><a name="line12" /> 12 # because it is actually an abstract description of the XHTML,
+</span><span class="inferred1"><a name="line13" /> 13 # with some code to generate dynamic content.
+</span><span class="inferred0"><a name="line14" /> 14 # 
+</span><span class="inferred1"><a name="line15" /> 15 # == Features
+</span><span class="inferred0"><a name="line16" /> 16 # 
+</span><span class="inferred1"><a name="line17" /> 17 # * Whitespace active
+</span><span class="inferred0"><a name="line18" /> 18 # * Well-formatted markup
+</span><span class="inferred1"><a name="line19" /> 19 # * DRY
+</span><span class="inferred0"><a name="line20" /> 20 # * Follows CSS conventions
+</span><span class="inferred1"><a name="line21" /> 21 # * Integrates Ruby code
+</span><span class="inferred0"><a name="line22" /> 22 # * Implements Rails templates with the .haml extension
+</span><span class="inferred1"><a name="line23" /> 23 #
+</span><span class="inferred0"><a name="line24" /> 24 # == Using Haml
+</span><span class="inferred1"><a name="line25" /> 25 #
+</span><span class="inferred0"><a name="line26" /> 26 # Haml can be used in two ways:
+</span><span class="inferred1"><a name="line27" /> 27 # as a plugin for Ruby on Rails,
+</span><span class="inferred0"><a name="line28" /> 28 # and as a standalong Ruby module.
+</span><span class="inferred1"><a name="line29" /> 29 #
+</span><span class="inferred0"><a name="line30" /> 30 # === Rails
+</span><span class="inferred1"><a name="line31" /> 31 # 
+</span><span class="inferred0"><a name="line32" /> 32 # Haml is most commonly used as a plugin.
+</span><span class="inferred1"><a name="line33" /> 33 # It can be installed as a plugin using the Rails plugin installer:
+</span><span class="inferred0"><a name="line34" /> 34 # 
+</span><span class="inferred1"><a name="line35" /> 35 #   ./script/plugin install http://svn.hamptoncatlin.com/haml/tags/stable
+</span><span class="inferred0"><a name="line36" /> 36 #
+</span><span class="inferred1"><a name="line37" /> 37 # Once it's installed, all view files with the &quot;.haml&quot; extension
+</span><span class="inferred0"><a name="line38" /> 38 # will be compiled using Haml.
+</span><span class="inferred1"><a name="line39" /> 39 #
+</span><span class="inferred0"><a name="line40" /> 40 # You can access instance variables in Haml templates
+</span><span class="inferred1"><a name="line41" /> 41 # the same way you do in ERb templates.
+</span><span class="inferred0"><a name="line42" /> 42 # Helper methods are also available in Haml templates.
+</span><span class="inferred1"><a name="line43" /> 43 # For example:
+</span><span class="inferred0"><a name="line44" /> 44 # 
+</span><span class="inferred1"><a name="line45" /> 45 #   # file: app/controllers/movies_controller.rb
+</span><span class="inferred0"><a name="line46" /> 46 # 
+</span><span class="inferred1"><a name="line47" /> 47 #   class MoviesController &lt; ApplicationController
+</span><span class="inferred0"><a name="line48" /> 48 #     def index
+</span><span class="inferred1"><a name="line49" /> 49 #       @title = &quot;Teen Wolf&quot;
+</span><span class="inferred0"><a name="line50" /> 50 #     end
+</span><span class="inferred1"><a name="line51" /> 51 #   end
+</span><span class="inferred0"><a name="line52" /> 52 # 
+</span><span class="inferred1"><a name="line53" /> 53 #   # file: app/views/movies/index.haml
+</span><span class="inferred0"><a name="line54" /> 54 # 
+</span><span class="inferred1"><a name="line55" /> 55 #   #content
+</span><span class="inferred0"><a name="line56" /> 56 #    .title
+</span><span class="inferred1"><a name="line57" /> 57 #      %h1= @title
+</span><span class="inferred0"><a name="line58" /> 58 #      = link_to 'Home', home_url
+</span><span class="inferred1"><a name="line59" /> 59 # 
+</span><span class="inferred0"><a name="line60" /> 60 # may be compiled to:
+</span><span class="inferred1"><a name="line61" /> 61 # 
+</span><span class="inferred0"><a name="line62" /> 62 #   &lt;div id='content'&gt;
+</span><span class="inferred1"><a name="line63" /> 63 #     &lt;div class='title'&gt;
+</span><span class="inferred0"><a name="line64" /> 64 #       &lt;h1&gt;Teen Wolf&lt;/h1&gt;
+</span><span class="inferred1"><a name="line65" /> 65 #       &lt;a href='/'&gt;Home&lt;/a&gt;
+</span><span class="inferred0"><a name="line66" /> 66 #     &lt;/div&gt;
+</span><span class="inferred1"><a name="line67" /> 67 #   &lt;/div&gt;
+</span><span class="inferred0"><a name="line68" /> 68 #
+</span><span class="inferred1"><a name="line69" /> 69 # === Ruby Module
+</span><span class="inferred0"><a name="line70" /> 70 #
+</span><span class="inferred1"><a name="line71" /> 71 # Haml can also be used completely separately from Rails and ActionView.
+</span><span class="inferred0"><a name="line72" /> 72 # To do this, install the gem with RubyGems:
+</span><span class="inferred1"><a name="line73" /> 73 #
+</span><span class="inferred0"><a name="line74" /> 74 #   gem install haml
+</span><span class="inferred1"><a name="line75" /> 75 #
+</span><span class="inferred0"><a name="line76" /> 76 # You can then use it by including the &quot;haml&quot; gem in Ruby code,
+</span><span class="inferred1"><a name="line77" /> 77 # and using Haml::Engine like so:
+</span><span class="inferred0"><a name="line78" /> 78 #
+</span><span class="inferred1"><a name="line79" /> 79 #   engine = Haml::Engine.new(&quot;%p Haml code!&quot;)
+</span><span class="inferred0"><a name="line80" /> 80 #   engine.render #=&gt; &quot;&lt;p&gt;Haml code!&lt;/p&gt;\n&quot;
+</span><span class="inferred1"><a name="line81" /> 81 # 
+</span><span class="inferred0"><a name="line82" /> 82 # == Characters with meaning to Haml
+</span><span class="inferred1"><a name="line83" /> 83 # 
+</span><span class="inferred0"><a name="line84" /> 84 # Various characters, when placed at a certain point in a line,
+</span><span class="inferred1"><a name="line85" /> 85 # instruct Haml to render different types of things.
+</span><span class="inferred0"><a name="line86" /> 86 # 
+</span><span class="inferred1"><a name="line87" /> 87 # === XHTML Tags
+</span><span class="inferred0"><a name="line88" /> 88 # 
+</span><span class="inferred1"><a name="line89" /> 89 # These characters render XHTML tags.
+</span><span class="inferred0"><a name="line90" /> 90 # 
+</span><span class="inferred1"><a name="line91" /> 91 # ==== %
+</span><span class="inferred0"><a name="line92" /> 92 # 
+</span><span class="inferred1"><a name="line93" /> 93 # 
+</span><span class="inferred0"><a name="line94" /> 94 # The percent character is placed at the beginning of a line.
+</span><span class="inferred1"><a name="line95" /> 95 # It's followed immediately by the name of an element,
+</span><span class="inferred0"><a name="line96" /> 96 # then optionally by modifiers (see below), a space,
+</span><span class="inferred1"><a name="line97" /> 97 # and text to be rendered inside the element.
+</span><span class="inferred0"><a name="line98" /> 98 # It creates an element in the form of &lt;tt&gt;&lt;element&gt;&lt;/element&gt;&lt;/tt&gt;.
+</span><span class="inferred1"><a name="line99" /> 99 # For example:
+</span><span class="inferred0"><a name="line100" />100 # 
+</span><span class="inferred1"><a name="line101" />101 #   %one
+</span><span class="inferred0"><a name="line102" />102 #     %two
+</span><span class="inferred1"><a name="line103" />103 #       %three Hey there
+</span><span class="inferred0"><a name="line104" />104 # 
+</span><span class="inferred1"><a name="line105" />105 # is compiled to:
+</span><span class="inferred0"><a name="line106" />106 # 
+</span><span class="inferred1"><a name="line107" />107 #   &lt;one&gt;
+</span><span class="inferred0"><a name="line108" />108 #     &lt;two&gt;
+</span><span class="inferred1"><a name="line109" />109 #       &lt;three&gt;Hey there&lt;/three&gt;
+</span><span class="inferred0"><a name="line110" />110 #     &lt;/two&gt;
+</span><span class="inferred1"><a name="line111" />111 #   &lt;/one&gt;
+</span><span class="inferred0"><a name="line112" />112 # 
+</span><span class="inferred1"><a name="line113" />113 # Any string is a valid element name;
+</span><span class="inferred0"><a name="line114" />114 # Haml will automatically generate opening and closing tags for any element.
+</span><span class="inferred1"><a name="line115" />115 # 
+</span><span class="inferred0"><a name="line116" />116 # ==== {}
+</span><span class="inferred1"><a name="line117" />117 # 
+</span><span class="inferred0"><a name="line118" />118 # Brackets represent a Ruby hash
+</span><span class="inferred1"><a name="line119" />119 # that is used for specifying the attributes of an element.
+</span><span class="inferred0"><a name="line120" />120 # It is literally evaluated as a Ruby hash,
+</span><span class="inferred1"><a name="line121" />121 # so logic will work in it and local variables may be used.
+</span><span class="inferred0"><a name="line122" />122 # Quote characters within the attribute
+</span><span class="inferred1"><a name="line123" />123 # will be replaced by appropriate escape sequences.
+</span><span class="inferred0"><a name="line124" />124 # The hash is placed after the tag is defined.
+</span><span class="inferred1"><a name="line125" />125 # For example:
+</span><span class="inferred0"><a name="line126" />126 # 
+</span><span class="inferred1"><a name="line127" />127 #   %head{ :name =&gt; &quot;doc_head&quot; }
+</span><span class="inferred0"><a name="line128" />128 #     %script{ 'type' =&gt; &quot;text/&quot; + &quot;javascript&quot;,
+</span><span class="inferred1"><a name="line129" />129 #              :src   =&gt; &quot;javascripts/script_#{2 + 7}&quot; }
+</span><span class="inferred0"><a name="line130" />130 # 
+</span><span class="inferred1"><a name="line131" />131 # is compiled to:
+</span><span class="inferred0"><a name="line132" />132 # 
+</span><span class="inferred1"><a name="line133" />133 #   &lt;head name=&quot;doc_head&quot;&gt;
+</span><span class="inferred0"><a name="line134" />134 #     &lt;script src='javascripts/script_9' type='text/javascript'&gt;
+</span><span class="inferred1"><a name="line135" />135 #     &lt;/script&gt;
+</span><span class="inferred0"><a name="line136" />136 #   &lt;/head&gt;
+</span><span class="inferred1"><a name="line137" />137 # 
+</span><span class="inferred0"><a name="line138" />138 # ==== []
+</span><span class="inferred1"><a name="line139" />139 # 
+</span><span class="inferred0"><a name="line140" />140 # Square brackets follow a tag definition and contain a Ruby object
+</span><span class="inferred1"><a name="line141" />141 # that is used to set the class and id of that tag.
+</span><span class="inferred0"><a name="line142" />142 # The class is set to the object's class
+</span><span class="inferred1"><a name="line143" />143 # (transformed to use underlines rather than camel case)
+</span><span class="inferred0"><a name="line144" />144 # and the id is set to the object's class, followed by its id.
+</span><span class="inferred1"><a name="line145" />145 # Because the id of an object is normally an obscure implementation detail,
+</span><span class="inferred0"><a name="line146" />146 # this is most useful for elements that represent instances of Models.
+</span><span class="inferred1"><a name="line147" />147 # For example:
+</span><span class="inferred0"><a name="line148" />148 # 
+</span><span class="inferred1"><a name="line149" />149 #   # file: app/controllers/users_controller.rb
+</span><span class="inferred0"><a name="line150" />150 # 
+</span><span class="inferred1"><a name="line151" />151 #   def show
+</span><span class="inferred0"><a name="line152" />152 #     @user = CrazyUser.find(15)
+</span><span class="inferred1"><a name="line153" />153 #   end
+</span><span class="inferred0"><a name="line154" />154 # 
+</span><span class="inferred1"><a name="line155" />155 #   # file: app/views/users/show.haml
+</span><span class="inferred0"><a name="line156" />156 # 
+</span><span class="inferred1"><a name="line157" />157 #   %div[@user]
+</span><span class="inferred0"><a name="line158" />158 #     %bar[290]/
+</span><span class="inferred1"><a name="line159" />159 #     Hello!
+</span><span class="inferred0"><a name="line160" />160 # 
+</span><span class="inferred1"><a name="line161" />161 # is compiled to:
+</span><span class="inferred0"><a name="line162" />162 # 
+</span><span class="inferred1"><a name="line163" />163 #   &lt;div class=&quot;crazy_user&quot; id=&quot;crazy_user_15&quot;&gt;
+</span><span class="inferred0"><a name="line164" />164 #     &lt;bar class=&quot;fixnum&quot; id=&quot;fixnum_581&quot; /&gt;
+</span><span class="inferred1"><a name="line165" />165 #     Hello!
+</span><span class="inferred0"><a name="line166" />166 #   &lt;/div&gt;
+</span><span class="inferred1"><a name="line167" />167 # 
+</span><span class="inferred0"><a name="line168" />168 # This is based off of DHH's SimplyHelpful syntax,
+</span><span class="inferred1"><a name="line169" />169 # as presented at RailsConf Europe 2006.
+</span><span class="inferred0"><a name="line170" />170 # 
+</span><span class="inferred1"><a name="line171" />171 # ==== /
+</span><span class="inferred0"><a name="line172" />172 # 
+</span><span class="inferred1"><a name="line173" />173 # The forward slash character, when placed at the end of a tag definition,
+</span><span class="inferred0"><a name="line174" />174 # causes the tag to be self-closed.
+</span><span class="inferred1"><a name="line175" />175 # For example:
+</span><span class="inferred0"><a name="line176" />176 # 
+</span><span class="inferred1"><a name="line177" />177 #   %br/
+</span><span class="inferred0"><a name="line178" />178 #   %meta{'http-equiv' =&gt; 'Content-Type', :content =&gt; 'text/html'}/
+</span><span class="inferred1"><a name="line179" />179 # 
+</span><span class="inferred0"><a name="line180" />180 # is compiled to:
+</span><span class="inferred1"><a name="line181" />181 # 
+</span><span class="inferred0"><a name="line182" />182 #   &lt;br /&gt;
+</span><span class="inferred1"><a name="line183" />183 #   &lt;meta http-equiv='Content-Type' content='text/html' /&gt;
+</span><span class="inferred0"><a name="line184" />184 #
+</span><span class="inferred1"><a name="line185" />185 # Some tags are automatically closed, as long as they have no content.
+</span><span class="inferred0"><a name="line186" />186 # +meta+, +img+, +link+, +script+, +br+, and +hr+ tags are closed by default.
+</span><span class="inferred1"><a name="line187" />187 # This list can be customized by setting the &lt;tt&gt;:autoclose&lt;/tt&gt; option (see below).
+</span><span class="inferred0"><a name="line188" />188 # For example:
+</span><span class="inferred1"><a name="line189" />189 #
+</span><span class="inferred0"><a name="line190" />190 #   %br
+</span><span class="inferred1"><a name="line191" />191 #   %meta{'http-equiv' =&gt; 'Content-Type', :content =&gt; 'text/html'}
+</span><span class="inferred0"><a name="line192" />192 #
+</span><span class="inferred1"><a name="line193" />193 # is also compiled to:
+</span><span class="inferred0"><a name="line194" />194 #
+</span><span class="inferred1"><a name="line195" />195 #   &lt;br /&gt;
+</span><span class="inferred0"><a name="line196" />196 #   &lt;meta http-equiv='Content-Type' content='text/html' /&gt;
+</span><span class="inferred1"><a name="line197" />197 # 
+</span><span class="inferred0"><a name="line198" />198 # ==== . and #
+</span><span class="inferred1"><a name="line199" />199 # 
+</span><span class="inferred0"><a name="line200" />200 # The period and pound sign are borrowed from CSS.
+</span><span class="inferred1"><a name="line201" />201 # They are used as shortcuts to specify the &lt;tt&gt;class&lt;/tt&gt;
+</span><span class="inferred0"><a name="line202" />202 # and &lt;tt&gt;id&lt;/tt&gt; attributes of an element, respectively.
+</span><span class="inferred1"><a name="line203" />203 # Multiple class names can be specified in a similar way to CSS,
+</span><span class="inferred0"><a name="line204" />204 # by chaining the class names together with periods.
+</span><span class="inferred1"><a name="line205" />205 # They are placed immediately after the tag and before an attributes hash.
+</span><span class="inferred0"><a name="line206" />206 # For example:
+</span><span class="inferred1"><a name="line207" />207 # 
+</span><span class="inferred0"><a name="line208" />208 #   %div#things
+</span><span class="inferred1"><a name="line209" />209 #     %span#rice Chicken Fried
+</span><span class="inferred0"><a name="line210" />210 #     %p.beans{ :food =&gt; 'true' } The magical fruit
+</span><span class="inferred1"><a name="line211" />211 #     %h1.class.otherclass#id La La La
+</span><span class="inferred0"><a name="line212" />212 # 
+</span><span class="inferred1"><a name="line213" />213 # is compiled to:
+</span><span class="inferred0"><a name="line214" />214 # 
+</span><span class="inferred1"><a name="line215" />215 #   &lt;div id='things'&gt;
+</span><span class="inferred0"><a name="line216" />216 #     &lt;span id='rice'&gt;Chicken Fried&lt;/span&gt;
+</span><span class="inferred1"><a name="line217" />217 #     &lt;p class='beans' food='true'&gt;The magical fruit&lt;/p&gt;
+</span><span class="inferred0"><a name="line218" />218 #     &lt;h1 class='class otherclass' id='id'&gt;La La La&lt;/h1&gt;
+</span><span class="inferred1"><a name="line219" />219 #   &lt;/div&gt;
+</span><span class="inferred0"><a name="line220" />220 # 
+</span><span class="inferred1"><a name="line221" />221 # And,
+</span><span class="inferred0"><a name="line222" />222 # 
+</span><span class="inferred1"><a name="line223" />223 #   #content
+</span><span class="inferred0"><a name="line224" />224 #     .articles
+</span><span class="inferred1"><a name="line225" />225 #       .article.title
+</span><span class="inferred0"><a name="line226" />226 #         Doogie Howser Comes Out
+</span><span class="inferred1"><a name="line227" />227 #       .article.date
+</span><span class="inferred0"><a name="line228" />228 #         2006-11-05
+</span><span class="inferred1"><a name="line229" />229 #       .article.entry
+</span><span class="inferred0"><a name="line230" />230 #         Neil Patrick Harris would like to dispel any rumors that he is straight
+</span><span class="inferred1"><a name="line231" />231 # 
+</span><span class="inferred0"><a name="line232" />232 # is compiled to:
+</span><span class="inferred1"><a name="line233" />233 # 
+</span><span class="inferred0"><a name="line234" />234 #   &lt;div id=&quot;content&quot;&gt;
+</span><span class="inferred1"><a name="line235" />235 #     &lt;div class=&quot;articles&quot;&gt;
+</span><span class="inferred0"><a name="line236" />236 #       &lt;div class=&quot;article title&quot;&gt;Doogie Howser Comes Out&lt;/div&gt;
+</span><span class="inferred1"><a name="line237" />237 #       &lt;div class=&quot;article date&quot;&gt;2006-11-05&lt;/div&gt;
+</span><span class="inferred0"><a name="line238" />238 #       &lt;div class=&quot;article entry&quot;&gt;
+</span><span class="inferred1"><a name="line239" />239 #         Neil Patrick Harris would like to dispel any rumors that he is straight
+</span><span class="inferred0"><a name="line240" />240 #       &lt;/div&gt;
+</span><span class="inferred1"><a name="line241" />241 #     &lt;/div&gt;
+</span><span class="inferred0"><a name="line242" />242 #   &lt;/div&gt;
+</span><span class="inferred1"><a name="line243" />243 # 
+</span><span class="inferred0"><a name="line244" />244 # ==== Implicit Div Elements
+</span><span class="inferred1"><a name="line245" />245 # 
+</span><span class="inferred0"><a name="line246" />246 # Because the div element is used so often, it is the default element.
+</span><span class="inferred1"><a name="line247" />247 # If you only define a class and/or id using the &lt;tt&gt;.&lt;/tt&gt; or &lt;tt&gt;#&lt;/tt&gt; syntax,
+</span><span class="inferred0"><a name="line248" />248 # a div element is automatically used.
+</span><span class="inferred1"><a name="line249" />249 # For example:
+</span><span class="inferred0"><a name="line250" />250 # 
+</span><span class="inferred1"><a name="line251" />251 #   #collection
+</span><span class="inferred0"><a name="line252" />252 #     .item
+</span><span class="inferred1"><a name="line253" />253 #       .description What a cool item!
+</span><span class="inferred0"><a name="line254" />254 # 
+</span><span class="inferred1"><a name="line255" />255 # is the same as:
+</span><span class="inferred0"><a name="line256" />256 # 
+</span><span class="inferred1"><a name="line257" />257 #   %div{:id =&gt; collection}
+</span><span class="inferred0"><a name="line258" />258 #     %div{:class =&gt; 'item'}
+</span><span class="inferred1"><a name="line259" />259 #       %div{:class =&gt; 'description'} What a cool item!
+</span><span class="inferred0"><a name="line260" />260 # 
+</span><span class="inferred1"><a name="line261" />261 # and is compiled to:
+</span><span class="inferred0"><a name="line262" />262 # 
+</span><span class="inferred1"><a name="line263" />263 #   &lt;div id='collection'&gt;
+</span><span class="inferred0"><a name="line264" />264 #     &lt;div class='item'&gt;Broken record album&lt;/div&gt;
+</span><span class="inferred1"><a name="line265" />265 #     &lt;div class='description'&gt;What a cool item!&lt;/div&gt;
+</span><span class="inferred0"><a name="line266" />266 #   &lt;/div&gt;
+</span><span class="inferred1"><a name="line267" />267 # 
+</span><span class="inferred0"><a name="line268" />268 # ==== =
+</span><span class="inferred1"><a name="line269" />269 # 
+</span><span class="inferred0"><a name="line270" />270 # &lt;tt&gt;=&lt;/tt&gt; is placed at the end of a tag definition,
+</span><span class="inferred1"><a name="line271" />271 # after class, id, and attribute declarations.
+</span><span class="inferred0"><a name="line272" />272 # It's just a shortcut for inserting Ruby code into an element.
+</span><span class="inferred1"><a name="line273" />273 # It works the same as &lt;tt&gt;=&lt;/tt&gt; without a tag:
+</span><span class="inferred0"><a name="line274" />274 # it inserts the result of the Ruby code into the template.
+</span><span class="inferred1"><a name="line275" />275 # However, if the result is short enough,
+</span><span class="inferred0"><a name="line276" />276 # it is displayed entirely on one line.
+</span><span class="inferred1"><a name="line277" />277 # For example:
+</span><span class="inferred0"><a name="line278" />278 # 
+</span><span class="inferred1"><a name="line279" />279 #   %p= &quot;hello&quot;
+</span><span class="inferred0"><a name="line280" />280 # 
+</span><span class="inferred1"><a name="line281" />281 # is not quite the same as:
+</span><span class="inferred0"><a name="line282" />282 # 
+</span><span class="inferred1"><a name="line283" />283 #   %p
+</span><span class="inferred0"><a name="line284" />284 #     = &quot;hello&quot;
+</span><span class="inferred1"><a name="line285" />285 # 
+</span><span class="inferred0"><a name="line286" />286 # It's compiled to:
+</span><span class="inferred1"><a name="line287" />287 # 
+</span><span class="inferred0"><a name="line288" />288 #   &lt;p&gt;hello&lt;/p&gt;
+</span><span class="inferred1"><a name="line289" />289 # 
+</span><span class="inferred0"><a name="line290" />290 # === XHTML Helpers
+</span><span class="inferred1"><a name="line291" />291 # 
+</span><span class="inferred0"><a name="line292" />292 # ==== No Special Character
+</span><span class="inferred1"><a name="line293" />293 # 
+</span><span class="inferred0"><a name="line294" />294 # If no special character appears at the beginning of a line,
+</span><span class="inferred1"><a name="line295" />295 # the line is rendered as plain text.
+</span><span class="inferred0"><a name="line296" />296 # For example:
+</span><span class="inferred1"><a name="line297" />297 # 
+</span><span class="inferred0"><a name="line298" />298 #   %gee
+</span><span class="inferred1"><a name="line299" />299 #     %whiz
+</span><span class="inferred0"><a name="line300" />300 #       Wow this is cool!
+</span><span class="inferred1"><a name="line301" />301 # 
+</span><span class="inferred0"><a name="line302" />302 # is compiled to:
+</span><span class="inferred1"><a name="line303" />303 # 
+</span><span class="inferred0"><a name="line304" />304 #   &lt;gee&gt;
+</span><span class="inferred1"><a name="line305" />305 #     &lt;whiz&gt;
+</span><span class="inferred0"><a name="line306" />306 #       Wow this is cool!
+</span><span class="inferred1"><a name="line307" />307 #     &lt;/whiz&gt;
+</span><span class="inferred0"><a name="line308" />308 #   &lt;/gee&gt;
+</span><span class="inferred1"><a name="line309" />309 # 
+</span><span class="inferred0"><a name="line310" />310 # ==== !!!
+</span><span class="inferred1"><a name="line311" />311 # 
+</span><span class="inferred0"><a name="line312" />312 # When describing XHTML documents with Haml,
+</span><span class="inferred1"><a name="line313" />313 # you can have a document type or XML prolog generated automatically
+</span><span class="inferred0"><a name="line314" />314 # by including the characters &lt;tt&gt;!!!&lt;/tt&gt;.
+</span><span class="inferred1"><a name="line315" />315 # For example:
+</span><span class="inferred0"><a name="line316" />316 # 
+</span><span class="inferred1"><a name="line317" />317 #   !!! XML
+</span><span class="inferred0"><a name="line318" />318 #   !!!
+</span><span class="inferred1"><a name="line319" />319 #   %html
+</span><span class="inferred0"><a name="line320" />320 #     %head
+</span><span class="inferred1"><a name="line321" />321 #       %title Myspace
+</span><span class="inferred0"><a name="line322" />322 #     %body
+</span><span class="inferred1"><a name="line323" />323 #       %h1 I am the international space station
+</span><span class="inferred0"><a name="line324" />324 #       %p Sign my guestbook
+</span><span class="inferred1"><a name="line325" />325 # 
+</span><span class="inferred0"><a name="line326" />326 # is compiled to:
+</span><span class="inferred1"><a name="line327" />327 # 
+</span><span class="inferred0"><a name="line328" />328 #   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+</span><span class="inferred1"><a name="line329" />329 #   &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+</span><span class="inferred0"><a name="line330" />330 #   &lt;html&gt;
+</span><span class="inferred1"><a name="line331" />331 #     &lt;head&gt;
+</span><span class="inferred0"><a name="line332" />332 #       &lt;title&gt;Myspace&lt;/title&gt;
+</span><span class="inferred1"><a name="line333" />333 #     &lt;/head&gt;
+</span><span class="inferred0"><a name="line334" />334 #     &lt;body&gt;
+</span><span class="inferred1"><a name="line335" />335 #       &lt;h1&gt;I am the international space station&lt;/h1&gt;
+</span><span class="inferred0"><a name="line336" />336 #       &lt;p&gt;Sign my guestbook&lt;/p&gt;
+</span><span class="inferred1"><a name="line337" />337 #     &lt;/body&gt;
+</span><span class="inferred0"><a name="line338" />338 #   &lt;/html&gt;
+</span><span class="inferred1"><a name="line339" />339 # 
+</span><span class="inferred0"><a name="line340" />340 # You can also specify the version and type of XHTML after the &lt;tt&gt;!!!&lt;/tt&gt;.
+</span><span class="inferred1"><a name="line341" />341 # XHTML 1.0 Strict, Transitional, and Frameset and XHTML 1.1 are supported.
+</span><span class="inferred0"><a name="line342" />342 # The default version is 1.0 and the default type is Transitional.
+</span><span class="inferred1"><a name="line343" />343 # For example:
+</span><span class="inferred0"><a name="line344" />344 # 
+</span><span class="inferred1"><a name="line345" />345 #   !!! 1.1
+</span><span class="inferred0"><a name="line346" />346 # 
+</span><span class="inferred1"><a name="line347" />347 # is compiled to:
+</span><span class="inferred0"><a name="line348" />348 # 
+</span><span class="inferred1"><a name="line349" />349 #   &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;
+</span><span class="inferred0"><a name="line350" />350 # 
+</span><span class="inferred1"><a name="line351" />351 # and
+</span><span class="inferred0"><a name="line352" />352 # 
+</span><span class="inferred1"><a name="line353" />353 #   !!! Strict
+</span><span class="inferred0"><a name="line354" />354 # 
+</span><span class="inferred1"><a name="line355" />355 # is compiled to:
+</span><span class="inferred0"><a name="line356" />356 # 
+</span><span class="inferred1"><a name="line357" />357 #   &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+</span><span class="inferred0"><a name="line358" />358 # 
+</span><span class="inferred1"><a name="line359" />359 # If you're not using the UTF-8 characterset for your document,
+</span><span class="inferred0"><a name="line360" />360 # you can specify which encoding should appear
+</span><span class="inferred1"><a name="line361" />361 # in the XML prolog in a similar way.
+</span><span class="inferred0"><a name="line362" />362 # For example:
+</span><span class="inferred1"><a name="line363" />363 # 
+</span><span class="inferred0"><a name="line364" />364 #   !!! XML iso-8859-1
+</span><span class="inferred1"><a name="line365" />365 # 
+</span><span class="inferred0"><a name="line366" />366 # is compiled to:
+</span><span class="inferred1"><a name="line367" />367 # 
+</span><span class="inferred0"><a name="line368" />368 #   &lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot; ?&gt;
+</span><span class="inferred1"><a name="line369" />369 # 
+</span><span class="inferred0"><a name="line370" />370 # ==== /
+</span><span class="inferred1"><a name="line371" />371 # 
+</span><span class="inferred0"><a name="line372" />372 # The forward slash character, when placed at the beginning of a line,
+</span><span class="inferred1"><a name="line373" />373 # wraps all text after it in an HTML comment.
+</span><span class="inferred0"><a name="line374" />374 # For example:
+</span><span class="inferred1"><a name="line375" />375 # 
+</span><span class="inferred0"><a name="line376" />376 #   %billabong
+</span><span class="inferred1"><a name="line377" />377 #     / This is the billabong element
+</span><span class="inferred0"><a name="line378" />378 #     I like billabongs!
+</span><span class="inferred1"><a name="line379" />379 # 
+</span><span class="inferred0"><a name="line380" />380 # is compiled to:
+</span><span class="inferred1"><a name="line381" />381 # 
+</span><span class="inferred0"><a name="line382" />382 #   &lt;billabong&gt;
+</span><span class="inferred1"><a name="line383" />383 #     &lt;!-- This is the billabong element --&gt;
+</span><span class="inferred0"><a name="line384" />384 #     I like billabongs!
+</span><span class="inferred1"><a name="line385" />385 #   &lt;/billabong&gt;
+</span><span class="inferred0"><a name="line386" />386 # 
+</span><span class="inferred1"><a name="line387" />387 # The forward slash can also wrap indented sections of code. For example:
+</span><span class="inferred0"><a name="line388" />388 # 
+</span><span class="inferred1"><a name="line389" />389 #   /
+</span><span class="inferred0"><a name="line390" />390 #     %p This doesn't render...
+</span><span class="inferred1"><a name="line391" />391 #     %div
+</span><span class="inferred0"><a name="line392" />392 #       %h1 Because it's commented out!
+</span><span class="inferred1"><a name="line393" />393 # 
+</span><span class="inferred0"><a name="line394" />394 # is compiled to:
+</span><span class="inferred1"><a name="line395" />395 # 
+</span><span class="inferred0"><a name="line396" />396 #   &lt;!--
+</span><span class="inferred1"><a name="line397" />397 #     &lt;p&gt;This doesn't render...&lt;/p&gt;
+</span><span class="inferred0"><a name="line398" />398 #     &lt;div&gt;
+</span><span class="inferred1"><a name="line399" />399 #       &lt;h1&gt;Because it's commented out!&lt;/h1&gt;
+</span><span class="inferred0"><a name="line400" />400 #     &lt;/div&gt;
+</span><span class="inferred1"><a name="line401" />401 #   --&gt;
+</span><span class="inferred0"><a name="line402" />402 # 
+</span><span class="inferred1"><a name="line403" />403 # You can also use Internet Explorer conditional comments
+</span><span class="inferred0"><a name="line404" />404 # (about)[http://www.quirksmode.org/css/condcom.html]
+</span><span class="inferred1"><a name="line405" />405 # by enclosing the condition in square brackets after the &lt;tt&gt;/&lt;/tt&gt;.
+</span><span class="inferred0"><a name="line406" />406 # For example:
+</span><span class="inferred1"><a name="line407" />407 # 
+</span><span class="inferred0"><a name="line408" />408 #   /[if IE]
+</span><span class="inferred1"><a name="line409" />409 #     %a{ :href =&gt; 'http://www.mozilla.com/en-US/firefox/' }
+</span><span class="inferred0"><a name="line410" />410 #       %h1 Get Firefox
+</span><span class="inferred1"><a name="line411" />411 # 
+</span><span class="inferred0"><a name="line412" />412 # is compiled to:
+</span><span class="inferred1"><a name="line413" />413 # 
+</span><span class="inferred0"><a name="line414" />414 #   &lt;!--[if IE]&gt;
+</span><span class="inferred1"><a name="line415" />415 #     &lt;a href='http://www.mozilla.com/en-US/firefox/'&gt;
+</span><span class="inferred0"><a name="line416" />416 #       &lt;h1&gt;Get Firefox&lt;/h1&gt;
+</span><span class="inferred1"><a name="line417" />417 #     &lt;/a&gt;
+</span><span class="inferred0"><a name="line418" />418 #   &lt;![endif]--&gt;
+</span><span class="inferred1"><a name="line419" />419 # 
+</span><span class="inferred0"><a name="line420" />420 # ==== \
+</span><span class="inferred1"><a name="line421" />421 # 
+</span><span class="inferred0"><a name="line422" />422 # The backslash character escapes the first character of a line,
+</span><span class="inferred1"><a name="line423" />423 # allowing use of otherwise interpreted characters as plain text.
+</span><span class="inferred0"><a name="line424" />424 # For example:
+</span><span class="inferred1"><a name="line425" />425 # 
+</span><span class="inferred0"><a name="line426" />426 #   %title
+</span><span class="inferred1"><a name="line427" />427 #     = @title
+</span><span class="inferred0"><a name="line428" />428 #     \- MySite
+</span><span class="inferred1"><a name="line429" />429 # 
+</span><span class="inferred0"><a name="line430" />430 # is compiled to:
+</span><span class="inferred1"><a name="line431" />431 # 
+</span><span class="inferred0"><a name="line432" />432 #   &lt;title&gt;
+</span><span class="inferred1"><a name="line433" />433 #     MyPage
+</span><span class="inferred0"><a name="line434" />434 #     - MySite
+</span><span class="inferred1"><a name="line435" />435 #   &lt;/title&gt;
+</span><span class="inferred0"><a name="line436" />436 # 
+</span><span class="inferred1"><a name="line437" />437 # ==== |
+</span><span class="inferred0"><a name="line438" />438 # 
+</span><span class="inferred1"><a name="line439" />439 # The pipe character designates a multiline string.
+</span><span class="inferred0"><a name="line440" />440 # It's placed at the end of a line
+</span><span class="inferred1"><a name="line441" />441 # and means that all following lines that end with &lt;tt&gt;|&lt;/tt&gt;
+</span><span class="inferred0"><a name="line442" />442 # will be evaluated as though they were on the same line.
+</span><span class="inferred1"><a name="line443" />443 # For example:
+</span><span class="inferred0"><a name="line444" />444 # 
+</span><span class="inferred1"><a name="line445" />445 #   %whoo
+</span><span class="inferred0"><a name="line446" />446 #     %hoo I think this might get |
+</span><span class="inferred1"><a name="line447" />447 #       pretty long so I should |
+</span><span class="inferred0"><a name="line448" />448 #       probably make it |
+</span><span class="inferred1"><a name="line449" />449 #       multiline so it doesn't |
+</span><span class="inferred0"><a name="line450" />450 #       look awful. |
+</span><span class="inferred1"><a name="line451" />451 #     %p This is short.
+</span><span class="inferred0"><a name="line452" />452 # 
+</span><span class="inferred1"><a name="line453" />453 # is compiled to:
+</span><span class="inferred0"><a name="line454" />454 # 
+</span><span class="inferred1"><a name="line455" />455 #   &lt;whoo&gt;
+</span><span class="inferred0"><a name="line456" />456 #     &lt;hoo&gt;
+</span><span class="inferred1"><a name="line457" />457 #       I think this might get pretty long so I should probably make it multiline so it doesn't look awful.
+</span><span class="inferred0"><a name="line458" />458 #     &lt;/hoo&gt;
+</span><span class="inferred1"><a name="line459" />459 #   &lt;/whoo&gt;
+</span><span class="inferred0"><a name="line460" />460 #
+</span><span class="inferred1"><a name="line461" />461 # ==== :
+</span><span class="inferred0"><a name="line462" />462 #
+</span><span class="inferred1"><a name="line463" />463 # The colon character designates a filter.
+</span><span class="inferred0"><a name="line464" />464 # This allows you to pass an indented block of text as input
+</span><span class="inferred1"><a name="line465" />465 # to another filtering program and add the result to the output of Haml.
+</span><span class="inferred0"><a name="line466" />466 # The syntax is simply a colon followed by the name of the filter.
+</span><span class="inferred1"><a name="line467" />467 # For example,
+</span><span class="inferred0"><a name="line468" />468 #
+</span><span class="inferred1"><a name="line469" />469 #   %p
+</span><span class="inferred0"><a name="line470" />470 #     :markdown
+</span><span class="inferred1"><a name="line471" />471 #       Textile
+</span><span class="inferred0"><a name="line472" />472 #       =======
+</span><span class="inferred1"><a name="line473" />473 #
+</span><span class="inferred0"><a name="line474" />474 #       Hello, *World*
+</span><span class="inferred1"><a name="line475" />475 #
+</span><span class="inferred0"><a name="line476" />476 # is compiled to
+</span><span class="inferred1"><a name="line477" />477 #
+</span><span class="inferred0"><a name="line478" />478 #   &lt;p&gt;
+</span><span class="inferred1"><a name="line479" />479 #     &lt;h1&gt;Textile&lt;/h1&gt;
+</span><span class="inferred0"><a name="line480" />480 #
+</span><span class="inferred1"><a name="line481" />481 #     &lt;p&gt;Hello, &lt;em&gt;World&lt;/em&gt;&lt;/p&gt;
+</span><span class="inferred0"><a name="line482" />482 #   &lt;/p&gt;
+</span><span class="inferred1"><a name="line483" />483 #
+</span><span class="inferred0"><a name="line484" />484 # Haml has the following filters defined:
+</span><span class="inferred1"><a name="line485" />485 #
+</span><span class="inferred0"><a name="line486" />486 # [plain]     Does not parse the filtered text.
+</span><span class="inferred1"><a name="line487" />487 #             This is useful for large blocks of text without HTML tags,
+</span><span class="inferred0"><a name="line488" />488 #             when you don't want lines starting with &lt;tt&gt;.&lt;/tt&gt; or &lt;tt&gt;-&lt;/tt&gt;
+</span><span class="inferred1"><a name="line489" />489 #             to be parsed.
+</span><span class="inferred0"><a name="line490" />490 #
+</span><span class="inferred1"><a name="line491" />491 # [ruby]      Parses the filtered text with the normal Ruby interpreter.
+</span><span class="inferred0"><a name="line492" />492 #             All output sent to &lt;tt&gt;$stdout&lt;/tt&gt;, like with +puts+,
+</span><span class="inferred1"><a name="line493" />493 #             is output into the Haml document.
+</span><span class="inferred0"><a name="line494" />494 #             Not available if the &lt;tt&gt;suppress_eval&lt;/tt&gt; option is set to true.
+</span><span class="inferred1"><a name="line495" />495 #
+</span><span class="inferred0"><a name="line496" />496 # [preserve]  Inserts the filtered text into the template with whitespace preserved.
+</span><span class="inferred1"><a name="line497" />497 #             &lt;tt&gt;preserve&lt;/tt&gt;d blocks of text aren't indented,
+</span><span class="inferred0"><a name="line498" />498 #             and newlines are replaced with the HTML escape code for newlines,
+</span><span class="inferred1"><a name="line499" />499 #             to preserve nice-looking output.
+</span><span class="inferred0"><a name="line500" />500 #
+</span><span class="inferred1"><a name="line501" />501 # [erb]       Parses the filtered text with ERB, like an RHTML template.
+</span><span class="inferred0"><a name="line502" />502 #             Not available if the &lt;tt&gt;suppress_eval&lt;/tt&gt; option is set to true.
+</span><span class="inferred1"><a name="line503" />503 #             At the moment, this doesn't support access to variables
+</span><span class="inferred0"><a name="line504" />504 #             defined by Ruby on Rails or Haml code.
+</span><span class="inferred1"><a name="line505" />505 #
+</span><span class="inferred0"><a name="line506" />506 # [sass]      Parses the filtered text with Sass to produce CSS output.
+</span><span class="inferred1"><a name="line507" />507 #
+</span><span class="inferred0"><a name="line508" />508 # [redcloth]  Parses the filtered text with RedCloth (http://whytheluckystiff.net/ruby/redcloth),
+</span><span class="inferred1"><a name="line509" />509 #             which uses both Textile and Markdown syntax.
+</span><span class="inferred0"><a name="line510" />510 #             Only works if RedCloth is installed.
+</span><span class="inferred1"><a name="line511" />511 #
+</span><span class="inferred0"><a name="line512" />512 # [textile]   Parses the filtered text with Textile (http://www.textism.com/tools/textile).
+</span><span class="inferred1"><a name="line513" />513 #             Only works if RedCloth is installed.
+</span><span class="inferred0"><a name="line514" />514 #
+</span><span class="inferred1"><a name="line515" />515 # [markdown]  Parses the filtered text with Markdown (http://daringfireball.net/projects/markdown).
+</span><span class="inferred0"><a name="line516" />516 #             Only works if RedCloth or BlueCloth (http://www.deveiate.org/projects/BlueCloth)
+</span><span class="inferred1"><a name="line517" />517 #             is installed
+</span><span class="inferred0"><a name="line518" />518 #             (BlueCloth takes precedence if both are installed).
+</span><span class="inferred1"><a name="line519" />519 #
+</span><span class="inferred0"><a name="line520" />520 # You can also define your own filters (see Setting Options, below).
+</span><span class="inferred1"><a name="line521" />521 # 
+</span><span class="inferred0"><a name="line522" />522 # === Ruby evaluators
+</span><span class="inferred1"><a name="line523" />523 # 
+</span><span class="inferred0"><a name="line524" />524 # ==== =
+</span><span class="inferred1"><a name="line525" />525 # 
+</span><span class="inferred0"><a name="line526" />526 # The equals character is followed by Ruby code,
+</span><span class="inferred1"><a name="line527" />527 # which is evaluated and the output inserted into the document as plain text.
+</span><span class="inferred0"><a name="line528" />528 # For example:
+</span><span class="inferred1"><a name="line529" />529 # 
+</span><span class="inferred0"><a name="line530" />530 #   %p
+</span><span class="inferred1"><a name="line531" />531 #     = ['hi', 'there', 'reader!'].join &quot; &quot;
+</span><span class="inferred0"><a name="line532" />532 #     = &quot;yo&quot;
+</span><span class="inferred1"><a name="line533" />533 # 
+</span><span class="inferred0"><a name="line534" />534 # is compiled to:
+</span><span class="inferred1"><a name="line535" />535 # 
+</span><span class="inferred0"><a name="line536" />536 #   &lt;p&gt;
+</span><span class="inferred1"><a name="line537" />537 #     hi there reader!
+</span><span class="inferred0"><a name="line538" />538 #     yo
+</span><span class="inferred1"><a name="line539" />539 #   &lt;/p&gt;
+</span><span class="inferred0"><a name="line540" />540 # 
+</span><span class="inferred1"><a name="line541" />541 # ==== -
+</span><span class="inferred0"><a name="line542" />542 # 
+</span><span class="inferred1"><a name="line543" />543 # The hyphen character makes the text following it into &quot;silent script&quot;:
+</span><span class="inferred0"><a name="line544" />544 # Ruby script that is evaluated, but not output.
+</span><span class="inferred1"><a name="line545" />545 # 
+</span><span class="inferred0"><a name="line546" />546 # &lt;b&gt;It is not recommended that you use this widely;
+</span><span class="inferred1"><a name="line547" />547 # almost all processing code and logic should be restricted
+</span><span class="inferred0"><a name="line548" />548 # to the Controller, the Helper, or partials.&lt;/b&gt;
+</span><span class="inferred1"><a name="line549" />549 # 
+</span><span class="inferred0"><a name="line550" />550 # For example:
+</span><span class="inferred1"><a name="line551" />551 # 
+</span><span class="inferred0"><a name="line552" />552 #   - foo = &quot;hello&quot;
+</span><span class="inferred1"><a name="line553" />553 #   - foo &lt;&lt; &quot; there&quot;
+</span><span class="inferred0"><a name="line554" />554 #   - foo &lt;&lt; &quot; you!&quot;
+</span><span class="inferred1"><a name="line555" />555 #   %p= foo
+</span><span class="inferred0"><a name="line556" />556 # 
+</span><span class="inferred1"><a name="line557" />557 # is compiled to:
+</span><span class="inferred0"><a name="line558" />558 # 
+</span><span class="inferred1"><a name="line559" />559 #   &lt;p&gt;
+</span><span class="inferred0"><a name="line560" />560 #     hello there you!
+</span><span class="inferred1"><a name="line561" />561 #   &lt;/p&gt;
+</span><span class="inferred0"><a name="line562" />562 # 
+</span><span class="inferred1"><a name="line563" />563 # ===== Blocks
+</span><span class="inferred0"><a name="line564" />564 # 
+</span><span class="inferred1"><a name="line565" />565 # Ruby blocks, like XHTML tags, don't need to be explicitly closed in Haml.
+</span><span class="inferred0"><a name="line566" />566 # Rather, they're automatically closed, based on indentation.
+</span><span class="inferred1"><a name="line567" />567 # A block begins whenever the indentation is increased
+</span><span class="inferred0"><a name="line568" />568 # after a silent script command.
+</span><span class="inferred1"><a name="line569" />569 # It ends when the indentation decreases
+</span><span class="inferred0"><a name="line570" />570 # (as long as it's not an +else+ clause or something similar).
+</span><span class="inferred1"><a name="line571" />571 # For example:
+</span><span class="inferred0"><a name="line572" />572 # 
+</span><span class="inferred1"><a name="line573" />573 #   - (42...47).each do |i|
+</span><span class="inferred0"><a name="line574" />574 #     %p= i
+</span><span class="inferred1"><a name="line575" />575 #   %p See, I can count!
+</span><span class="inferred0"><a name="line576" />576 # 
+</span><span class="inferred1"><a name="line577" />577 # is compiled to:
+</span><span class="inferred0"><a name="line578" />578 # 
+</span><span class="inferred1"><a name="line579" />579 #   &lt;p&gt;
+</span><span class="inferred0"><a name="line580" />580 #     42
+</span><span class="inferred1"><a name="line581" />581 #   &lt;/p&gt;
+</span><span class="inferred0"><a name="line582" />582 #   &lt;p&gt;
+</span><span class="inferred1"><a name="line583" />583 #     43
+</span><span class="inferred0"><a name="line584" />584 #   &lt;/p&gt;
+</span><span class="inferred1"><a name="line585" />585 #   &lt;p&gt;
+</span><span class="inferred0"><a name="line586" />586 #     44
+</span><span class="inferred1"><a name="line587" />587 #   &lt;/p&gt;
+</span><span class="inferred0"><a name="line588" />588 #   &lt;p&gt;
+</span><span class="inferred1"><a name="line589" />589 #     45
+</span><span class="inferred0"><a name="line590" />590 #   &lt;/p&gt;
+</span><span class="inferred1"><a name="line591" />591 #   &lt;p&gt;
+</span><span class="inferred0"><a name="line592" />592 #     46
+</span><span class="inferred1"><a name="line593" />593 #   &lt;/p&gt;
+</span><span class="inferred0"><a name="line594" />594 # 
+</span><span class="inferred1"><a name="line595" />595 # Another example:
+</span><span class="inferred0"><a name="line596" />596 # 
+</span><span class="inferred1"><a name="line597" />597 #   %p
+</span><span class="inferred0"><a name="line598" />598 #     - case 2
+</span><span class="inferred1"><a name="line599" />599 #     - when 1
+</span><span class="inferred0"><a name="line600" />600 #       = &quot;1!&quot;
+</span><span class="inferred1"><a name="line601" />601 #     - when 2
+</span><span class="inferred0"><a name="line602" />602 #       = &quot;2?&quot;
+</span><span class="inferred1"><a name="line603" />603 #     - when 3
+</span><span class="inferred0"><a name="line604" />604 #       = &quot;3.&quot;
+</span><span class="inferred1"><a name="line605" />605 # 
+</span><span class="inferred0"><a name="line606" />606 # is compiled to:
+</span><span class="inferred1"><a name="line607" />607 # 
+</span><span class="inferred0"><a name="line608" />608 #   &lt;p&gt;
+</span><span class="inferred1"><a name="line609" />609 #     2?
+</span><span class="inferred0"><a name="line610" />610 #   &lt;/p&gt;
+</span><span class="inferred1"><a name="line611" />611 # 
+</span><span class="inferred0"><a name="line612" />612 # == Haml Options
+</span><span class="inferred1"><a name="line613" />613 # 
+</span><span class="inferred0"><a name="line614" />614 # Options can be set by setting the hash &lt;tt&gt;Haml::Template.options&lt;/tt&gt;
+</span><span class="inferred1"><a name="line615" />615 # from &lt;tt&gt;environment.rb&lt;/tt&gt; in Rails,
+</span><span class="inferred0"><a name="line616" />616 # or by passing an options hash to Haml::Engine.
+</span><span class="inferred1"><a name="line617" />617 # Available options are:
+</span><span class="inferred0"><a name="line618" />618 # 
+</span><span class="inferred1"><a name="line619" />619 # [&lt;tt&gt;:suppress_eval&lt;/tt&gt;] Whether or not attribute hashes and Ruby scripts
+</span><span class="inferred0"><a name="line620" />620 #                           designated by &lt;tt&gt;=&lt;/tt&gt; or &lt;tt&gt;~&lt;/tt&gt; should be
+</span><span class="inferred1"><a name="line621" />621 #                           evaluated. If this is true, said scripts are
+</span><span class="inferred0"><a name="line622" />622 #                           rendered as empty strings. Defaults to false.
+</span><span class="inferred1"><a name="line623" />623 # 
+</span><span class="inferred0"><a name="line624" />624 # [&lt;tt&gt;:precompiled&lt;/tt&gt;]   A string containing a precompiled Haml template.
+</span><span class="inferred1"><a name="line625" />625 #                           If this is passed, &lt;tt&gt;template&lt;/tt&gt; is ignored
+</span><span class="inferred0"><a name="line626" />626 #                           and no precompilation is done.
+</span><span class="inferred1"><a name="line627" />627 # 
+</span><span class="inferred0"><a name="line628" />628 # [&lt;tt&gt;:attr_wrapper&lt;/tt&gt;]  The character that should wrap element attributes.
+</span><span class="inferred1"><a name="line629" />629 #                           This defaults to &lt;tt&gt;'&lt;/tt&gt; (an apostrophe). Characters
+</span><span class="inferred0"><a name="line630" />630 #                           of this type within the attributes will be escaped
+</span><span class="inferred1"><a name="line631" />631 #                           (e.g. by replacing them with &lt;tt&gt;&amp;apos;&lt;/tt&gt;) if
+</span><span class="inferred0"><a name="line632" />632 #                           the character is an apostrophe or a quotation mark.
+</span><span class="inferred1"><a name="line633" />633 #
+</span><span class="inferred0"><a name="line634" />634 # [&lt;tt&gt;:filename&lt;/tt&gt;]      The name of the Haml file being parsed.
+</span><span class="inferred1"><a name="line635" />635 #                           This is only used as information when exceptions are raised.
+</span><span class="inferred0"><a name="line636" />636 #                           This is automatically assigned when working through ActionView,
+</span><span class="inferred1"><a name="line637" />637 #                           so it's really only useful for the user to assign
+</span><span class="inferred0"><a name="line638" />638 #                           when dealing with Haml programatically.
+</span><span class="inferred1"><a name="line639" />639 #
+</span><span class="inferred0"><a name="line640" />640 # [&lt;tt&gt;:filters&lt;/tt&gt;]       A hash of filters that can be applied to Haml code.
+</span><span class="inferred1"><a name="line641" />641 #                           The keys are the string names of the filters;
+</span><span class="inferred0"><a name="line642" />642 #                           the values are references to the classes of the filters.
+</span><span class="inferred1"><a name="line643" />643 #                           User-defined filters should always have lowercase keys,
+</span><span class="inferred0"><a name="line644" />644 #                           and should have:
+</span><span class="inferred1"><a name="line645" />645 #                           * An +initialize+ method that accepts one parameter,
+</span><span class="inferred0"><a name="line646" />646 #                             the text to be filtered.
+</span><span class="inferred1"><a name="line647" />647 #                           * A +render+ method that returns the result of the filtering.
+</span><span class="inferred0"><a name="line648" />648 # 
+</span><span class="inferred1"><a name="line649" />649 # [&lt;tt&gt;:locals&lt;/tt&gt;]        The local variables that will be available within the
+</span><span class="inferred0"><a name="line650" />650 #                           template. For instance, if &lt;tt&gt;:locals&lt;/tt&gt; is
+</span><span class="inferred1"><a name="line651" />651 #                           &lt;tt&gt;{ :foo =&gt; &quot;bar&quot; }&lt;/tt&gt;, then within the template,
+</span><span class="inferred0"><a name="line652" />652 #                           &lt;tt&gt;= foo&lt;/tt&gt; will produce &lt;tt&gt;bar&lt;/tt&gt;.
+</span><span class="inferred1"><a name="line653" />653 #
+</span><span class="inferred0"><a name="line654" />654 # [&lt;tt&gt;:autoclose&lt;/tt&gt;]     A list of tag names that should be automatically self-closed
+</span><span class="inferred1"><a name="line655" />655 #                           if they have no content.
+</span><span class="inferred0"><a name="line656" />656 #                           Defaults to &lt;tt&gt;['meta', 'img', 'link', 'script', 'br', 'hr']&lt;/tt&gt;.
+</span><span class="inferred1"><a name="line657" />657 #
+</span><span class="marked0"><a name="line658" />658 module Haml; end
+</span><span class="inferred1"><a name="line659" />659 
+</span><span class="marked0"><a name="line660" />660 require 'haml/engine'
+</span></pre><hr />    <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a> version 0.8.0.</p><p>
+          <a href='http://validator.w3.org/check/referer'>
+            <img src='http://www.w3.org/Icons/valid-xhtml10' height='31' alt='Valid XHTML 1.0!' width='88' />
+          </a>
+          <a href='http://jigsaw.w3.org/css-validator/check/referer'>
+            <img src='http://jigsaw.w3.org/css-validator/images/vcss' alt='Valid CSS!' style='border:0;width:88px;height:31px' />
+          </a>
+        </p>
+      </body>
+    </html>

@@ -1,0 +1,25 @@
+!!! XML
+%rss{:version => '2.0'}
+  %channel
+    %title= feed[:title]
+    %url= feed[:url]
+    %description= feed[:desc]
+    %language= feed[:lang]
+    %managingEditor= "#{feed[:name]} (#{feed[:email]})"
+    %pubDate= @posts[-1].created_at.rfc822
+    %lastBuildDate= @posts[-1].updated_at.rfc822
+    %ttl= feed[:ttl]
+    /
+      %image
+        %url= feed[:image]
+        %title= feed[:title]
+        %link= feed[:url]
+    - for p in @posts
+      %item
+        %title= h p.title
+        %link= post_url p
+        %description= post_content p
+        %author= "#{feed[:name]} (#{feed[:email]})"
+        %guid{:isPermaLink => false}= p.uid
+        %pubDate= p.created_at.rfc822
+        %source{:url => feed[:url]}= feed[:title]

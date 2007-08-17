@@ -1,0 +1,3 @@
+prev = page["preview"]
+prev.update current_object.render
+prev.show

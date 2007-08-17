@@ -1,0 +1,6 @@
+%h2
+  == #{pluralize @posts.size, 'Post'} for #{@page_title}
+= date_links
+- for @post in @posts
+  .entry
+    = render :partial => 'post_small'

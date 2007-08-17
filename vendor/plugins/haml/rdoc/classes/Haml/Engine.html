@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Haml::Engine</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Haml::Engine</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/haml/engine_rb.html">
+                lib/haml/engine.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This is the class where all the parsing and processing of the <a
+href="../Haml.html">Haml</a> template is done. It can be directly used by
+the user by creating a <a href="Engine.html#M000013">new</a> instance and
+calling <tt><a href="Engine.html#M000015">to_html</a></tt> to <a
+href="Engine.html#M000014">render</a> the template. For example:
+</p>
+<pre>
+  template = File.read('templates/really_cool_template.haml')
+  haml_engine = Haml::Engine.new(template)
+  output = haml_engine.to_html
+  puts output
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000013">new</a>&nbsp;&nbsp;
+      <a href="#M000014">render</a>&nbsp;&nbsp;
+      <a href="#M000015">to_html</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ELEMENT</td>
+          <td>=</td>
+          <td class="context-item-value">?%</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates an XHTML/XML element.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DIV_CLASS</td>
+          <td>=</td>
+          <td class="context-item-value">?.</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates a <tt>&lt;div&gt;</tt> element with the given class.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DIV_ID</td>
+          <td>=</td>
+          <td class="context-item-value">?#</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates a <tt>&lt;div&gt;</tt> element with the given id.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMMENT</td>
+          <td>=</td>
+          <td class="context-item-value">?/</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates an XHTML/XML comment.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DOCTYPE</td>
+          <td>=</td>
+          <td class="context-item-value">?!</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates an XHTML doctype.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SCRIPT</td>
+          <td>=</td>
+          <td class="context-item-value">?=</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates script, the result of which is output.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FLAT_SCRIPT</td>
+          <td>=</td>
+          <td class="context-item-value">?~</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates script, the result of which is flattened and output.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SILENT_SCRIPT</td>
+          <td>=</td>
+          <td class="context-item-value">?-</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates script which is run but not output.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SILENT_COMMENT</td>
+          <td>=</td>
+          <td class="context-item-value">?#</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+When following SILENT_SCRIPT, designates a comment that is not output.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ESCAPE</td>
+          <td>=</td>
+          <td class="context-item-value">?\\</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates a non-parsed line.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FILTER</td>
+          <td>=</td>
+          <td class="context-item-value">?:</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates a block of filtered text.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PLAIN_TEXT</td>
+          <td>=</td>
+          <td class="context-item-value">-1</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Designates a non-parsed line. Not actually a character.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SPECIAL_CHARACTERS</td>
+          <td>=</td>
+          <td class="context-item-value">[       ELEMENT,       DIV_CLASS,       DIV_ID,       COMMENT,       DOCTYPE,       SCRIPT,       FLAT_SCRIPT,       SILENT_SCRIPT,       ESCAPE,       FILTER</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Keeps track of the ASCII values of the characters that begin a
+specially-interpreted line.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MULTILINE_CHAR_VALUE</td>
+          <td>=</td>
+          <td class="context-item-value">?|</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+The value of the character that designates that a line is part of a
+multiline string.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MULTILINE_STARTERS</td>
+          <td>=</td>
+          <td class="context-item-value">SPECIAL_CHARACTERS - [?/]</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Characters that designate that a multiline string may be about to begin.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MID_BLOCK_KEYWORDS</td>
+          <td>=</td>
+          <td class="context-item-value">['else', 'elsif', 'rescue', 'ensure', 'when']</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Keywords that appear in the middle of a Ruby block with lowered
+indentation. If a block has been started using indentation, lowering the
+indentation with one of these won&#8216;t end the block. For example:
+
+<pre>
+  - if foo
+    %p yes!
+  - else
+    %p no!
+</pre>
+<p>
+The block is ended after <tt>%p no!</tt>, because <tt>else</tt> is a member
+of this array.
+</p>
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMMENT_REGEX</td>
+          <td>=</td>
+          <td class="context-item-value">/\/(\[[a-zA-Z0-9 \.]*\])?(.*)/</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+The Regex that matches an HTML comment command.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DOCTYPE_REGEX</td>
+          <td>=</td>
+          <td class="context-item-value">/([0-9]\.[0-9])?[\s]*([a-zA-Z]*)/</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+The Regex that matches a Doctype command.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">TAG_REGEX</td>
+          <td>=</td>
+          <td class="context-item-value">/[%]([-:_a-zA-Z0-9]+)([-_a-zA-Z0-9\.\#]*)(\{.*\})?(\[.*\])?([=\/\~]?)?(.*)?/</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+The Regex that matches an HTML tag command.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FLAT_WARNING</td>
+          <td>=</td>
+          <td class="context-item-value">&lt;&lt;END Haml deprecation warning: The ~ command is deprecated and will be removed in future Haml versions. Use the :preserve filter, the preserve helper, or the find_and_preserve helper instead. END</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">options</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+Allow reading and writing of the options hash
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">precompiled</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+Allow access to the precompiled template
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="#M000013" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(template, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a <a href="Engine.html#M000013">new</a> instace of <a
+href="Engine.html">Haml::Engine</a> that will compile the given template
+string when <tt><a href="Engine.html#M000015">to_html</a></tt> is called.
+See README for available options.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/haml/engine.rb, line 121</span>
+121:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">template</span>, <span class="ruby-identifier">options</span> = {})
+122:       <span class="ruby-ivar">@options</span> = {
+123:         <span class="ruby-identifier">:suppress_eval</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>,
+124:         <span class="ruby-identifier">:attr_wrapper</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;'&quot;</span>,
+125:         <span class="ruby-identifier">:locals</span> =<span class="ruby-operator">&gt;</span> {},
+126:         <span class="ruby-identifier">:filters</span> =<span class="ruby-operator">&gt;</span> {
+127:           <span class="ruby-value str">'sass'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Sass</span><span class="ruby-operator">::</span><span class="ruby-constant">Engine</span>,
+128:           <span class="ruby-value str">'plain'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Haml</span><span class="ruby-operator">::</span><span class="ruby-constant">Filters</span><span class="ruby-operator">::</span><span class="ruby-constant">Plain</span>,
+129:           <span class="ruby-value str">'preserve'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Haml</span><span class="ruby-operator">::</span><span class="ruby-constant">Filters</span><span class="ruby-operator">::</span><span class="ruby-constant">Preserve</span>
+130:         }
+131:       }
+132: 
+133:       <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:suppress_eval</span>]
+134:         <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:filters</span>].<span class="ruby-identifier">merge!</span>({
+135:           <span class="ruby-value str">'erb'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ERB</span>,
+136:           <span class="ruby-value str">'ruby'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Haml</span><span class="ruby-operator">::</span><span class="ruby-constant">Filters</span><span class="ruby-operator">::</span><span class="ruby-constant">Ruby</span>
+137:         })
+138:       <span class="ruby-keyword kw">end</span>
+139: 
+140:       <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">NOT_LOADED</span>.<span class="ruby-identifier">include?</span> <span class="ruby-value str">'redcloth'</span>
+141:         <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:filters</span>].<span class="ruby-identifier">merge!</span>({
+142:           <span class="ruby-value str">'redcloth'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">RedCloth</span>,
+143:           <span class="ruby-value str">'textile'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Haml</span><span class="ruby-operator">::</span><span class="ruby-constant">Filters</span><span class="ruby-operator">::</span><span class="ruby-constant">Textile</span>,
+144:           <span class="ruby-value str">'markdown'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Haml</span><span class="ruby-operator">::</span><span class="ruby-constant">Filters</span><span class="ruby-operator">::</span><span class="ruby-constant">Markdown</span>
+145:         })
+146:       <span class="ruby-keyword kw">end</span>
+147:       <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">NOT_LOADED</span>.<span class="ruby-identifier">include?</span> <span class="ruby-value str">'bluecloth'</span>
+148:         <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:filters</span>][<span class="ruby-value str">'markdown'</span>] = <span class="ruby-constant">Haml</span><span class="ruby-operator">::</span><span class="ruby-constant">Filters</span><span class="ruby-operator">::</span><span class="ruby-constant">Markdown</span>
+149:       <span class="ruby-keyword kw">end</span>
+150: 
+151:       <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">rec_merge!</span> <span class="ruby-identifier">options</span>
+152: 
+153:       <span class="ruby-ivar">@precompiled</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:precompiled</span>]
+154: 
+155:       <span class="ruby-ivar">@template</span> = <span class="ruby-identifier">template</span>.<span class="ruby-identifier">strip</span> <span class="ruby-comment cmt">#String</span>
+156:       <span class="ruby-ivar">@to_close_stack</span> = []
+157:       <span class="ruby-ivar">@output_tabs</span> = <span class="ruby-value">0</span>
+158:       <span class="ruby-ivar">@template_tabs</span> = <span class="ruby-value">0</span>
+159:       <span class="ruby-ivar">@index</span> = <span class="ruby-value">0</span>
+160: 
+161:       <span class="ruby-comment cmt"># This is the base tabulation of the currently active</span>
+162:       <span class="ruby-comment cmt"># flattened block. -1 signifies that there is no such block.</span>
+163:       <span class="ruby-ivar">@flat_spaces</span> = <span class="ruby-value">-1</span>
+164: 
+165:       <span class="ruby-keyword kw">begin</span>
+166:         <span class="ruby-comment cmt"># Only do the first round of pre-compiling if we really need to.</span>
+167:         <span class="ruby-comment cmt"># They might be passing in the precompiled string.</span>
+168:         <span class="ruby-identifier">do_precompile</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@precompiled</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@precompiled</span> = <span class="ruby-constant">String</span>.<span class="ruby-identifier">new</span>)
+169:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Haml</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+170:         <span class="ruby-identifier">e</span>.<span class="ruby-identifier">add_backtrace_entry</span>(<span class="ruby-ivar">@index</span>, <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:filename</span>])
+171:         <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span>
+172:       <span class="ruby-keyword kw">end</span>
+173:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">(scope = Object.new, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Processes the template and returns the result as a string.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/haml/engine.rb, line 176</span>
+176:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">scope</span> = <span class="ruby-constant">Object</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+177:       <span class="ruby-ivar">@scope_object</span> = <span class="ruby-identifier">scope</span>
+178:       <span class="ruby-ivar">@buffer</span> = <span class="ruby-constant">Haml</span><span class="ruby-operator">::</span><span class="ruby-constant">Buffer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@options</span>)
+179: 
+180:       <span class="ruby-identifier">local_assigns</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:locals</span>]
+181: 
+182:       <span class="ruby-comment cmt"># Get inside the view object's world</span>
+183:       <span class="ruby-ivar">@scope_object</span>.<span class="ruby-identifier">instance_eval</span> <span class="ruby-keyword kw">do</span>
+184:         <span class="ruby-comment cmt"># Set all the local assigns</span>
+185:         <span class="ruby-identifier">local_assigns</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
+186:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:define_method</span>, <span class="ruby-identifier">key</span>) { <span class="ruby-identifier">val</span> }
+187:         <span class="ruby-keyword kw">end</span>
+188:       <span class="ruby-keyword kw">end</span>
+189: 
+190:       <span class="ruby-comment cmt"># Compile the @precompiled buffer</span>
+191:       <span class="ruby-identifier">compile</span> <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+192: 
+193:       <span class="ruby-comment cmt"># Return the result string</span>
+194:       <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">buffer</span>
+195:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <span class="method-name">to_html</span><span class="method-args">(scope = Object.new, &amp;block)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="Engine.html#M000014">render</a>
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+first:
+  id: 1
+  title: Foobish Stuffs
+  content: |
+    Today I went to the store.
+    Then I went to the other store.
+    It was a Good Day.
+  created_at: 2007-04-02 00:00:01
+  updated_at: 2007-04-02 00:00:01
+titleless:
+  id: 2
+  title: ""
+  content: Foo Bar
+  created_at: 2007-04-02 00:00:01
+  updated_at: 2007-04-02 00:00:01
+contentless:
+  id: 3
+  title: Foo Bar
+  content: ""
+  created_at: 2007-04-02 00:00:01
+  updated_at: 2007-04-02 00:00:01
+commented:
+  id: 4
+  title: Everyone comment me!
+  content: |
+    Okay, everyone, comment on this entry.
+    I mean now!
+    Hop to it!
+  created_at: 2007-04-02 00:00:01
+  updated_at: 2007-04-02 00:00:01
+end:
+  id: 5
+  title: Last post chronologically
+  content: |
+    Out of the three ordered posts,
+    I'm the last time-wise
+    and the first id-wise.
+  created_at: 2007-05-05 00:00:01
+  updated_at: 2007-05-05 00:00:01
+start:
+  id: 6
+  title: First post chronologically
+  content: |
+    Out of the three ordered posts,
+    I'm the first time-wise
+    and the middle id-wise.
+  created_at: 2007-05-01 00:00:01
+  updated_at: 2007-05-01 00:00:01
+mid:
+  id: 7
+  title: Middle post chronologically
+  content: |
+    Out of the three ordered posts,
+    I'm the middle time-wise
+    and the last id-wise.
+  created_at: 2007-05-03 00:00:01
+  updated_at: 2007-05-03 00:00:01
+oldest:
+  id: 8
+  title: Oldest post evar
+  content: |
+    This post was pointed before the intarwubs
+    was started!
+  created_at: 1990-08-11 00:00:01
+  created_at: 1990-08-11 00:00:01
+newest:
+  id: 9
+  title: Youngest post evar
+  content: This post was pointed after the intarwubs ended!
+  created_at: 2010-08-11 00:00:01
+  created_at: 2010-08-11 00:00:01
+redclothed:
+  id: 10
+  title: This Post Uses Redcloth!
+  content: |+
+    Woah, *emphasis*. Really[1]?
+
+    fn1. Yes, really emphasis.
+  created_at: 2007-04-02 00:00:01
+  updated_at: 2007-04-02 00:00:01
+complicated:
+  id: 11
+  title: Very Compilcated
+  created_at: 2007-04-02 00:00:01
+  updated_at: 2007-04-02 00:00:01
+  content: |+
+    "I said last Monday":/posts/5 I'd mention when the @make_resourceful@ Rails plugin, which Hampton Catlin, Jeff Hardy, and I have been working on, is 
+    released. Well, as of yesterday (the 25th) around midnight, it was. See "Hampton's blog 
+    post":http://hamptoncatlin.com/2007/make_resourceful-0-1-0-release for the official announcement. The main points are as follows:
+    
+    * Very alpha release. The API is subject to change, although it probably won't for the most part.
+    * There's a "Google group":http://groups.google.com/group/make_resourceful.
+    * Install with @./script/plugin install http://svn.hamptoncatlin.com/make_resourceful/trunk@.
+    
+    For those who didn't catch "my last post about it":/posts/5 and are too lazy to go back and read it, @make_resourceful@ is a plugin that allows you 
+    to factor out all the repetitive REST(Representational State Transfer) code that clutters up the controller a surprising amount. It manages this by 
+    automatically creating typical RESTful actions, while allowing plenty of room for user customization.
+    
+    h3. @actions@
+    
+    The core functionality of @make_resourceful@ comes from the @actions@ method[1].
+    This tells @make_resourceful@ which of the typical RESTful actions
+    (@index@, @show@, @new@, @create@, @edit@, @update@, and @destroy@) should be auto-generated. For example:
+    
+      class VideosController < ApplicationController
+        make_resourceful do
+          actions :index, :show,
+                :new, :create,
+                :destroy
+        end
+      end
+    
+    It simply takes a list of symbols with the action names,
+    and exposes the proper actions,
+    all ready with their typical operation.
+    If you want to auto-generate all the possible actions, it's even easier:
+    
+      class VideosController < ApplicationController
+        make_resourceful do
+          actions :all
+        end
+      end
+    
+    I'm sure most folks are familiar with the default actions,
+    but for the sake of those who aren't
+    and for specifying exactly what @make_resourceful@ handles,
+    I'll go over what each auto-generated action does.
+    
+    h4. @index@
+    
+    @index@ simply loads in a list of relevant objects
+    and renders the template.
+    For example, for @VideosController@,
+    it would assign the attribute 
+    @current_objects@ and the instance variable @@videos@ to a list of all Videos.
+    
+    h4. @show@
+    
+    @show@ also just loads the relevant object.
+    For @VideosController@,
+    it would assign both @current_object@ and @@video@
+    to the video specified by @params[:id]@.
+    
+    h4. @edit@
+    
+    @edit@ works identically to @show@:
+    it finds the current object
+    and loads it into the proper instance variables.
+    
+    h4. @new@
+    
+    @new@ is similar to @show@,
+    but instead of finding an object,
+    it simply creates a new one.
+    Thus, for @VideosController@,
+    @current_object@ and @@video@ would both be assigned to
+    (the same) newly created Video object.
+    
+    h4. @create@
+    
+    This is where it starts getting tricky.
+    Don't be frightened, though;
+    the default actions getting tricky
+    means that the tricky stuff is now stuff
+    that's taken care of for you.
+    
+    @create@ builds a new instance of the current model
+    with the parameters passed in
+    (presumably by a form rendered with @new@),
+    then tries to save that instance.
+    For example, for @VideosController@,
+    it would build @current_object@ and @@video@
+    with the parameters from @params[:video]@.
+    
+    If the saving succeeds,
+    @flash[:notice]@ is set with an appropriate success message
+    and the user is redirected to the @show@ page for the newly created object.
+    Otherwise, if it fails,
+    @flash[:error]@ and an appropriate HTTP error are set,
+    and the @new@ action is rendered.
+    Note that in this case the user isn't actually redirected;
+    thus, the object that's made available to @new.rhtml@
+    has all the user's attributes set,
+    as well as whatever errors caused the save to fail.
+    
+    h4. @update@
+    
+    @update@ is nearly identical to create.
+    The only difference is that instead of building a brand new object,
+    it finds the existing one and updates the attributes,
+    just as you'd expect.
+    Also, if the update fails, @edit@ is rendered rather than @new@.
+    
+    h4. @destroy@
+    
+    @destroy@ also works similarly to @create@.
+    It finds the relevant object,
+    then tries to destroy it.
+    If the object is successfully destroyed,
+    @flash[:notice]@ is set and
+    the user is redirected to @index@.
+    Otherwise, @flash[:error]@ is set
+    and the user is redirected back to the page they were previously viewing.
+    
+    h3. @belongs_to@
+    
+    @make_resourceful@ also deals easily with nested resources.
+    In order to activate this functionality,
+    you simply have to declare the chain of ancestors
+    using the @belongs_to@ method.
+    For example, if each Video had several Scenes
+    and each Scene in turn has several Frames,
+    you would declare it as so:
+    
+    <pre>
+      class FramesController < ApplicationController
+        make_resourceful do
+          actions :all
+    
+          belongs_to :video, :scene
+        end
+      end
+    </pre>
+    
+    You're simply declaring the chain of ancestors,
+    from the topmost (Video) down.
+    
+    @belongs_to@ does two very useful things.
+    First, it automatically causes all the parent objects to be assigned.
+    For example, for @FramesController@,
+    @@video@ and @@scene@ would both be assigned before every action.
+    
+    Second, it ensures that all model searches are properly scoped.
+    For example, suppose the Frame with id 42 belonged to the Scene with id 3.
+    The URL "videos/12/scenes/5/frames/42" wouldn't be valid;
+    Frame 42 doesn't belong to Scene 5.
+    @belongs_to@ ensures that this won't blithely serve up Frame 42 anyway;
+    instead, it acts just as though Frame 42 couldn't be found at all.
+    The URL "videos/12/scenes/3/frames/42", on the other hand, will work fine.
+    
+    h3. @before@ and @after@
+    
+    Now, I think I know what you might be thinking.
+    "All this automation is great," you may cognate,
+    "but what if I want my action to do something special?
+    Do I just give up and define it all myself?"
+    
+    Not at all, my friend!
+    @make_resourceful@ provides a vast array of ways for you to customize
+    your actions to behave in specialized ways.
+    The simplest way to do so is to use the @before@ and @after@ methods.
+    These methods take the name of an action and a block to execute,
+    and then executes the block in the relevant place.
+    For example[2]:
+    
+      before :show do
+        @video.views += 1
+      end
+    
+    This shows a few important aspects of @before@.
+    It's not actually the first thing that happens;
+    the relevant instance variables are loaded beforehand.
+    The callback order is typically as follows:
+    
+    * Instance variables are loaded.
+    * @before@ callbacks are called.
+    * Business logic is executed.
+    * @after@ callbacks are called.
+    * The response is sent out (see @response_for@, below).
+    
+    Note that @index@, @show@, @new@, and @edit@ don't actually have any business logic[2].
+    Thus, they don't actually call any @after@ callbacks.
+    @create@, @update@, and @destroy@, on the other hand,
+    have plenty of it.
+    Each of these actually define two @after@ callbacks;
+    one for when the action succeeds,
+    and one for when it fails.
+    For example:
+    
+    <pre>
+      after :create do
+        logger.info "Video #{@video.filename} successfully created!"
+      end
+    
+      after :create_fails do
+        logger.info "Video #{@video.filename} creation failed!"
+      end
+    </pre>
+    
+    A similar pattern applies to @update@ and @destroy@.
+    
+    h3. @response_for@
+    
+    You may have noticed in my list of the steps in a @resourceful@ action
+    a step where "the response is sent out."
+    This is the step where stuff that the user will see is dealt with,
+    such as assigning @flash@ notices and errors,
+    rendering pages,
+    and redirecting.
+    
+    Although the default responses for each action are very sensible,
+    it's concievable that you might want to change them around for whatever reason.
+    The @response_for@ method makes this not only possible but easy.
+    At its most basic, it works just like the other two callbacks.
+    For example:
+    
+      response_for :new do
+        render :action => 'edit'
+      end
+    
+    You can also respond to different formats,
+    using the same syntax as the built-in @respond_to@ method:
+    
+      response_for :show do |format|
+        format.html
+        format.json { render :json => @video.to_json }
+        format.xml { render :xml => @video.to_xml }
+      end
+    
+    h3. @associated_with@
+    
+    The @associated_with@ method allows you
+    to automatically assign attributes on a newly created object.
+    It takes the name of a controller method that returns the value to assign,
+    and then assigns the corresponding attribute.
+    For example:
+    
+    <pre>
+      # ApplicationController
+      def current_user
+        User.find(session[:user_id])
+      end
+    
+      # GroupsController
+      make_resourceful do
+        build :all
+        associated_with :current_user
+      end
+    </pre>
+    
+    Because @current_user@ returns a User,
+    this will assign @@group.user = current_user@
+    whenever a group is created or edited.
+    If you want to assign a different attribute,
+    use the @:assign_with@ method:
+    
+      associated_with :current_user, :assign_with => :admin
+    
+    This will set @@group.adming = current_user@ instead.
+    
+    h3. A Finer Grain of Control of @flash@ and Redirecting
+    
+    @make_resourceful@ offers one last bit of power[4]:
+    the ability to set the @flash@ message and the redirect
+    from the client side.
+    If you post "_flash[notice]" or "_flash[error]" along with form data,
+    @make_resourceful@ will use those instead of the defaults.
+    The same goes for "_redirect_on[success]" and "_redirect_on[failure]".
+    
+    This gives you a surprising amount of power.
+    Instead of forcing, say, @create@ to always say "Video created successfully!",
+    you can have it say "Video uploaded successfully!" when the user uploads a video,
+    "Videos merges successfully!" when the user merges two videos into one, etc.
+    You can similarly control where the user will be redirected to
+    on what sort of outcome.
+    All that without adding any extra logic to the controller!
+    
+    So that's the plugin in all its present glory!
+    I can assure you the glory will only increase,
+    and I'll be sure to tell all about it when it does.
+    Until then,
+    go forth and @make_resourceful@!
+    
+    fn1. This method used to be known as @build@,
+         but was changed to @actions@ as that's more declarative.
+    
+    fn2. For simplicity's sake, I'll exclude the controller class
+         and call to @make_resourceful@ for this and future examples.
+         We'll say they're all in @VideoController@.
+    
+    fn3. By "business logic" I mean stuff like saving or deleting models.
+    
+    fn4. If you're super-demanding and want _even more_ cool features,
+         just be patient; they're in the works.
+imagey:
+  id: 12
+  title: This Post Uses Redcloth!
+  content: |+
+    That's a monorail cat.
+
+    Woo!
+
+    !http://lolcats.com/images/u/07/22/lolcatsdotcombtl138k9j39veehb.jpg(Monorail Cat)!
+  created_at: 2007-04-02 00:00:01
+  updated_at: 2007-04-02 00:00:01

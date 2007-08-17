@@ -1,0 +1,5 @@
+= render :partial => 'post'
+#comments
+  - for @comment in @post.comments
+    = render :partial => 'comment'
+  = render :partial => 'new_comment'

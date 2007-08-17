@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Haml::Helpers</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Haml::Helpers</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/haml/helpers_rb.html">
+                lib/haml/helpers.rb
+                </a>
+        <br />
+                <a href="../../files/lib/haml/helpers/action_view_mods_rb.html">
+                lib/haml/helpers/action_view_mods.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This module contains various helpful methods to make it easier to do
+various tasks. <a href="Helpers.html">Haml::Helpers</a> is automatically
+included in the context that a <a href="../Haml.html">Haml</a> template is
+parsed in, so all these methods are at your disposal from within the
+template.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000001">action_view?</a>&nbsp;&nbsp;
+      <a href="#M000011">capture_haml</a>&nbsp;&nbsp;
+      <a href="#M000002">find_and_preserve</a>&nbsp;&nbsp;
+      <a href="#M000004">flatten</a>&nbsp;&nbsp;
+      <a href="#M000005">list_of</a>&nbsp;&nbsp;
+      <a href="#M000009">precede</a>&nbsp;&nbsp;
+      <a href="#M000003">preserve</a>&nbsp;&nbsp;
+      <a href="#M000010">succeed</a>&nbsp;&nbsp;
+      <a href="#M000008">surround</a>&nbsp;&nbsp;
+      <a href="#M000007">tab_down</a>&nbsp;&nbsp;
+      <a href="#M000006">tab_up</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Helpers/ActionViewMods.html">ActionViewMods</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Helpers/ActionViewMods.html" class="link">Haml::Helpers::ActionViewMods</a><br />
+
+    </div>
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">action_view?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns whether or not <a href="../ActionView.html">ActionView</a> is
+installed on the system.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 15</span>
+15:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">action_view?</span>
+16:       <span class="ruby-ivar">@@action_view</span>
+17:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">capture_haml</span><span class="method-args">(*args, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Captures the result of the given block of <a href="../Haml.html">Haml</a>
+code, gets rid of the excess indentation, and returns it as a string. For
+example, after the following,
+</p>
+<pre>
+  .foo
+    - foo = capture_haml(13) do |a|
+      %p= a
+</pre>
+<p>
+the local variable <tt>foo</tt> would be assigned to
+&quot;&lt;p&gt;13&lt;/p&gt;\n&quot;.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 184</span>
+184:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">capture_haml</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+185:       <span class="ruby-identifier">capture_haml_with_buffer</span>(<span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">buffer</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+186:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">find_and_preserve</span><span class="method-args">(input)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Isolates the whitespace-sensitive tags in the string and uses <a
+href="Helpers.html#M000003">preserve</a> to convert any endlines inside
+them into HTML entities for endlines.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 21</span>
+21:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_and_preserve</span>(<span class="ruby-identifier">input</span>)
+22:       <span class="ruby-identifier">input</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">to_s</span>
+23:       <span class="ruby-identifier">input</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/&lt;(textarea|code|pre)[^&gt;]*&gt;(.*?)&lt;\/\1&gt;/i</span><span class="ruby-identifier">m</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span>, <span class="ruby-identifier">contents</span><span class="ruby-operator">|</span>
+24:         <span class="ruby-identifier">input</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-identifier">contents</span>, <span class="ruby-identifier">preserve</span>(<span class="ruby-identifier">contents</span>))
+25:       <span class="ruby-keyword kw">end</span>
+26:       <span class="ruby-identifier">input</span>
+27:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <span class="method-name">flatten</span><span class="method-args">(input)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="Helpers.html#M000003">preserve</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">list_of</span><span class="method-args">(array) {|item| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Takes an Enumerable object and a block and iterates over the object,
+yielding each element to a <a href="../Haml.html">Haml</a> block and
+putting the result into <tt>&lt;li&gt;</tt> elements. This creates a list
+of the results of the block. For example:
+</p>
+<pre>
+  = list_of([['hello'], ['yall']]) do |i|
+    = i[0]
+</pre>
+<p>
+Produces:
+</p>
+<pre>
+  &lt;li&gt;hello&lt;/li&gt;
+  &lt;li&gt;yall&lt;/li&gt;
+</pre>
+<p>
+And
+</p>
+<pre>
+  = list_of({:title =&gt; 'All the stuff', :description =&gt; 'A book about all the stuff.'}) do |key, val|
+    %h3= key.humanize
+    %p= val
+</pre>
+<p>
+Produces:
+</p>
+<pre>
+  &lt;li&gt;
+    &lt;h3&gt;Title&lt;/h3&gt;
+    &lt;p&gt;All the stuff&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;h3&gt;Description&lt;/h3&gt;
+    &lt;p&gt;A book about all the stuff.&lt;/p&gt;
+  &lt;/li&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 70</span>
+70:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">list_of</span>(<span class="ruby-identifier">array</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yields: item</span>
+71:       <span class="ruby-identifier">to_return</span> = <span class="ruby-identifier">array</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+72:         <span class="ruby-identifier">result</span> = <span class="ruby-identifier">capture_haml</span>(<span class="ruby-identifier">i</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+73:         
+74:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">count</span>(<span class="ruby-value str">&quot;\n&quot;</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+75:           <span class="ruby-identifier">result</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;\n  &quot;</span>)
+76:           <span class="ruby-identifier">result</span> = <span class="ruby-node">&quot;\n  #{result.strip}\n&quot;</span>
+77:         <span class="ruby-keyword kw">else</span>
+78:           <span class="ruby-identifier">result</span>.<span class="ruby-identifier">strip!</span>
+79:         <span class="ruby-keyword kw">end</span>
+80:         
+81:         <span class="ruby-node">&quot;&lt;li&gt;#{result}&lt;/li&gt;&quot;</span>
+82:       <span class="ruby-keyword kw">end</span>
+83:       <span class="ruby-identifier">to_return</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+84:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">precede</span><span class="method-args">(char, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Prepends the given character to the beginning of the <a
+href="../Haml.html">Haml</a> block, with no whitespace between. For
+example:
+</p>
+<pre>
+  = precede '*' do
+    %span.small Not really
+</pre>
+<p>
+Produces:
+</p>
+<pre>
+  *&lt;span class='small'&gt;Not really&lt;/span&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 152</span>
+152:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">precede</span>(<span class="ruby-identifier">char</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+153:       <span class="ruby-node">&quot;#{char}#{capture_haml(&amp;block).chomp}\n&quot;</span>
+154:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">preserve</span><span class="method-args">(input)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Takes any string, finds all the endlines and converts them to HTML entities
+for endlines so they&#8216;ll render correctly in whitespace-sensitive tags
+without screwing up the indentation.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 32</span>
+32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">preserve</span>(<span class="ruby-identifier">input</span>)      
+33:       <span class="ruby-identifier">input</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\n/</span>, <span class="ruby-value str">'&amp;#x000A;'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\r/</span>, <span class="ruby-value str">''</span>)
+34:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">succeed</span><span class="method-args">(char, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Appends the given character to the end of the <a
+href="../Haml.html">Haml</a> block, with no whitespace between. For
+example:
+</p>
+<pre>
+  click
+  = succeed '.' do
+    %a{:href=&gt;&quot;thing&quot;} here
+</pre>
+<p>
+Produces:
+</p>
+<pre>
+  click
+  &lt;a href='thing'&gt;here&lt;/a&gt;.
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 169</span>
+169:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">succeed</span>(<span class="ruby-identifier">char</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+170:       <span class="ruby-node">&quot;#{capture_haml(&amp;block).chomp}#{char}\n&quot;</span>
+171:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">surround</span><span class="method-args">(front, back = nil, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Surrounds the given block of <a href="../Haml.html">Haml</a> code with the
+given characters, with no whitespace in between. For example:
+</p>
+<pre>
+  = surround '(', ')' do
+    %a{:href =&gt; &quot;food&quot;} chicken
+</pre>
+<p>
+Produces:
+</p>
+<pre>
+  (&lt;a href='food'&gt;chicken&lt;/a&gt;)
+</pre>
+<p>
+and
+</p>
+<pre>
+  = surround '*' do
+    %strong angry
+</pre>
+<p>
+Produces:
+</p>
+<pre>
+  *&lt;strong&gt;angry&lt;/strong&gt;*
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 134</span>
+134:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">surround</span>(<span class="ruby-identifier">front</span>, <span class="ruby-identifier">back</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+135:       <span class="ruby-identifier">back</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">front</span>
+136:       <span class="ruby-identifier">output</span> = <span class="ruby-identifier">capture_haml</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+137:       
+138:       <span class="ruby-node">&quot;#{front}#{output.chomp}#{back}\n&quot;</span>
+139:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">tab_down</span><span class="method-args">(i = 1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Increments the number of tabs the buffer automatically adds to the lines of
+the template.
+</p>
+<p>
+See <a href="Helpers.html#M000006">tab_up</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 110</span>
+110:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tab_down</span>(<span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>)
+111:       <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">tabulation</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">i</span>
+112:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">tab_up</span><span class="method-args">(i = 1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Increments the number of tabs the buffer automatically adds to the lines of
+the template. For example:
+</p>
+<pre>
+  %h1 foo
+  - tab_up
+  %p bar
+  - tab_down
+  %strong baz
+</pre>
+<p>
+Produces:
+</p>
+<pre>
+  &lt;h1&gt;foo&lt;/h1&gt;
+    &lt;p&gt;bar&lt;/p&gt;
+  &lt;strong&gt;baz&lt;/strong&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/haml/helpers.rb, line 102</span>
+102:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tab_up</span>(<span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>)
+103:       <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">tabulation</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">i</span>
+104:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

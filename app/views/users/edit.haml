@@ -1,0 +1,9 @@
+- restful_form do |f|
+  = f.text_field :name
+  = f.text_field :email
+  = f.text_field :link, :label => 'Site'
+  = f.check_box :admin, :label => 'Admin?'
+  #password_stuff
+    = f.password_field :password, :label => 'New Password'
+    = f.password_field :password_confirm, :label => 'Confirm Password'
+  = submit_tag

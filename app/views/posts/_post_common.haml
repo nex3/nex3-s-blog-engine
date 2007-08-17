@@ -1,0 +1,8 @@
+- if admin?
+  .side_links
+    = delete_link
+    = edit_link
+%h1= link_to h(@post.title), post_path(@post)
+.posted
+  == Posted #{@post.created_at.human_day('%B %e, %Y')}
+

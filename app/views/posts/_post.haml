@@ -1,0 +1,9 @@
+.model[@post]
+  = render :partial => 'post_common'
+  .content~ @post.render
+  - if @post.next || @post.prev
+    .nav
+      - if @post.prev
+        = link_to prev_link_text, post_path(@post.prev), :class => 'prev'
+      - if @post.next
+        = link_to next_link_text, post_path(@post.next), :class => 'next'

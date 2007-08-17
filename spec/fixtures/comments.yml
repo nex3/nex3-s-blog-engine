@@ -1,0 +1,72 @@
+one:
+  id: 1
+  user_id: 12
+  post_id: 4
+  content: Everybody... loves... comments!
+  created_at: 2007-04-02 00:00:02
+two:
+  id: 2
+  user_id: 2
+  post_id: 4
+  content: I... love... comments!
+  created_at: 2007-04-02 00:00:05
+three:
+  id: 3
+  user_id: 1
+  post_id: 4
+  content: HUBERT... HEART... COMMENTTH!
+  created_at: 2007-04-02 00:00:03
+four:
+  id: 4
+  user_id: 12
+  post_id: 1
+  content: First post!
+  created_at: 2007-04-02 00:00:00
+contentless:
+  id: 5
+  user_id: 12
+  post_id: 1
+  content: ""
+  created_at: 2007-04-02 00:00:00
+postless:
+  id: 6
+  user_id: 12
+  content: First post!
+  created_at: 2007-04-02 00:00:00
+userless:
+  id: 7
+  post_id: 2
+  content: First post!
+  created_at: 2007-04-02 00:00:00
+nameless:
+  id: 8
+  post_id: 3
+  user_id: 3
+  content: First post!
+  created_at: 2007-04-02 00:00:00
+redclothed:
+  id: 9
+  post_id: 3
+  user_id: 1
+  content: |+
+    Dude, *bold*. Also, footnote[1].
+
+    p{color: green}. Green?
+
+    <script>alert('XSS')</script>
+
+    fn1. Yes.
+  created_at: 2007-04-02 00:00:00
+adminny:
+  id: 10
+  post_id: 3
+  user_id: 4
+  content: |+
+    Dude, *bold*. Also, footnote[1].
+
+    p{color: green}. Green?
+
+    <script>alert('XSS')</script>
+
+    fn1. Yes.
+  created_at: 2007-04-02 00:00:00

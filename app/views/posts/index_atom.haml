@@ -1,0 +1,26 @@
+!!! XML
+%feed{:xmlns => "http://www.w3.org/2005/Atom"}
+  %title= feed[:title]
+  %id= feed[:url]
+  %updated= @posts[-1].created_at.xmlschema
+  %icon= image_path('favicon.png')
+  %author
+    %name= feed[:name]
+    %email= feed[:email]
+    %uri= feed[:url]
+  %link{:rel => 'self', :href => posts_url + '.atom'}/
+  %rights
+    All content available under a  Creative Commons Attribution-Share Alike 3.0 License
+    (http://creativecommons.org/licenses/by-sa/3.0/)
+  - for post in @posts
+    %entry
+      %id= post.uid
+      %title= h post.title
+      %updated= post.updated_at.xmlschema
+      %published= post.created_at.xmlschema
+      %author
+        %name= feed[:name]
+        %email= feed[:email]
+        %uri= feed[:url]
+      %summary{:type => 'html'}= post_content post
+      %link{:rel => 'alternate', :href => post_url(post)}/

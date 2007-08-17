@@ -1,0 +1,9 @@
+- if admin?
+  .sect.admin
+    - sidebar_admin_links
+.sect.links
+  - sidebar_links
+.sect.archives
+  %h2 Archives
+  - for month in Post.months_spanned
+    = link_to month.strftime('%B %Y'), :controller => 'posts', :action => 'dates', :year => month.year, :month => month.month
