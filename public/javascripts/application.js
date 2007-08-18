@@ -16,6 +16,7 @@ Element.addMethods({
 });
 
 function search(input) {
+    $("search_results").spin(1);
     new Ajax.Request("/posts.js", {
         method: "get",
         parameters: { query: input.getValue() }
