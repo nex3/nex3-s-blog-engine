@@ -6,6 +6,12 @@ class PostsController < ApplicationController
     before(:new)  { title 'New Post'                   }
     before(:edit) { title "Editing \"#{@post.title}\"" }
 
+    before :index do
+      if params[:query]
+        title "Search results for \"#{CGI::escapeHTML params[:query]}\""
+      end
+    end
+
     response_for :new do |format|
       format.html { render :action => 'edit' }
       format.js
