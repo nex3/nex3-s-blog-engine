@@ -7,3 +7,9 @@
   %h2 Archives
   - for month in Post.months_spanned
     = link_to month.strftime('%B %Y'), :controller => 'posts', :action => 'dates', :year => month.year, :month => month.month
+.sect.search
+  %h2 Search
+  - form_tag "/posts", :method => :get do
+    = submit_tag "Go", :class => 'button'
+    = text_field_tag "query"
+  %ul#search_results

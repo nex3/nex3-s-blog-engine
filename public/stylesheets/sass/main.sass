@@ -138,6 +138,7 @@ a img
   :width 70%
   :float left
 
+!sidebar_bg = #ffd
 #sidebar
   :float right
   :border
@@ -150,7 +151,7 @@ a img
     :top 2em
     :left 2.5em
   :margin-top -1.1em
-  :background-color #ffd
+  :background-color = !sidebar_bg
   a
     :text-decoration none
     &:hover
@@ -175,6 +176,29 @@ a img
     :display block
     img
       :margin-right 0.4em
+  .search
+    input
+      :width 65%
+      &.button
+        :width 20%
+        :float right
+        :margin-right 10%
+    ul
+      :list-style none
+      :padding-left 0
+      :margin-left -1em
+      a
+        :display block
+        :padding 0.2em
+          :left 1em
+        &:hover
+          :background-color = !sidebar_bg - #002
+      li
+        &.odd
+          :background-color = !sidebar_bg - #222
+          a:hover
+            :background-color = !sidebar_bg - #224
+
 
 #bottom
   :border-top

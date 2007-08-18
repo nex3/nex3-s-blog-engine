@@ -1,18 +1,31 @@
 Element.addMethods({
     spin: function(element) {
         var img = document.createElement('img');
-        img.src = "/images/spinner.gif";
+        if (arguments[1])
+            img.src = "/images/spinner" + arguments[1] + ".gif";
+        else
+            img.src = "/images/spinner.gif";
         img.alt = "Please Wait";
         Element.addClassName(img, "spinner");
 
-        $A(element.childNodes).each(function(child) {
-            Element.remove(child);
-        });
+        $A(element.childNodes).each(Element.remove);
         
         element.appendChild(img);
         element.show();
     }
 });
+
+function search(input) {
+    new Ajax.Request("/posts.js", {
+        method: "get",
+        parameters: { query: input.getValue() }
+    });
+}
+
+function setSearchListener() {
+    var input = $$(".search form input[type=text]")[0];
+    new Form.Element.EventObserver(input, search);
+}
 
 var isAction;
 
@@ -21,6 +34,8 @@ Event.observe(window, 'load', function() {
     isAction = function(controller, action) {
         return body.hasClassName(controller) && body.hasClassName(action);
     };
+
+    setSearchListener();
 
     if (isAction('users', 'edit')) {
         var checkbox = $('user_admin');

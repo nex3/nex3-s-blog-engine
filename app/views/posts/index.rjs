@@ -1,0 +1,3 @@
+page["search_results"].update(@posts.map do |post|
+  "<li class='#{cycle('even', 'odd')}'>#{link_to h(post.title), post_url(post)}</li>"
+end.join)
