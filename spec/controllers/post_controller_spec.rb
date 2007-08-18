@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PostsController do
+  before(:each) { controller.stubs(:params).returns({}) }
+
   it "should accept URLs with additional text" do
     controller.stubs(:params).returns(:id => "1-foo-bar-baz")
     Post.expects(:find).with(1)
@@ -14,6 +16,14 @@ describe PostsController do
 
   it "should order posts by creation time" do
     Post.expects(:find).with(anything, has_entry(:order, 'created_at DESC'))
+    controller.send(:current_objects)
+  end
+
+  it "should search for posts if a query is given" do
+    Post.expects(:find).with(:all, :order => 'created_at DESC',
+                             :conditions => ['content LIKE ? OR title LIKE ?',
+                                             "%term%", "%term%"])
+    controller.stubs(:params).returns(:query => "term")
     controller.send(:current_objects)
   end
 end

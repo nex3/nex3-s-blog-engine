@@ -63,8 +63,8 @@ class PostsController < ApplicationController
   end
 
   def current_objects
-    @current_objects ||=  if params[:keyword]
-      term = "%#{params[:keyword]}%"
+    @current_objects ||=  if params[:query]
+      term = "%#{params[:query]}%"
       Post.find(:all, :order => 'created_at DESC',
                 :conditions => ['content LIKE ? OR title LIKE ?', term, term])
     else
