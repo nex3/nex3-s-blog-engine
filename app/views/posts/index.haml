@@ -1,2 +1,4 @@
+- if params[:query]
+  %h1== Search results for "#{h params[:query]}"
 - for @post in @posts
   = render :partial => 'post_small'
