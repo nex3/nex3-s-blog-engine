@@ -25,7 +25,7 @@ function search(input) {
 
 function setSearchListener() {
     var input = $$(".search form input[type=text]")[0];
-    new Form.Element.EventObserver(input, search);
+    new Form.Element.Observer(input, 1, search);
 }
 
 var isAction;

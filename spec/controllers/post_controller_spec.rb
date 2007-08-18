@@ -107,6 +107,11 @@ describe PostsController, "#index" do
     get :index, :format => 'atom'
     response.headers['Content-Type'].should == 'application/atom+xml; charset=utf-8'
   end
+
+  it "should set the title for index with a query" do
+    controller.expects(:title).with("Search results for \"foobar\"")
+    get :index, :query => 'foobar'
+  end
 end
 
 describe PostsController, "#show" do
