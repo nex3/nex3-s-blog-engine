@@ -3,4 +3,5 @@
   = f.text_area :content
   = preview_button new_post_path, 'preview'
   = submit_tag 'Save Changes', :class => 'button'
-#preview.content{:style => 'display: none'}
+#preview.content{:style => @post.content? ? '' : 'display: none'}
+  = @post.render
