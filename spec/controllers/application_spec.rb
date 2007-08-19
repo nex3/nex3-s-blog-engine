@@ -183,6 +183,7 @@ describe ApplicationController, "#current_user" do
     controller.stubs(:current_user=)
     controller.stubs(:session).returns({})
     controller.stubs(:cookies).returns({})
+    controller.stubs(:params).returns({})
   end
 
   it "should return the current user" do
@@ -216,6 +217,23 @@ describe ApplicationController, "#current_user" do
   it "should return @current_user if it's set" do
     controller.instance_variable_set('@current_user', 42)
     controller.current_user.should == 42
+  end
+
+  it "should try to log in the user given by params[:admin][:name and :pass] if they exist" do
+    controller.stubs(:params).returns(:admin => {:name => "Foob", :pass => "Barf"})
+    User.expects(:login).with("Foob", "Barf").returns(:user)
+    controller.current_user.should == :user
+  end
+
+  it "should raise an error if params[:admin][:name] is given but params[:admin_pass] isn't" do
+    controller.stubs(:params).returns(:admin => {:name => "Foob"})
+    lambda { controller.current_user }.should raise_error
+  end
+
+  it "should raise an error if params[:admin_name] and params[:admin_pass] are invalid" do 
+    controller.stubs(:params).returns(:admin => {:name => "Foob", :pass => "Barf"})
+    User.stubs(:login).returns(nil)
+    lambda { controller.current_user }.should raise_error
   end
 end
 

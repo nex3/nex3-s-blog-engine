@@ -59,6 +59,14 @@ class ApplicationController < ActionController::Base
                         self.current_user = User.find(session[:user_id])
                       elsif cookies[:user_id]
                         self.current_user = User.find(cookies[:user_id])
+                      elsif params[:admin]
+                        if params[:admin][:name] && params[:admin][:pass] &&
+                            user = User.login(params[:admin][:name], params[:admin][:pass])
+                          user
+                        else
+                          params[:admin][:pass] = nil
+                          raise "Invalid username or password."
+                        end
                       else
                         User.anon
                       end
