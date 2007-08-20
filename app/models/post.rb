@@ -17,7 +17,12 @@ class Post < ActiveRecord::Base
   end
 
   def comment_count
-    @comment_count ||= self.class.count_by_sql ['SELECT COUNT(*) FROM comments c WHERE c.post_id = ?', id]
+    @comment_count ||=
+      if self.comments.loaded?
+        self.comments.length
+      else
+        self.class.count_by_sql ['SELECT COUNT(*) FROM comments c WHERE c.post_id = ?', id]
+      end
   end
 
   def paragraphs
@@ -41,11 +46,11 @@ class Post < ActiveRecord::Base
   end
 
   def self.oldest
-    self.find(:first, :order => 'created_at')
+    self.find(:first, :select => 'created_at, id', :order => 'created_at')
   end
 
   def self.newest
-    self.find(:first, :order => 'created_at DESC')
+    self.find(:first, :select => 'created_at, id', :order => 'created_at DESC')
   end
 
   def self.after(date)

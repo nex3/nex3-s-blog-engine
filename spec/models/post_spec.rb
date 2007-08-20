@@ -6,6 +6,11 @@ describe Post, ".oldest" do
   it "should return the oldest post" do
     Post.oldest.should == posts(:oldest)
   end
+
+  it "should only select created_at and id" do
+    Post.expects(:find).with(anything, has_entry(:select, 'created_at, id'))
+    Post.oldest
+  end
 end
 
 describe Post, ".newest" do
@@ -13,6 +18,11 @@ describe Post, ".newest" do
 
   it "should return the newest post" do
     Post.newest.should == posts(:newest)
+  end
+
+  it "should only select created_at and id" do
+    Post.expects(:find).with(anything, has_entry(:select, 'created_at, id'))
+    Post.newest
   end
 end
 
@@ -137,6 +147,24 @@ describe Post, "with three comments" do
   it "should only calculate comment_count once" do
     Post.expects(:count_by_sql).returns(3).once
     5.times { posts(:commented).comment_count }
+  end
+end
+
+describe Post, "with three already-loaded comments" do
+  fixtures :posts
+
+  before :each do
+    @post = posts(:commented)
+    @post.comments(true)
+  end
+
+  it "should have a comment_count of 3" do
+    @post.comment_count.should == 3
+  end
+
+  it "shouldn't make an SQL call to determine comment_count" do
+    Post.expects(:count_by_sql).never
+    @post.comment_count
   end
 end
 

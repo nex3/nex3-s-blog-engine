@@ -15,12 +15,17 @@ describe PostsController do
   end
 
   it "should order posts by creation time" do
-    Post.expects(:find).with(anything, has_entry(:order, 'created_at DESC'))
+    Post.expects(:find).with(anything, has_entry(:order, 'posts.created_at DESC'))
+    controller.send(:current_objects)
+  end
+
+  it "should load comments for the posts" do
+    Post.expects(:find).with(anything, has_entry(:include, :comments))
     controller.send(:current_objects)
   end
 
   it "should search for posts if a query is given" do
-    Post.expects(:find).with(:all, :order => 'created_at DESC',
+    Post.expects(:find).with(:all, :order => 'posts.created_at DESC', :include => :comments,
                              :conditions => ['content LIKE ? OR title LIKE ?',
                                              "%term%", "%term%"])
     controller.stubs(:params).returns(:query => "term")

@@ -70,12 +70,14 @@ class PostsController < ApplicationController
   end
 
   def current_objects
-    @current_objects ||= if params[:query]
+    @current_objects ||=
+      if params[:query]
         term = "%#{params[:query]}%"
-        Post.find(:all, :order => 'created_at DESC',
+        Post.find(:all, :order => 'posts.created_at DESC', :include => :comments,
                   :conditions => ['content LIKE ? OR title LIKE ?', term, term])
       else
-        Post.find(:all, :order => 'created_at DESC', :limit => 6)
+        Post.find(:all, :order => 'posts.created_at DESC',
+                  :limit => 6, :include => :comments)
       end
   end
 end
