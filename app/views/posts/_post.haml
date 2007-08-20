@@ -1,8 +1,11 @@
 .model[@post]
   = render :partial => 'post_common'
   .content~ @post.render
-  - if @post.next || @post.prev
+  - if @post.prev || @post.next
     .nav
+      -# If either @post.prev or @post.next don't exist,
+      -# they will be loaded twice,
+      -# but since there's no data it doesn't matter.
       - if @post.prev
         = link_to prev_link_text, post_path(@post.prev), :class => 'prev'
       - if @post.next

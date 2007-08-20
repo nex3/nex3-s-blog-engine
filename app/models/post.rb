@@ -30,11 +30,11 @@ class Post < ActiveRecord::Base
   end
 
   def next
-    next_or_prev('>', '')
+    @next ||= next_or_prev('>', '')
   end
 
   def prev
-    next_or_prev('<', 'DESC')
+    @prev ||= next_or_prev('<', 'DESC')
   end
 
   def uid
@@ -87,7 +87,8 @@ class Post < ActiveRecord::Base
   private
 
   def next_or_prev(op, order)
-    Post.find(:first, :conditions => ["created_at #{op} ?", created_at], :order => "created_at #{order}")
+    Post.find(:first, :conditions => ["created_at #{op} ?", created_at],
+              :select => 'title, id, created_at', :order => "created_at #{order}")
   end
 
   def render_string(to_render)

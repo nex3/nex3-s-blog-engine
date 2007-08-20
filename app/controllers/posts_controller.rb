@@ -66,7 +66,8 @@ class PostsController < ApplicationController
   end
 
   def current_object
-    @current_object ||= Post.find(params[:id].scan(/^(\d+)/)[0][0].to_i)
+    @current_object ||= Post.find(params[:id].scan(/^(\d+)/)[0][0].to_i,
+                                  :include => :comments)
   end
 
   def current_objects

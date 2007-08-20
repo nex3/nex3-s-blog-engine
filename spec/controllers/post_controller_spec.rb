@@ -5,7 +5,7 @@ describe PostsController do
 
   it "should accept URLs with additional text" do
     controller.stubs(:params).returns(:id => "1-foo-bar-baz")
-    Post.expects(:find).with(1)
+    Post.expects(:find).with(1, anything)
     controller.send(:current_object)
   end
 
