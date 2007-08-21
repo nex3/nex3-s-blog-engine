@@ -1,5 +1,5 @@
 = render :partial => 'post'
 #comments
-  - for @comment in @post.comments
+  - for @comment in @post.comments_with_users
     = render :partial => 'comment'
   = render :partial => 'new_comment'

@@ -148,6 +148,14 @@ describe Post, "with three comments" do
     Post.expects(:count_by_sql).returns(3).once
     5.times { posts(:commented).comment_count }
   end
+
+  it "should load the comments' users if comments_with_users is called" do
+    post = posts(:commented)
+    comments = stub
+    post.stubs(:comments).returns(comments)
+    comments.expects(:find).with(:all, :include => :user)
+    post.comments_with_users
+  end
 end
 
 describe Post, "with three already-loaded comments" do

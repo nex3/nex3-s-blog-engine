@@ -25,6 +25,10 @@ class Post < ActiveRecord::Base
       end
   end
 
+  def comments_with_users
+    @comments ||= comments.find(:all, :include => :user)
+  end
+
   def paragraphs
     @paragraphs ||= content.split(/\r?\n\r?\n/)
   end
