@@ -74,7 +74,7 @@ class PostsController < ApplicationController
       if params[:query]
         term = "%#{params[:query]}%"
         Post.find(:all, :order => 'posts.created_at DESC', :include => :comments,
-                  :conditions => ['content LIKE ? OR title LIKE ?', term, term])
+                  :conditions => ['posts.content LIKE ? OR posts.title LIKE ?', term, term])
       else
         Post.find(:all, :order => 'posts.created_at DESC',
                   :limit => 6, :include => :comments)
