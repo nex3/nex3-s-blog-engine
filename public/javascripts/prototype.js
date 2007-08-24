@@ -815,6 +815,9 @@ Ajax.Base.prototype = {
     this.options.method = this.options.method.toLowerCase();
     if (typeof this.options.parameters == 'string')
       this.options.parameters = this.options.parameters.toQueryParams();
+
+    if (options && options['method'])
+      this.options.parameters['_method'] = undefined;
   }
 }
 
