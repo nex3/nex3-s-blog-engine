@@ -26,7 +26,7 @@ describe PostsController do
 
   it "should search for posts if a query is given" do
     Post.expects(:find).with(:all, :order => 'posts.created_at DESC', :include => :comments,
-                             :conditions => ['content LIKE ? OR title LIKE ?',
+                             :conditions => ['posts.content LIKE ? OR posts.title LIKE ?',
                                              "%term%", "%term%"])
     controller.stubs(:params).returns(:query => "term")
     controller.send(:current_objects)
@@ -188,7 +188,7 @@ describe PostsController, "#update" do
   include ResourcefulController
   include ApplicationSpecHelpers
   before(:each) { stub_update }
-  
+
   it "should redirect to signin for a non-admin" do
     put :update, :id => 1
     response.should redirect_to('/signin')
@@ -206,7 +206,7 @@ describe PostsController, "#create" do
   include ResourcefulController
   include ApplicationSpecHelpers
   before(:each) { stub_create }
-  
+
   it "should redirect to signin for a non-admin" do
     post :create
     response.should redirect_to('/signin')
@@ -224,7 +224,7 @@ describe PostsController, "#destroy" do
   include ResourcefulController
   include ApplicationSpecHelpers
   before(:each) { stub_destroy }
-  
+
   it "should redirect to signin for a non-admin" do
     delete :destroy, :format => 'html', :id => 42
     response.should redirect_to('/signin')
@@ -239,7 +239,7 @@ end
 
 describe PostsController, "#dates" do
   include ResourcefulController
-  
+
   before :each do
     @after = stub
     Post.stubs(:after).returns(@after)
