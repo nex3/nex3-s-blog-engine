@@ -21,6 +21,10 @@ class Comment < ActiveRecord::Base
     end.gsub(/id="[^"]*fn[^"]*"/) {|s| s + ' class="footnote"'}
   end
 
+  def uid
+    "nex3.leeweiz.net,#{created_at.strftime('%Y-%m-%d')}:comments/#{id}"
+  end
+
   def user_with_anon
     user_without_anon || User.anon
   end

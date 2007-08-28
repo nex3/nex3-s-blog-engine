@@ -26,7 +26,22 @@ class CommentsController < ApplicationController
 
   before_filter :require_proper_user, :only => [:update, :edit, :destroy]
 
+  def show
+    redirect_to "#{post_path(Post.find(params[:post_id]))}#comment_#{params[:id]}"
+  end
+
   def index
-    redirect_to post_url(Post.find(params[:post_id])) + '#comments'
+    respond_to do |format|
+      format.html { redirect_to post_path(Post.find(params[:post_id])) + '#comments' }
+      format.atom do
+        load_objects
+        headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
+        render :action => 'index', :layout => false
+      end
+    end
+  end
+
+  def current_objects
+    @post.comments.find(:all, :order => 'created_at DESC')
   end
 end

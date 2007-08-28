@@ -7,13 +7,11 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users
 
-  map.connect "posts/new.:format", :controller => 'posts', :action => 'new',
-    :conditions => {:method => :post}
-  map.dates "posts/dates/:year/:month", :controller => 'posts', :action => 'dates',
-    :conditions => {:method => :get}, :defaults => {:month => nil, :year => nil}
+  map.connect 'posts.rss', :controller => 'posts', :action => 'index', :format => 'atom'
+  map.connect "posts/new.:format", :controller => 'posts', :action => 'new', :conditions => {:method => :post}
+  map.dates "posts/dates/:year/:month", :controller => 'posts', :action => 'dates', :conditions => {:method => :get}, :defaults => {:month => nil, :year => nil}
   map.resources :posts do |p|
-    p.connect "posts/:post_id/comments/new.:format", :controller => 'comments',
-      :action => 'new', :conditions => {:method => :post}
+    p.connect "posts/:post_id/comments/new.:format", :controller => 'comments', :action => 'new', :conditions => {:method => :post}
     p.resources :comments
   end
 

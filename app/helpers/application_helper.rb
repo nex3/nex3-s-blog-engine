@@ -74,8 +74,7 @@ module ApplicationHelper
   def sidebar_links
     [
      ['About Me', 'user', {:controller => 'static', :action => 'show', :page => 'about'}],
-     ['Atom Feed', 'feed', posts_path + '.atom'],
-     ['RSS Feed', 'rss', posts_path + '.rss']
+     ['Feed', 'feed', posts_path + '.atom'],
     ].each(&method(:sidebar_link))
   end
 

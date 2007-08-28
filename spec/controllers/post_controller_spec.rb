@@ -93,16 +93,6 @@ describe PostsController, "#index" do
     response.should render_template("index")
   end
 
-  it "should render the rss template on an rss request" do
-    get :index, :format => 'rss'
-    response.should render_template("index_rss")
-  end
-
-  it "should render the rss template with the proper content-type" do
-    get :index, :format => 'rss'
-    response.headers['Content-Type'].should == 'application/rss+xml; charset=utf-8'
-  end
-
   it "should render the atom template on an atom request" do
     get :index, :format => 'atom'
     response.should render_template("index_atom")

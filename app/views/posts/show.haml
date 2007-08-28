@@ -1,5 +1,11 @@
+- content_for :head do
+  = auto_discovery_link_tag :atom, comments_url(@post) + '.atom', :title => 'Comments : Nex3'
 = render :partial => 'post'
 #comments
   - for @comment in @post.comments_with_users
     = render :partial => 'comment'
+  .comment_feed
+    %a{:href => comments_url(@post) + '.atom'}
+      Comment Feed
+      = silk_tag 'feed', :alt => ''
   = render :partial => 'new_comment'

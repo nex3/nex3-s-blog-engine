@@ -1,0 +1,18 @@
+!!! XML
+%feed{:xmlns => "http://www.w3.org/2005/Atom"}
+  %title== #{h @post.title} : Comments : Nex3
+  %id= comments_url(@post)
+  %updated= (@comments[-1] || @post).created_at.xmlschema
+  %icon= image_path('favicon.png')
+  %link{:rel => 'self', :href => comments_url(@post) + '.atom'}/
+  - for comment in current_objects
+    %entry
+      %id= comment.uid
+      %title= h truncate(comment.content, 50)
+      %updated= comment.updated_at.xmlschema
+      %published= comment.created_at.xmlschema
+      %author
+        %name= h comment.user.name
+        %uri= h comment.user.href
+      %summary{:type => 'html'}= h comment.render
+      %link{:rel => 'alternate', :href => comment_url(@post, comment)}/

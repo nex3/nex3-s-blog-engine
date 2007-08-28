@@ -20,11 +20,6 @@ class PostsController < ApplicationController
     response_for :index do |format|
       format.html
       format.js { render :template => 'posts/index.rjs' }
-      format.rss do
-        headers['Content-Type'] = 'application/rss+xml; charset=utf-8'
-        render :action => 'index_rss', :layout => false
-      end
-
       format.atom do
         headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
         render :action => 'index_atom', :layout => false
