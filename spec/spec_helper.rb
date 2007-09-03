@@ -9,9 +9,6 @@ Spec::Runner.configure do |config|
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures'
   config.mock_with :mocha
-  config.before(:each, :behaviour_type => :controller) do
-    raise_controller_errors
-  end
 
   # You can declare fixtures for each behaviour like this:
   #   describe "...." do
