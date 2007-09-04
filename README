@@ -61,7 +61,7 @@ You'll live.
 
 So, first of all, get all the gems you need.
 If I'm remembering everything,
-this just means redcloth and rcov at the moment.
+this means redcloth, rcov, and coderay at the moment.
 Everything else comes in plugins.
 
 Next up, set up config/database.yml.
