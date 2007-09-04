@@ -26,7 +26,7 @@ module CodeCloth
 
     text.replace("\t<pre class='CodeRay #{@scanner.plugin_id}'><code>#{
       @scanner.new(rest.gsub(/^#{'\s' * rest.index(/[^\s]/)}/, '')).tokenize.html
-    }</pre></code>")
+    }</code></pre>")
   end
 
   SYNTAXLESS_CODE_RE = /<pre><code>(.*?)<\/code><\/pre>/m
