@@ -55,4 +55,10 @@ class Comment < ActiveRecord::Base
       user.errors.each { |name, message| errors.add(name, message) }
     end
   end
+
+  def validate_on_create
+    if spam?
+      errors.add("content", "determined to be spam. If it's actually not, feel free to email me about it and I'll put it up as soon as I can.")
+    end
+  end
 end
