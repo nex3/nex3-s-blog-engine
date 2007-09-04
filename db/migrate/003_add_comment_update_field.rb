@@ -4,6 +4,6 @@ class AddCommentUpdateField < ActiveRecord::Migration
   end
 
   def self.down
-    drop_column :comments, :updated_at
+    remove_column :comments, :updated_at
   end
 end
