@@ -1,182 +1,111 @@
-== Welcome to Rails
+= Nex3 Blogging Engine
 
-Rails is a web-application and persistence framework that includes everything
-needed to create database-backed web-applications according to the
-Model-View-Control pattern of separation. This pattern splits the view (also
-called the presentation) into "dumb" templates that are primarily responsible
-for inserting pre-built data in between HTML tags. The model contains the
-"smart" domain objects (such as Account, Product, Person, Post) that holds all
-the business logic and knows how to persist themselves to a database. The
-controller handles the incoming requests (such as Save New Account, Update
-Product, Show Post) by manipulating the model and directing data to the view.
+Yes, I named it after my own online alias.
+I didn't anticipate that other people would want to use it.
+In fact, as far as I know, only one other person _does_ want to use it.
+If I'm wrong and you're not that person (you'll know if you are),
+shoot me an email at nex342@gmail.com.
+I'm always interested to know if people are using my stuff.
 
-In Rails, the model is handled by what's called an object-relational mapping
-layer entitled Active Record. This layer allows you to present the data from
-database rows as objects and embellish these data objects with business logic
-methods. You can read more about Active Record in
-link:files/vendor/rails/activerecord/README.html.
+Assuming that only a few people are using this, though,
+I'm not going to be very keen on making UI improvements
+for nitty-gritty administrative stuff.
+I mean, I want to streamline posting and such,
+but getting it set up will require mucking around in script/console.
+If you want to change the behavior, hack the source.
+That sort of thing.
 
-The controller and view are handled by the Action Pack, which handles both
-layers by its two parts: Action View and Action Controller. These two layers
-are bundled in a single package due to their heavy interdependence. This is
-unlike the relationship between the Active Record and Action Pack that is much
-more separate. Each of these packages can be used independently outside of
-Rails.  You can read more about Action Pack in
-link:files/vendor/rails/actionpack/README.html.
+So what's cool about Nex3? Hell if I know.
+I pretty much made it for fun.
+I haven't used other blogging frameworks,
+but to the best of my knowledge this doesn't have any features they don't.
+I guess you could call it minimalistic,
+but I'm not really going out of my way to keep it simple.
+I pretty much just add features as I want them.
 
+At the moment I'm writing this, Nex3 comes with a few reasonably useful features.
+For those curious for a brief rundown, I'll list them here,
+although I don't by any means guarantee that this list will be kept up-to-date.
 
-== Getting started
+* You can post posts, or articles, or whatever you want to call them.
+  Shoving stuff up on the front page in an orderly manner.
+  This is a pretty important one for a blog.
 
-1. At the command prompt, start a new rails application using the rails command
-   and your application name. Ex: rails myapp
-   (If you've downloaded rails in a complete tgz or zip, this step is already done)
-2. Change directory into myapp and start the web server: <tt>script/server</tt> (run with --help for options)
-3. Go to http://localhost:3000/ and get "Welcome aboard: You’re riding the Rails!"
-4. Follow the guidelines to start developing your application
+* Other people (and you) can comment on your shoved stuff.
+  Start up a conversation of sorts.
+  Not as important, I guess, but still lots of fun.
 
+* You and your commenty buddies can preview your text.
+  Definitely useful if you use the built-in textile formatting for your text.
+  It's nice that it's human-readable and stuff,
+  but you can never really tell how the parser'll do on those edge cases.
 
-== Web Servers
+* Folks can get updated when you post something.
+  Well, it's Atom-based, so really they can update themselves.
+  But it all looks the same to the user.
 
-By default, Rails will try to use Mongrel and lighttpd if they are installed, otherwise
-Rails will use the WEBrick, the webserver that ships with Ruby. When you run script/server,
-Rails will check if Mongrel exists, then lighttpd and finally fall back to WEBrick. This ensures
-that you can always get up and running quickly.
+* There's this sleek-looking live search.
+  All AJAXy and stuff. Or non-AJAXy if you don't have Javascript.
+  Anyway, you can look through your posts for stuff.
 
-Mongrel is a Ruby-based webserver with a C-component (which requires compilation) that is
-suitable for development and deployment of Rails applications. If you have Ruby Gems installed,
-getting up and running with mongrel is as easy as: <tt>gem install mongrel</tt>.
-More info at: http://mongrel.rubyforge.org
+* You can use Akismet to beat off the spam.
+  This is a new one. I don't really know how well it works yet,
+  but Akismet's supposed to be good.
+  We'll see.
 
-If Mongrel is not installed, Rails will look for lighttpd. It's considerably faster than
-Mongrel and WEBrick and also suited for production use, but requires additional
-installation and currently only works well on OS X/Unix (Windows users are encouraged
-to start with Mongrel). We recommend version 1.4.11 and higher. You can download it from
-http://www.lighttpd.net.
+== Setting Up
 
-And finally, if neither Mongrel or lighttpd are installed, Rails will use the built-in Ruby
-web server, WEBrick. WEBrick is a small Ruby web server suitable for development, but not
-for production.
+Yeah, it's a bit of a pain to set up.
+But hey, it's O(1).
+You'll live.
 
-But of course its also possible to run Rails on any platform that supports FCGI.
-Apache, LiteSpeed, IIS are just a few. For more information on FCGI,
-please visit: http://wiki.rubyonrails.com/rails/pages/FastCGI
+So, first of all, get all the gems you need.
+If I'm remembering everything,
+this just means redcloth and rcov at the moment.
+Everything else comes in plugins.
 
+Next up, set up config/database.yml.
+This should be pretty straightforward.
+Make the databases, set the right socket location, etc.
 
-== Debugging Rails
+Then run +rake db:migrate+.
+Get all those tables set up.
 
-Have "tail -f" commands running on the server.log and development.log. Rails will
-automatically display debugging and runtime information to these files. Debugging
-info will also be shown in the browser on requests from 127.0.0.1.
+You might want to run the specs.
+I encourage it.
+Just do +rake rspec+.
+Everything should pass, or maybe be marked as "pending."
+If something fails, let me know.
 
+Finally, you need to set up the admin user.
+There's no way to do this with a GUI,
+so fire up script/console.
+Enter the following,
+with the appropriate replacements:
 
-== Breakpoints
+  u = User.new
+  u.name = <username>
+  u.password = <password>
+  u.password_confirm = <password>
+  u.admin = true
 
-Breakpoint support is available through the script/breakpointer client. This
-means that you can break out of execution at any point in the code, investigate
-and change the model, AND then resume execution! Example:
+After this, the site should be up and running.
+On my layout, which I suppose will be the default,
+you can sign in by clicking that character in the upper right-hand corner.
 
-  class WeblogController < ActionController::Base
-    def index
-      @posts = Post.find(:all)
-      breakpoint "Breaking out from the list"
-    end
-  end
+Once you sign in, you'll notice a few more links on the sidebar.
+These allow you to do fun administrative stuff,
+like create new posts and muck with users and log out.
 
-So the controller will accept the action, run the first line, then present you
-with a IRB prompt in the breakpointer window. Here you can do things like:
+At this point, you might want to click the users icon
+and give yourself a link and an email.
 
-Executing breakpoint "Breaking out from the list" at .../webrick_server.rb:16 in 'breakpoint'
+Once that's all working, change the layout.
+I love you, but I worked hard on that layout,
+and I don't really want other folks using it.
+It ticks me off whenever I see two people using the same layout.
+Use the creativity your favorite deity or force of nature gave you.
 
-  >> @posts.inspect
-  => "[#<Post:0x14a6be8 @attributes={\"title\"=>nil, \"body\"=>nil, \"id\"=>\"1\"}>,
-       #<Post:0x14a6620 @attributes={\"title\"=>\"Rails you know!\", \"body\"=>\"Only ten..\", \"id\"=>\"2\"}>]"
-  >> @posts.first.title = "hello from a breakpoint"
-  => "hello from a breakpoint"
-
-...and even better is that you can examine how your runtime objects actually work:
-
-  >> f = @posts.first
-  => #<Post:0x13630c4 @attributes={"title"=>nil, "body"=>nil, "id"=>"1"}>
-  >> f.
-  Display all 152 possibilities? (y or n)
-
-Finally, when you're ready to resume execution, you press CTRL-D
-
-
-== Console
-
-You can interact with the domain model by starting the console through <tt>script/console</tt>.
-Here you'll have all parts of the application configured, just like it is when the
-application is running. You can inspect domain models, change values, and save to the
-database. Starting the script without arguments will launch it in the development environment.
-Passing an argument will specify a different environment, like <tt>script/console production</tt>.
-
-To reload your controllers and models after launching the console run <tt>reload!</tt>
-
-To reload your controllers and models after launching the console run <tt>reload!</tt>
-
-
-
-== Description of contents
-
-app
-  Holds all the code that's specific to this particular application.
-
-app/controllers
-  Holds controllers that should be named like weblogs_controller.rb for
-  automated URL mapping. All controllers should descend from ApplicationController
-  which itself descends from ActionController::Base.
-
-app/models
-  Holds models that should be named like post.rb.
-  Most models will descend from ActiveRecord::Base.
-
-app/views
-  Holds the template files for the view that should be named like
-  weblogs/index.rhtml for the WeblogsController#index action. All views use eRuby
-  syntax.
-
-app/views/layouts
-  Holds the template files for layouts to be used with views. This models the common
-  header/footer method of wrapping views. In your views, define a layout using the
-  <tt>layout :default</tt> and create a file named default.rhtml. Inside default.rhtml,
-  call <% yield %> to render the view using this layout.
-
-app/helpers
-  Holds view helpers that should be named like weblogs_helper.rb. These are generated
-  for you automatically when using script/generate for controllers. Helpers can be used to
-  wrap functionality for your views into methods.
-
-config
-  Configuration files for the Rails environment, the routing map, the database, and other dependencies.
-
-components
-  Self-contained mini-applications that can bundle together controllers, models, and views.
-
-db
-  Contains the database schema in schema.rb.  db/migrate contains all
-  the sequence of Migrations for your schema.
-
-doc
-  This directory is where your application documentation will be stored when generated
-  using <tt>rake doc:app</tt>
-
-lib
-  Application specific libraries. Basically, any kind of custom code that doesn't
-  belong under controllers, models, or helpers. This directory is in the load path.
-
-public
-  The directory available for the web server. Contains subdirectories for images, stylesheets,
-  and javascripts. Also contains the dispatchers and the default HTML files. This should be
-  set as the DOCUMENT_ROOT of your web server.
-
-script
-  Helper scripts for automation and generation.
-
-test
-  Unit and functional tests along with fixtures. When using the script/generate scripts, template
-  test files will be generated for you and placed in this directory.
-
-vendor
-  External libraries that the application depends on. Also includes the plugins subdirectory.
-  This directory is in the load path.
+Once that's all done, start posting.
+If you're feeling particularly generous, link back to me.
+If not, well, at least enjoy the engine.
