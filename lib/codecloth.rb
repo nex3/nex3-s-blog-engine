@@ -4,6 +4,8 @@ require 'coderay'
 
 module CodeCloth
   def self.included(other)
+    other::BASIC_TAGS['span'] = ['class']
+    other::BASIC_TAGS['pre'] = ['class']
     other::DEFAULT_RULES.insert 0, :block_syntax_set
     other.send :alias_method, :blocks_without_syntax, :blocks
     other.send :alias_method, :blocks, :blocks_with_syntax
