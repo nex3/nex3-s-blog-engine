@@ -30,7 +30,25 @@ class Comment < ActiveRecord::Base
   end
   alias_method_chain :user, :anon
 
+  def spam?
+    @spam ||= AkismetInstance.commentCheck(*akismet_info)
+  end
+
+  def spam!
+    @spam = true
+    AkismetInstance.submitSpam(*akismet_info)
+  end
+
+  def ham!
+    @spam = false
+    AkismetInstance.submitHam(*akismet_info)
+  end
+
   private
+
+  def akismet_info
+    [user.ip, user.agent, user.referrer, '', 'comment', user.name, user.email, user.link, content, {}]
+  end
 
   def validate
     if user_without_anon && !user.save

@@ -17,3 +17,12 @@ class ActionController::AbstractRequest
     old_method
   end
 end
+
+# Load up global Akismet instance.
+# Config should be put in config/akismet.yml,
+# of the form:
+#
+#   blog: ...
+#   apikey: ...
+conf = YAML.load(File.read(File.join(RAILS_ROOT, "config", "akismet.yml")))
+AkismetInstance = Akismet.new(conf["apikey"], conf["blog"])

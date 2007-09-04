@@ -46,6 +46,19 @@ class ApplicationController < ActionController::Base
   # Login Management
   # ====
 
+  def params_with_ip_and_agent
+    ps = params_without_ip_and_agent
+    
+    if ps[:user] 
+      ps[:user][:ip]       = request.remote_ip              if ps[:user][:ip].nil?
+      ps[:user][:agent]    = request.env['HTTP_USER_AGENT'] if ps[:user][:agent].nil?
+      ps[:user][:referrer] = request.env['HTTP_REFERRER']   if ps[:user][:referrer].nil?
+    end
+
+    ps
+  end
+  alias_method_chain :params, :ip_and_agent
+
   def current_user=(user)
     session[:user_id] = user.id
 

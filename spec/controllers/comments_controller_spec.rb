@@ -42,7 +42,7 @@ describe CommentsController, "#create" do
   end
 
   it "should construct a new User instance" do
-    User.expects(:new).with(@params[:user]).returns(@user)
+    User.expects(:new).with(all_of(*@params[:user].map(&method(:has_entry)))).returns(@user)
     post :create, @params
   end
 

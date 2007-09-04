@@ -128,6 +128,44 @@ describe ApplicationController, "#post_url" do
   end
 end
 
+describe ApplicationController, "#params" do
+  include ApplicationSpecHelpers
+
+  before :each do
+    publicize_helpers
+
+    @params = {}
+    controller.stubs(:params_without_ip_and_agent).returns(@params)
+
+    @request = stub
+    controller.stubs(:request).returns(@request)
+    @request.stubs(:remote_ip).returns("127.0.0.1")
+    @request.stubs(:env).returns({'HTTP_USER_AGENT' => 'Foobar', 'HTTP_REFERRER' => 'http://www.google.com'})
+  end
+
+  it "should set the user's ip" do
+    @params[:user] = {}
+    controller.params[:user].should be_a_kind_of(Hash)
+    controller.params[:user][:ip].should == "127.0.0.1"
+  end
+
+  it "should set the user's agent" do
+    @params[:user] = {}
+    controller.params[:user].should be_a_kind_of(Hash)
+    controller.params[:user][:agent].should == "Foobar"
+  end
+
+  it "should set the user's referrer" do
+    @params[:user] = {}
+    controller.params[:user].should be_a_kind_of(Hash)
+    controller.params[:user][:referrer].should == 'http://www.google.com'
+  end
+
+  it "shouldn't set anything if user isn't set" do
+    controller.params[:user].should be_nil
+  end
+end
+
 describe ApplicationController, "#current_user=" do
   include ApplicationSpecHelpers
 
