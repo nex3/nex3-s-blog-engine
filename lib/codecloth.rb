@@ -74,7 +74,7 @@ module CodeCloth
   end
 
   def unescape_pre(text)
-    text.gsub(/<(codeclothpre)>(.*?)<\/\1>/) do
+    text.gsub(/<(codeclothpre)>(.*?)<\/\1>/m) do
       "<pre>#{$2.gsub('&amp;', '&')}</pre>"
     end
   end
