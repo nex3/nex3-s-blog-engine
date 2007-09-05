@@ -50,7 +50,7 @@ module CodeCloth
 
   private
 
-  SYNTAXLESS_CODE_RE = /<pre><code>(.*?)<\/code><\/pre>/m
+  SYNTAXLESS_CODE_RE = /<pre>(?:<code>)?(.*?)(?:<\/code>)?<\/pre>/m
 
   def syntaxify(text, scanner)
     text.gsub!(SYNTAXLESS_CODE_RE) do
