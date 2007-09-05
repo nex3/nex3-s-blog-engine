@@ -22,5 +22,5 @@
         %name= feed[:name]
         %email= feed[:email]
         %uri= feed[:url]
-      %summary{:type => 'html'}~ post_content post
+      %summary{:type => 'html'}= post_content post
       %link{:rel => 'alternate', :href => post_url(post)}/

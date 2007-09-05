@@ -21,8 +21,8 @@ module PostsHelper
   end
 
   def post_content(post)
-    h absolute_anchors(post.render.gsub(/<img src=("|')\//,
-                                        "<img src=\\1#{feed[:url]}/"),
+    h absolute_anchors(find_and_preserve(post.render).gsub(/<img src=("|')\//,
+                                                           "<img src=\\1#{feed[:url]}/"),
                        post_url(post))
   end
 

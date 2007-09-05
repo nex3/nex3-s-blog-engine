@@ -14,5 +14,5 @@
       %author
         %name= h comment.user.name
         %uri= h comment.user.href
-      %summary{:type => 'html'}~ h comment.render
+      %summary{:type => 'html'}= h find_and_preserve(comment.render)
       %link{:rel => 'alternate', :href => comment_url(@post, comment)}/
