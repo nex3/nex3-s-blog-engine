@@ -10,9 +10,10 @@ class Post < ActiveRecord::Base
 
   def render_small
     pgraphs = paragraphs[0...3]
-    if pgraphs[-1] && pgraphs[-1][0] == ?!
-      pgraphs = pgraphs[0...2]
-    end
+
+    pgraphs = paragraphs[0..4] if pgraphs.first[0] == ?$
+    pgraphs.slice! -1 if pgraphs[-1] && pgraphs[-1][0] == ?!
+
     render_string pgraphs.join("\r\n\r\n")
   end
 

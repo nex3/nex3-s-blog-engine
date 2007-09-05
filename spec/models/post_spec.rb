@@ -244,6 +244,14 @@ describe Post, "ending with an image" do
   end
 end
 
+describe Post, "with global syntax highlighting" do
+  fixtures :posts
+
+  it "should render_small four paragraphs" do
+    posts(:syntaxey).render_small.should include("Skop.")
+  end
+end
+
 describe Post, "#slug" do
   before :each do
     @post = Post.new

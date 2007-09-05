@@ -3,12 +3,24 @@ require 'redcloth'
 require 'coderay'
 
 module CodeCloth
+  HTML_OPTIONS = { :wrap => :div }
+
   def self.included(other)
     other::BASIC_TAGS['span'] = ['class']
-    other::BASIC_TAGS['pre'] = ['class']
+    other::BASIC_TAGS['div'] = ['class']
+    other::BASIC_TAGS['codeclothpre'] = nil
     other::DEFAULT_RULES.insert 0, :block_syntax_set
-    other.send :alias_method, :blocks_without_syntax, :blocks
-    other.send :alias_method, :blocks, :blocks_with_syntax
+
+    other.send :alias_method, :to_html_without_syntax, :to_html
+    other.send :alias_method, :to_html, :to_html_with_syntax
+
+    other.send :alias_method, :initialize_without_scanner, :initialize
+    other.send :alias_method, :initialize, :initialize_with_scanner
+  end
+
+  def initialize_with_scanner(*whatever)
+    initialize_without_scanner(*whatever)
+    @scanner = CodeRay::Scanners['plain']
   end
 
   def block_syntax_set(text)
@@ -19,27 +31,40 @@ module CodeCloth
     syntax.strip!
     syntax.downcase!
 
-    @scanner = CodeRay::Scanners[syntax.empty? ? 'plain' : syntax]
+    scanner = CodeRay::Scanners[syntax.empty? ? 'plain' : syntax]
 
-    unless rest
+    if rest.nil?
+      @scanner = scanner
       text.replace('')
-      return true
+    else
+      #p text
+      text.replace rest.gsub(/^#{'\s' * rest.index(/[^\s]/)}/, '')
+      blocks text, true
+      syntaxify text, scanner
     end
-
-    text.replace("\t<pre class='CodeRay #{@scanner.plugin_id}'><code>#{
-      @scanner.new(rest.gsub(/^#{'\s' * rest.index(/[^\s]/)}/, '')).tokenize.html
-    }</code></pre>")
   end
+
+  def to_html_with_syntax(*whatever)
+    unescape_pre syntaxify(to_html_without_syntax(*whatever), @scanner)
+  end
+
+  private
 
   SYNTAXLESS_CODE_RE = /<pre><code>(.*?)<\/code><\/pre>/m
 
-  def blocks_with_syntax(*whatever)
-    res = blocks_without_syntax(*whatever)
-    return if res.nil? || @scanner.nil? || @scanner == CodeRay::Scanners['plain']
-
-    res.gsub!(SYNTAXLESS_CODE_RE) do
-      "\t<pre class='CodeRay #{@scanner.plugin_id}'><code>#{@scanner.new($1).tokenize.html}</code></pre>"
+  def syntaxify(text, scanner)
+    text.gsub!(SYNTAXLESS_CODE_RE) do
+      escape_pre scanner.new($1).tokenize.html(HTML_OPTIONS)
     end
+    text
+  end
+
+  def escape_pre(text)
+    text.gsub(/<(\/?)pre>/, '<\1codeclothpre>')
+  end
+
+  def unescape_pre(text)
+    text.gsub(/<(\/?)codeclothpre>/, '<\1pre>')
   end
 end
 
