@@ -41,6 +41,7 @@ module CodeCloth
       text.replace rest.gsub(/^#{'\s' * rest.index(/[^\s]/)}/, '')
       blocks text, true
       syntaxify text, scanner
+      text
     end
   end
 
@@ -73,7 +74,9 @@ module CodeCloth
   end
 
   def unescape_pre(text)
-    text.gsub(/<(\/?)codeclothpre>/, '<\1pre>')
+    text.gsub(/<(codeclothpre)>(.*?)<\/\1>/) do
+      "<pre>#{$2.gsub('&amp;', '&')}</pre>"
+    end
   end
 end
 
