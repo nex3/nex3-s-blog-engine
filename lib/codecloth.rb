@@ -9,6 +9,7 @@ module CodeCloth
     other::BASIC_TAGS['span'] = ['class']
     other::BASIC_TAGS['div'] = ['class']
     other::BASIC_TAGS['codeclothpre'] = nil
+
     other::DEFAULT_RULES.insert 0, :block_syntax_set
 
     other.send :alias_method, :to_html_without_syntax, :to_html
@@ -37,7 +38,6 @@ module CodeCloth
       @scanner = scanner
       text.replace('')
     else
-      #p text
       text.replace rest.gsub(/^#{'\s' * rest.index(/[^\s]/)}/, '')
       blocks text, true
       syntaxify text, scanner
@@ -45,7 +45,7 @@ module CodeCloth
   end
 
   def to_html_with_syntax(*whatever)
-    unescape_pre syntaxify(to_html_without_syntax(*whatever), @scanner)
+    unescape_pre syntaxify(syntaxify_manual_html(to_html_without_syntax(*whatever)), @scanner)
   end
 
   private
@@ -55,6 +55,15 @@ module CodeCloth
   def syntaxify(text, scanner)
     text.gsub!(SYNTAXLESS_CODE_RE) do
       escape_pre scanner.new($1).tokenize.html(HTML_OPTIONS)
+    end
+    text
+  end
+
+  MANUAL_HTML_RE = /^\$([^\n]+)\n(#{SYNTAXLESS_CODE_RE})/
+
+  def syntaxify_manual_html(text)
+    text.gsub!(MANUAL_HTML_RE) do
+      syntaxify $2, CodeRay::Scanners[$1.strip.downcase]
     end
     text
   end
