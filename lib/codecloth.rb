@@ -1,3 +1,10 @@
+# codecloth.rb
+# By Nathan Weizenbaum (http://nex3.leeweiz.net)
+# MIT License (http://www.opensource.org/licenses/mit-license.php)
+#
+# Integrating CodeRay syntax highlighting with RedCloth.
+# Check out http://nex3.leeweiz.net/posts/31-a-solution-to-the-syntax-highlighting-problem
+
 require 'rubygems'
 require 'redcloth'
 require 'coderay'

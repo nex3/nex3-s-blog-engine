@@ -1,5 +1,10 @@
-require 'rubygems'
-require 'coderay'
+# By Nathan Weizenbaum (http://nex3.leeweiz.net)
+# MIT License (http://www.opensource.org/licenses/mit-license.php)
+#
+# CodeRay scanner for Lisp.
+# The keywords are mostly geared towards Emacs Lisp,
+# but it should work fine for Common Lisp
+# and reasonably well for Scheme.
 
 module CodeRay::Scanners
   class Lisp < Scanner
