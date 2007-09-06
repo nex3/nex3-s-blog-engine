@@ -1,6 +1,8 @@
 .model[@comment]
   - if admin? || current_user == @comment.user
     .side_links
+      - if admin?
+        = spam_comment_link
       = delete_comment_link
       = edit_comment_link
   .posted

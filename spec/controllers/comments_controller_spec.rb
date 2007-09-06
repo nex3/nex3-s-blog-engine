@@ -165,6 +165,13 @@ describe CommentsController, "#destroy" do
     post :destroy, @params
     response.should redirect_to('http://test.host/posts/42-horbit#comments')
   end
+
+  it "should mark the comment as spam if the spam param is set" do
+    set_proper
+    @params[:spam] = '1'
+    @comment.expects(:spam!)
+    post :destroy, @params
+  end
 end
 
 describe CommentsController, "#edit" do

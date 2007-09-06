@@ -9,6 +9,10 @@ class CommentsController < ApplicationController
       @comment.user = @user
     end
 
+    before(:destroy) do
+      @comment.spam! if params[:spam]
+    end
+
     before(:new) { @comment.user ||= current_user_if_same User.new(params[:user]) }
 
     response_for(:create) do
