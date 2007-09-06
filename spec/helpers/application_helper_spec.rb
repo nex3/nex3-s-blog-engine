@@ -263,6 +263,13 @@ describe ApplicationHelper, "#preview_button" do
   end
 end
 
+describe ApplicationHelper, "#xml_stylesheet" do
+  it "should return an XML stylesheet declaration" do
+    expects(:stylesheet_path).with("name").returns("/path/to/name.css")
+    xml_stylesheet("name").should == '<?xml-stylesheet href="http://nex3.leeweiz.net/path/to/name.css" type="text/css" ?>'
+  end
+end
+
 describe ApplicationHelper, "#sidebar_link" do
   before :each do
     stubs(:link_to).returns("{link}")

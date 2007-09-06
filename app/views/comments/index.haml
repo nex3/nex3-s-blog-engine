@@ -1,10 +1,12 @@
 !!! XML
+= xml_stylesheet 'main'
+= xml_stylesheet 'coderay'
 %feed{:xmlns => "http://www.w3.org/2005/Atom"}
   %title== #{h @post.title} : Comments : Nex3
   %id= comments_url(@post)
   %updated= (@comments[-1] || @post).created_at.xmlschema
   %icon= image_path('favicon.png')
-  %link{:rel => 'self', :href => comments_url(@post) + '.atom'}/
+  %link{:rel => 'self', :href => comments_path(@post) + '.atom'}/
   - for comment in current_objects
     %entry
       %id= comment.uid
@@ -14,5 +16,9 @@
       %author
         %name= h comment.user.name
         %uri= h comment.user.href
-      %summary{:type => 'html'}= h find_and_preserve(comment.render)
-      %link{:rel => 'alternate', :href => comment_url(@post, comment)}/
+      %content{:type => 'xhtml'}
+        .model{:xmlns => "http://www.w3.org/1999/xhtml"}[comment]
+          = stylesheet_link_tag 'main'
+          = stylesheet_link_tag 'coderay'
+          .content= find_and_preserve(comment.render)
+      %link{:rel => 'alternate', :href => object_path(comment)}/

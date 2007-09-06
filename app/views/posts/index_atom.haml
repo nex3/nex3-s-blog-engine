@@ -1,5 +1,7 @@
 !!! XML
-%feed{:xmlns => "http://www.w3.org/2005/Atom"}
+= xml_stylesheet 'main'
+= xml_stylesheet 'coderay'
+%feed{:xmlns => "http://www.w3.org/2005/Atom", 'xml:base' => feed[:url]}
   %title Blog Posts : Nex3
   %id= feed[:url]
   %updated= @posts[-1].created_at.xmlschema
@@ -8,7 +10,7 @@
     %name= feed[:name]
     %email= feed[:email]
     %uri= feed[:url]
-  %link{:rel => 'self', :href => posts_url + '.atom'}/
+  %link{:rel => 'self', :href => posts_path + '.atom'}/
   %rights
     All content available under a  Creative Commons Attribution-Share Alike 3.0 License
     (http://creativecommons.org/licenses/by-sa/3.0/)
@@ -22,5 +24,9 @@
         %name= feed[:name]
         %email= feed[:email]
         %uri= feed[:url]
-      %summary{:type => 'html'}= post_content post
-      %link{:rel => 'alternate', :href => post_url(post)}/
+      %content{:type => 'xhtml'}
+        #content{:xmlns => "http://www.w3.org/1999/xhtml"}
+          = stylesheet_link_tag 'main'
+          = stylesheet_link_tag 'coderay'
+          = post_content post
+      %link{:rel => 'alternate', :href => post_path(post)}/

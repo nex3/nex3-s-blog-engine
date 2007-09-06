@@ -43,6 +43,10 @@ module ApplicationHelper
       :failure => "$(#{element.to_json}).update(\"<h3 class='failure'>Preview Failed</h3>\")"
   end
 
+  def xml_stylesheet(name)
+    "<?xml-stylesheet href=\"http://nex3.leeweiz.net#{stylesheet_path name}\" type=\"text/css\" ?>"
+  end
+
   # Stuff for the application-wide layout
 
   def glyph

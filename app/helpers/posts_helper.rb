@@ -21,9 +21,9 @@ module PostsHelper
   end
 
   def post_content(post)
-    h absolute_anchors(find_and_preserve(post.render).gsub(/<img src=("|')\//,
-                                                           "<img src=\\1#{feed[:url]}/"),
-                       post_url(post))
+    absolute_anchors(find_and_preserve(post.render).gsub(/<img src=("|')\//,
+                                                         "<img src=\\1#{feed[:url]}/"),
+                     post_path(post))
   end
 
   def date_links
