@@ -6,12 +6,17 @@
 # but it should work fine for Common Lisp
 # and reasonably well for Scheme.
 
+require 'rubygems'
+require 'coderay'
+
 module CodeRay::Scanners
   class Lisp < Scanner
     register_for :lisp
 
     NON_SYMBOL_CHARS = '();\s\[\]'
     SYMBOL_RE = /[^#{NON_SYMBOL_CHARS}]+/
+    EXPONENT_RE = /(e[\-+]?[0-9]+)?/
+
     GEN_DEFINES = %w{
       defun defun* defsubst defmacro defadvice define-skeleton define-minor-mode
       define-global-minor-mode define-globalized-minor-mode define-derived-mode
@@ -56,10 +61,16 @@ module CodeRay::Scanners
             kind = :reserved
           elsif scan(/:#{SYMBOL_RE}/)
             kind = :constant
+          elsif scan(/\?#{SYMBOL_RE}/)
+            kind = :char
           elsif match = scan(/"(\\"|[^"])+"/m)
             tokens << [:open, :string] << ['"', :delimiter] <<
               [match[1...-1], :content] << ['"', :delimiter] << [:close, :string]
             next
+          elsif scan(/[\-+]?[0-9]*\.[0-9]+#{EXPONENT_RE}/)
+            kind = :float
+          elsif scan(/[\-+][0-9]+#{EXPONENT_RE}/)
+            kind = :integer
           elsif scan(/;.*$/)
             kind = :comment
           elsif scan(SYMBOL_RE)
