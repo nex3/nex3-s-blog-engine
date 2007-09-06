@@ -69,7 +69,7 @@ module CodeRay::Scanners
             next
           elsif scan(/[\-+]?[0-9]*\.[0-9]+#{EXPONENT_RE}/)
             kind = :float
-          elsif scan(/[\-+][0-9]+#{EXPONENT_RE}/)
+          elsif scan(/[\-+]?[0-9]+#{EXPONENT_RE}/)
             kind = :integer
           elsif scan(/;.*$/)
             kind = :comment
