@@ -67,8 +67,8 @@ newest:
   id: 9
   title: Youngest post evar
   content: This post was pointed after the intarwubs ended!
-  created_at: 2010-08-11 00:00:01
-  created_at: 2010-08-11 00:00:01
+  created_at: 2010-08-10 00:00:01
+  updated_at: 2010-08-10 00:00:01
 redclothed:
   id: 10
   title: This Post Uses Redcloth!

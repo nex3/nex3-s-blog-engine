@@ -83,6 +83,8 @@ class Post < ActiveRecord::Base
                               months << date
                               date = date.last_month
                             end
+
+                            months << date if date.month == oldest.month
                           end
 
                           months
