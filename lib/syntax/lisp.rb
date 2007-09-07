@@ -1,4 +1,4 @@
-# By Nathan Weizenbaum (http://nex3.leeweiz.net)
+# By Nathan Weizenbaum (http://nex-3.com)
 # MIT License (http://www.opensource.org/licenses/mit-license.php)
 #
 # CodeRay scanner for Lisp.

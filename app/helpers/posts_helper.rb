@@ -58,7 +58,7 @@ module PostsHelper
 
   @@feed_info = {
     :title => 'Blog Posts : Nex3',
-    :url => 'http://nex3.leeweiz.net',
+    :url => 'http://nex-3.com',
     :desc => 'Nathan Weizenbaum\'s blog, all about things that interest him.',
     :lang => 'en-us',
     :name => 'Nathan Weizenbaum',

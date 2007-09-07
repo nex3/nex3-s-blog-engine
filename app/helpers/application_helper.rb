@@ -44,7 +44,7 @@ module ApplicationHelper
   end
 
   def xml_stylesheet(name)
-    "<?xml-stylesheet href=\"http://nex3.leeweiz.net#{stylesheet_path name}\" type=\"text/css\" ?>"
+    "<?xml-stylesheet href=\"http://nex-3.com#{stylesheet_path name}\" type=\"text/css\" ?>"
   end
 
   # Stuff for the application-wide layout

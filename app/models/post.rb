@@ -43,7 +43,7 @@ class Post < ActiveRecord::Base
   end
 
   def uid
-    "nex3.leeweiz.net,#{created_at.strftime('%Y-%m-%d')}:#{id}"
+    "nex-3.com,#{created_at.strftime('%Y-%m-%d')}:#{id}"
   end
 
   def slug
