@@ -8,6 +8,7 @@
 require 'rubygems'
 require 'redcloth'
 require 'coderay'
+require 'cgi'
 
 module CodeCloth
   HTML_OPTIONS = { :wrap => :div }
@@ -62,7 +63,7 @@ module CodeCloth
 
   def syntaxify(text, scanner)
     text.gsub!(SYNTAXLESS_CODE_RE) do
-      escape_pre scanner.new($1).tokenize.html(HTML_OPTIONS)
+      escape_pre scanner.new(CGI::unescapeHTML($1)).tokenize.html(HTML_OPTIONS)
     end
     text
   end
