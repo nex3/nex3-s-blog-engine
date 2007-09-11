@@ -27,4 +27,4 @@ end
 conf = YAML.load(File.read(File.join(RAILS_ROOT, "config", "akismet.yml")))
 AkismetInstance = Akismet.new(conf["apikey"], conf["blog"])
 
-%w{codecloth syntax/lisp}.each(&method(:require))
+%w{codecloth syntax/lisp syntax/javascript}.each(&method(:require))
