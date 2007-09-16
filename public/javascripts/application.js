@@ -16,11 +16,14 @@ Element.addMethods({
 });
 
 function search(input) {
-    $("search_results").spin(1);
-    new Ajax.Request("/posts.js", {
-        method: "get",
-        parameters: { query: input.getValue() }
-    });
+    var results = $("search_results");
+    if (results) {
+        $("search_results").spin(1);
+        new Ajax.Request("/posts.js", {
+            method: "get",
+            parameters: { query: input.getValue() }
+        });
+    }
 }
 
 function setSearchListener() {
