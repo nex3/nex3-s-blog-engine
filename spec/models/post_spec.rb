@@ -103,7 +103,7 @@ describe Post, "with a normal configuration" do
   end
 
   it "should produce a unique uid" do
-    posts(:first).uid.should == "nex3.leeweiz.net,2007-04-02:1"
+    posts(:first).uid.should == "http://nex-3.com,2007-04-02:1/"
   end
 end
 
