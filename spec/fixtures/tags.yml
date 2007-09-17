@@ -1,0 +1,9 @@
+emacs:
+  id: 1
+  name: Emacs
+awesome:
+  id: 2
+  name: Awesome
+ugly:
+  id: 3
+  name: Ugly

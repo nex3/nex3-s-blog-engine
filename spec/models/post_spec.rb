@@ -252,6 +252,14 @@ describe Post, "with global syntax highlighting" do
   end
 end
 
+describe Post, "with a couple tags" do
+  fixtures :posts, :posts_tags, :tags
+
+  it "should have the proper two tags, ordered alphabetically" do
+    posts(:first).tags.should == [tags(:awesome), tags(:emacs)]
+  end
+end
+
 describe Post, "#slug" do
   before :each do
     @post = Post.new

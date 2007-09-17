@@ -1,0 +1,12 @@
+one:
+  tag_id: 1
+  post_id: 1
+two:
+  tag_id: 1
+  post_id: 4
+three:
+  tag_id: 2
+  post_id: 1
+four:
+  tag_id: 3
+  post_id: 5

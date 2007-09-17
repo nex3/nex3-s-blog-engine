@@ -2,14 +2,14 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 4) do
+ActiveRecord::Schema.define(:version => 5) do
 
   create_table "comments", :force => true do |t|
     t.column "user_id",    :integer
     t.column "content",    :text,     :default => "",                    :null => false
     t.column "created_at", :datetime
     t.column "post_id",    :integer
-    t.column "updated_at", :datetime, :default => '2007-09-06 16:33:12'
+    t.column "updated_at", :datetime, :default => '2007-08-27 19:19:16'
   end
 
   create_table "posts", :force => true do |t|
@@ -17,6 +17,18 @@ ActiveRecord::Schema.define(:version => 4) do
     t.column "content",    :text,     :default => "", :null => false
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+  end
+
+  create_table "posts_tags", :id => false, :force => true do |t|
+    t.column "post_id", :integer
+    t.column "tag_id",  :integer
+  end
+
+  add_index "posts_tags", ["post_id"], :name => "index_posts_tags_on_post_id"
+  add_index "posts_tags", ["tag_id"], :name => "index_posts_tags_on_tag_id"
+
+  create_table "tags", :force => true do |t|
+    t.column "name", :string, :default => "", :null => false
   end
 
   create_table "users", :force => true do |t|
