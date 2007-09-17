@@ -268,12 +268,12 @@ describe Post, " with new tags set via #tag_string=" do
   fixtures :posts, :posts_tags, :tags
 
   before :each do
-    @post = posts(:start)
-    @post.tag_string = "ugly, funky, weird"
+    @post = posts(:first)
+    @post.tag_string = "ugly, fungy, weerd"
   end
 
   it "should return the same string with #tag_string" do
-    @post.tag_string.should == "ugly, funky, weird"
+    @post.tag_string.should == "ugly, fungy, weerd"
   end
 
   it "shouldn't create a new tag with the same name as one that already exists" do
@@ -282,7 +282,7 @@ describe Post, " with new tags set via #tag_string=" do
   end
 
   it "should create a new tag with a new name" do
-    @post.tags.to_a.find { |t| t.name == "funky" }.should be_a_new_record
+    @post.tags.to_a.find { |t| t.name == "fungy" }.should be_a_new_record
   end
 end
 

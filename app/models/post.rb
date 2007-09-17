@@ -56,6 +56,7 @@ class Post < ActiveRecord::Base
     models = Tag.find(:all, :order => 'name', :conditions => [tags.map { "name = ?" }.join(" OR "), *tags])
     models = models.inject({}) { |memo, model| memo[model.name] = model; memo }
 
+    self.tags.clear
     tags.each { |tag| models[tag] ? self.tags << models[tag] : self.tags.build(:name => tag) }
   end
 
