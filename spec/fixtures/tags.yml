@@ -7,3 +7,6 @@ awesome:
 ugly:
   id: 3
   name: ugly
+nameless:
+  id: 4
+  name: ""
