@@ -54,8 +54,9 @@ class Post < ActiveRecord::Base
   def tag_string=(tags)
     tags = tags.split(',').map { |t| t.strip.downcase }
     models = Tag.find(:all, :order => 'name', :conditions => [tags.map { "name = ?" }.join(" OR "), *tags])
+    models = models.inject({}) { |memo, model| memo[model.name] = model; memo }
 
-    self.tags = tags.map { |tag| models.find { |m| m.name == tag } || Tag.new(:name => tag) }
+    tags.each { |tag| models[tag] ? self.tags << models[tag] : self.tags.build(:name => tag) }
   end
 
   def tag_string

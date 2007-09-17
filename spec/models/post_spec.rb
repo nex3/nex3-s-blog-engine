@@ -277,11 +277,12 @@ describe Post, " with new tags set via #tag_string=" do
   end
 
   it "shouldn't create a new tag with the same name as one that already exists" do
+    @post.tags.to_a.find { |t| t.name == "ugly" }.should_not be_a_new_record
     Tag.find(:all, :conditions => {:name => 'ugly'}).length.should == 1
   end
 
   it "should create a new tag with a new name" do
-    Tag.find(:all, :conditions => {:name => 'funky'}).should_not be_empty
+    @post.tags.to_a.find { |t| t.name == "funky" }.should be_a_new_record
   end
 end
 
@@ -293,16 +294,17 @@ describe Post, " with strangely formatted tags set via #tag_string=" do
     @post.tag_string = "UGLY   , funKy,Weird"
   end
 
-  it "should return a well-formatted string with #tag_string" do
+  it "should return a properly formatted string with #tag_string" do
     @post.tag_string.should == "ugly, funky, weird"
   end
 
   it "shouldn't create a new tag with the same name as one that already exists" do
+    @post.tags.to_a.find { |t| t.name == "ugly" }.should_not be_a_new_record
     Tag.find(:all, :conditions => "name LIKE '%ugly%'").length.should == 1
   end
 
   it "should create a new tag with a new name" do
-    Tag.find(:all, :conditions => {:name => 'funky'}).should_not be_empty
+    @post.tags.to_a.find { |t| t.name == "funky" }.should be_a_new_record
   end
 end
 
