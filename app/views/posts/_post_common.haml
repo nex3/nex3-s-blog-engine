@@ -2,6 +2,10 @@
   .side_links
     = delete_link
     = edit_link
+- unless @post.tags(true).empty?
+  .tags
+    = @post.tags.map { |t| link_to t.name.titleize, posts_path(:tag => t.name) }.join ", "
+    .label Tags
 %h2= link_to h(@post.title), post_path(@post)
 .posted
   == Posted #{@post.created_at.human_day('%B %e, %Y')}

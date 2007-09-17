@@ -1,5 +1,6 @@
 - restful_form do |f|
   = f.text_field :title
+  = f.text_field :tag_string, :label => "Tags (Comma Separated)"
   = f.text_area :content
   = preview_button new_post_path, 'preview'
   = submit_tag 'Save Changes', :class => 'button'

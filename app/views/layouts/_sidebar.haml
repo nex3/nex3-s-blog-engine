@@ -5,8 +5,15 @@
   - sidebar_links
 .sect.archives
   %h2 Archives
-  - for month in Post.months_spanned
-    = link_to month.strftime('%B %Y'), :controller => 'posts', :action => 'dates', :year => month.year, :month => month.month
+  %ul
+    = list_of Post.months_spanned do |month|
+      = link_to month.strftime('%B %Y'), :controller => 'posts', :action => 'dates', :year => month.year, :month => month.month
+.sect.tags
+  %h2 Tags
+  %ul
+    = list_of Tag.find(:all) do |tag|
+      = link_to h(tag.name.titleize), posts_path(:tag => tag.name)
+      == &ndash; #{tag.posts.size}
 .sect.search
   %h2 Search
   - form_tag "/posts", :method => :get do
