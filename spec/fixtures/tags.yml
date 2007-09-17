@@ -1,9 +1,9 @@
 emacs:
   id: 1
-  name: Emacs
+  name: emacs
 awesome:
   id: 2
-  name: Awesome
+  name: awesome
 ugly:
   id: 3
-  name: Ugly
+  name: ugly

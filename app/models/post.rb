@@ -51,6 +51,17 @@ class Post < ActiveRecord::Base
     title.downcase.gsub(/[^a-z0-9_]/, '-').gsub(/--+/, '-').gsub(/-*$/, '')
   end
 
+  def tag_string=(tags)
+    tags = tags.split(',').map { |t| t.strip.downcase }
+    models = Tag.find(:all, :order => 'name', :conditions => [tags.map { "name = ?" }.join(" OR "), *tags])
+
+    self.tags = tags.map { |tag| models.find { |m| m.name == tag } || Tag.new(:name => tag) }
+  end
+
+  def tag_string
+    tags.map { |t| t.name.downcase }.join(", ")
+  end
+
   def self.oldest
     self.find(:first, :select => 'created_at, id', :order => 'created_at')
   end

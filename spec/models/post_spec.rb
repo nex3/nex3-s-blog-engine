@@ -244,7 +244,7 @@ describe Post, "ending with an image" do
   end
 end
 
-describe Post, "with global syntax highlighting" do
+describe Post, " with global syntax highlighting" do
   fixtures :posts
 
   it "should render_small four paragraphs" do
@@ -252,11 +252,57 @@ describe Post, "with global syntax highlighting" do
   end
 end
 
-describe Post, "with a couple tags" do
+describe Post, " with a couple tags" do
   fixtures :posts, :posts_tags, :tags
 
   it "should have the proper two tags, ordered alphabetically" do
     posts(:first).tags.should == [tags(:awesome), tags(:emacs)]
+  end
+
+  it "should return a comma-separated list with #tag_string" do
+    posts(:first).tag_string.should == "awesome, emacs"
+  end
+end
+
+describe Post, " with new tags set via #tag_string=" do
+  fixtures :posts, :posts_tags, :tags
+
+  before :each do
+    @post = posts(:start)
+    @post.tag_string = "ugly, funky, weird"
+  end
+
+  it "should return the same string with #tag_string" do
+    @post.tag_string.should == "ugly, funky, weird"
+  end
+
+  it "shouldn't create a new tag with the same name as one that already exists" do
+    Tag.find(:all, :conditions => {:name => 'ugly'}).length.should == 1
+  end
+
+  it "should create a new tag with a new name" do
+    Tag.find(:all, :conditions => {:name => 'funky'}).should_not be_empty
+  end
+end
+
+describe Post, " with strangely formatted tags set via #tag_string=" do
+  fixtures :posts, :posts_tags, :tags
+
+  before :each do
+    @post = posts(:start)
+    @post.tag_string = "UGLY   , funKy,Weird"
+  end
+
+  it "should return a well-formatted string with #tag_string" do
+    @post.tag_string.should == "ugly, funky, weird"
+  end
+
+  it "shouldn't create a new tag with the same name as one that already exists" do
+    Tag.find(:all, :conditions => "name LIKE '%ugly%'").length.should == 1
+  end
+
+  it "should create a new tag with a new name" do
+    Tag.find(:all, :conditions => {:name => 'funky'}).should_not be_empty
   end
 end
 
