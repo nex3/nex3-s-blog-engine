@@ -12,7 +12,7 @@
   %h2 Tags
   %ul
     = list_of Tag.all_with_postcount do |tag|
-      = link_to silk_tag('bullet_feed', :alt => 'Feed'), posts_path(:tag => tag.name, :format => 'atom'), :title => "Feed for #{tag.name}", :class => 'feed'
+      = link_to silk_tag('bullet_feed', :alt => 'Feed'), {:controller => 'posts', :action => 'index', :format => 'atom', :tag => tag.name}, :title => "Feed for #{tag.name}", :class => 'feed'
       = link_to h(tag.name.titleize), posts_path(:tag => tag.name)
       == &ndash; #{tag.post_count}
 .sect.search
