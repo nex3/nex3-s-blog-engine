@@ -136,6 +136,25 @@ a img
     :width 5px
   :padding 0.5em
 
+.nav
+  :margin-top 0.5em
+  :height 2em
+  :position relative
+  a
+    :text-decoration none
+    :opacity 0.5
+    img
+      :position relative
+      :bottom 0.1em
+    &:hover
+      :opacity 1
+    &.next
+      :position absolute
+      :right 0
+    &.prev
+      :position absolute
+      :left 0
+
 #main
   :padding 0.3em
     :top 1em
@@ -269,24 +288,6 @@ a img
       :top 0
       :right -4em
       :color #aaa
-  .nav
-    :margin-top -0.5em
-    :height 2em
-    :position relative
-    a
-      :text-decoration none
-      :opacity 0.5
-      img
-        :position relative
-        :bottom 0.1em
-      &:hover
-        :opacity 1
-      &.next
-        :position absolute
-        :right 0
-      &.prev
-        :position absolute
-        :left 0
 
 .model.post
   :border-bottom

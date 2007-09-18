@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Post, ".oldest" do
   fixtures :posts
 
+  before(:each) { Post.instance_variable_set("@oldest", nil) }
+
   it "should return the oldest post" do
     Post.oldest.should == posts(:oldest)
   end
@@ -15,6 +17,8 @@ end
 
 describe Post, ".newest" do
   fixtures :posts
+
+  before(:each) { Post.instance_variable_set("@newest", nil) }
 
   it "should return the newest post" do
     Post.newest.should == posts(:newest)

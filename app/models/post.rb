@@ -66,11 +66,11 @@ class Post < ActiveRecord::Base
 
   class << self
     def oldest
-      find(:first, :select => 'created_at, id', :order => 'created_at')
+      @oldest ||= find(:first, :select => 'created_at, id', :order => 'created_at')
     end
 
     def newest
-      find(:first, :select => 'created_at, id', :order => 'created_at DESC')
+      @newest ||= find(:first, :select => 'created_at, id', :order => 'created_at DESC')
     end
 
     def after(date)

@@ -2,3 +2,10 @@
   %h1== Search results for "#{h params[:query]}"
 - for @post in @posts
   = render :partial => 'post_small'
+- if page != 0 || @posts.last != Post.oldest
+  .nav
+    - if page != 0
+      = link_to silk_tag('arrow_left',  :alt => "<") + " Newer Posts", params.merge(:page => page - 1), :class => 'prev'
+    - if @posts.last != Post.oldest
+      = link_to silk_tag('arrow_right', :alt => ">") + " Older Posts", params.merge(:page => page + 1), :class => 'next'
+  

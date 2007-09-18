@@ -27,8 +27,25 @@ describe PostsController do
     controller.send(:current_objects)
   end
 
+  it "should begin at the first post on page 0" do
+    Post.expects(:find).with(anything, has_entry(:offset, 0))
+    controller.send(:current_objects)
+  end
+
+  it "should begin at the sixth post on page 1" do
+    Post.expects(:find).with(anything, has_entry(:offset, 6))
+    @params[:page] = '1'
+    controller.send(:current_objects)
+  end
+
+  it "should begin at the thirtieth post on page 5" do
+    Post.expects(:find).with(anything, has_entry(:offset, 30))
+    @params[:page] = '5'
+    controller.send(:current_objects)
+  end
+
   it "should search for posts if a query is given" do
-    Post.expects(:find).with(:all, all_of(has_entry(:limit, nil), has_entry(:query, "term")))
+    Post.expects(:find).with(:all, all_of(has_entry(:query, "term")))
     @params[:query] = "term"
     controller.send(:current_objects)
   end
@@ -47,8 +64,7 @@ describe PostsController do
   end
 
   it "should filter search results if both a tag and a query are given" do
-    Post.expects(:find).with(:all, all_of(has_entry(:limit, nil),
-                                          has_entry(:tags,  ['stuff']),
+    Post.expects(:find).with(:all, all_of(has_entry(:tags,  ['stuff']),
                                           has_entry(:query, 'term')))
     @params[:query] = "term"
     @params[:tag] = "stuff"

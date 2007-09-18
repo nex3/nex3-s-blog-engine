@@ -69,10 +69,15 @@ class PostsController < ApplicationController
   def current_objects
     @current_objects ||=
       Post.find(:all, {
-                  :order => 'posts.created_at DESC', :limit => params[:query] ? nil : 6,
-                  :include => [:comments, :tags], :tags => tags, :query => params[:query]
+                  :order => 'posts.created_at DESC', :limit => 6, :include => [:comments, :tags],
+                  :offset => page * 6, :tags => tags, :query => params[:query],
                 })
   end
+
+  def page
+    (params[:page] || 0).to_i
+  end
+  helper_method :page
 
   def tags
     return if params[:tag].nil? && params[:tags].nil?
