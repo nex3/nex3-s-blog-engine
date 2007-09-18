@@ -28,30 +28,28 @@ describe PostsController do
   end
 
   it "should search for posts if a query is given" do
-    Post.expects(:find).with(:all, :limit => nil, :order => 'posts.created_at DESC',
-                             :include => [:comments, :tags], :query => "term", :tags => nil)
+    Post.expects(:find).with(:all, all_of(has_entry(:limit, nil), has_entry(:query, "term")))
     @params[:query] = "term"
     controller.send(:current_objects)
   end
 
   it "should filter the posts if a tag is given" do
-    Post.expects(:find).with(:all, :limit => 6, :order => 'posts.created_at DESC',
-                             :include => [:comments, :tags], :query => nil, :tags => ['stuff'])
+    Post.expects(:find).with(:all, has_entry(:tags, ['stuff']))
     @params[:tag] = "Stuff"
     controller.send(:current_objects)
   end
 
   it "should filter the posts if multiple tags are given" do
-    Post.expects(:find).with(:all, :limit => 6, :order => 'posts.created_at DESC',
-                             :include => [:comments, :tags], :query => nil, :tags => %w{stuff grumbles blat boom})
+    Post.expects(:find).with(:all, has_entry(:tags, %w{stuff grumbles blat boom}))
     @params[:tag] = "Stuff,gRuMbLes, ,"
     @params[:tags] = "BLAT,,,boom, , ,"
     controller.send(:current_objects)
   end
 
   it "should filter search results if both a tag and a query are given" do
-    Post.expects(:find).with(:all, :limit => nil, :order => 'posts.created_at DESC',
-                             :include => [:comments, :tags], :tags => ['stuff'], :query => 'term')
+    Post.expects(:find).with(:all, all_of(has_entry(:limit, nil),
+                                          has_entry(:tags,  ['stuff']),
+                                          has_entry(:query, 'term')))
     @params[:query] = "term"
     @params[:tag] = "stuff"
     controller.send(:current_objects)
