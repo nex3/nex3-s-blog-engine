@@ -95,6 +95,32 @@ describe Post, ".months_spanned" do
   end
 end
 
+describe Post, ".find_with_tags" do
+  fixtures :posts, :posts_tags, :tags
+
+  it "should return posts with a given tag" do
+    Post.find(:all, :tags => ['emacs'], :order => 'posts.id').should == [posts(:first), posts(:commented)]
+  end
+
+  it "should respect conditions" do
+    Post.find(:all, :tags => ['emacs'], :conditions => {:title => "Foobish Stuffs"}).should ==
+      [posts(:first)]
+  end
+
+  it "should return all posts with any of the given tags" do
+    Post.find(:all, :tags => ['emacs', 'ugly'], :order => 'posts.id').should ==
+      [posts(:first), posts(:commented), posts(:end)]
+  end
+end
+
+describe Post, ".find_with_query" do
+  fixtures :posts
+
+  it "should return all posts that match the given query" do
+    Post.find(:all, :query => "the three ordered posts", :order => 'created_at DESC').should ==
+      [posts(:end), posts(:mid), posts(:start)]
+  end
+end
 describe Post, "with a normal configuration" do
   fixtures :posts
 

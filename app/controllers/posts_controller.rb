@@ -68,32 +68,10 @@ class PostsController < ApplicationController
 
   def current_objects
     @current_objects ||=
-      begin
-        opts = {:order => 'posts.created_at DESC', :limit => 6, :include => [:comments, :tags]}
-
-        if tags
-          opts[:joins] = <<-END
-            INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id
-            INNER JOIN tags AS inner_tags ON inner_tags.id = inner_posts_tags.tag_id
-          END
-          opts[:conditions] = [tags.map { 'inner_tags.name = ?' }.join(' OR '), *tags]
-        end
-
-        if params[:query]
-          term = "%#{params[:query]}%"
-          cond = "posts.content LIKE ? OR posts.title LIKE ?"
-
-          opts.delete :limit
-          if opts[:conditions]
-            opts[:conditions][0] << " AND (#{cond})"
-            opts[:conditions] << term << term
-          else
-            opts[:conditions] = [cond, term, term]
-          end
-        end
-
-        Post.find(:all, opts)
-      end
+      Post.find(:all, {
+                  :order => 'posts.created_at DESC', :limit => params[:query] ? nil : 6,
+                  :include => [:comments, :tags], :tags => tags, :query => params[:query]
+                })
   end
 
   def tags

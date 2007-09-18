@@ -64,45 +64,88 @@ class Post < ActiveRecord::Base
     tags.map { |t| t.name.downcase }.join(", ")
   end
 
-  def self.oldest
-    self.find(:first, :select => 'created_at, id', :order => 'created_at')
-  end
+  class << self
+    def oldest
+      find(:first, :select => 'created_at, id', :order => 'created_at')
+    end
 
-  def self.newest
-    self.find(:first, :select => 'created_at, id', :order => 'created_at DESC')
-  end
+    def newest
+      find(:first, :select => 'created_at, id', :order => 'created_at DESC')
+    end
 
-  def self.after(date)
-    self.find(:first, :conditions => ['created_at > ?', date], :order => 'created_at')
-  end
+    def after(date)
+      find(:first, :conditions => ['created_at > ?', date], :order => 'created_at')
+    end
 
-  def self.before(date)
-    self.find(:first, :conditions => ['created_at < ?', date], :order => 'created_at DESC')
-  end
+    def before(date)
+      find(:first, :conditions => ['created_at < ?', date], :order => 'created_at DESC')
+    end
 
-  def self.between(date1, date2)
-    Post.find(:all, :conditions => ['created_at >= ? AND created_at < ?', date1, date2],
-              :order => 'created_at DESC')
-  end
+    def between(date1, date2)
+      find(:all, :conditions => ['created_at >= ? AND created_at < ?', date1, date2],
+           :order => 'created_at DESC')
+    end
 
-  def self.months_spanned
-    @months_spanned ||= begin
-                          months = []
+    def months_spanned
+      @months_spanned ||=
+        begin
+          months = []
 
-                          if newest = Post.newest
-                            date = newest.created_at.to_time
-                            oldest = Post.oldest.created_at.to_time
+          if newest = Post.newest
+            date = newest.created_at.to_time
+            oldest = Post.oldest.created_at.to_time
 
-                            until date < oldest
-                              months << date
-                              date = date.last_month
-                            end
+            until date < oldest
+              months << date
+              date = date.last_month
+            end
 
-                            months << date if date.month == oldest.month
-                          end
+            months << date if date.month == oldest.month
+          end
 
-                          months
-                        end
+          months
+        end
+    end
+
+    def find_with_tags(*args)
+      handle_option(:tags, args) do |options, tags|
+        options[:select] ||= 'posts.*'
+        options[:joins]  ||= ''
+        options[:joins]  << <<-END
+          INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id
+          INNER JOIN tags AS inner_tags ON inner_tags.id = inner_posts_tags.tag_id
+        END
+        add_to_conditions(options, tags.map { 'inner_tags.name = ?' }.join(' OR '), *tags)
+      end
+    end
+    alias_method_chain :find, :tags
+
+    def find_with_query(*args)
+      handle_option(:query, args) do |options, query|
+        term = "%#{query}%"
+        add_to_conditions(options, "posts.content LIKE ? OR posts.title LIKE ?", term, term)
+      end
+    end
+    alias_method_chain :find, :query
+
+    private
+
+    def handle_option(name, args)
+      options = extract_options_from_args!(args)
+      if option = options.delete(name)
+        yield options, option
+      end
+      send("find_without_#{name}", *(args + [options]))
+    end
+
+    def add_to_conditions(options, condition, *args)
+      condition = args.empty? ? condition : [condition, *args]
+      if options[:conditions].nil?
+        options[:conditions] = condition
+      else
+        options[:conditions] = sanitize_sql(options[:conditions]) + " AND (#{sanitize_sql(condition)})"
+      end
+    end
   end
 
   private
