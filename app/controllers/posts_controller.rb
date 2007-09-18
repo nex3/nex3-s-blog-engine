@@ -9,8 +9,8 @@ class PostsController < ApplicationController
     before :index do
       if params[:query]
         title "Search results for \"#{CGI::escapeHTML params[:query]}\""
-      elsif params[:tag]
-        title "Posts about " + params[:tag].titleize
+      elsif tags
+        title "Posts about " + tags.map(&:titleize).to_sentence
       end
     end
 
@@ -62,8 +62,8 @@ class PostsController < ApplicationController
     else nil end
   end
 
-  def current_object
-    @current_object ||= Post.find(params[:id].scan(/^(\d+)/)[0][0].to_i)
+  def current_param
+    params[:id].scan(/^(\d+)/)[0][0]
   end
 
   def current_objects
@@ -71,10 +71,12 @@ class PostsController < ApplicationController
       begin
         opts = {:order => 'posts.created_at DESC', :limit => 6, :include => [:comments, :tags]}
 
-        if params[:tag]
-          opts[:joins] = 'INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id'
-          opts[:conditions] = ['inner_posts_tags.tag_id = ?',
-                               Tag.find(:first, :conditions => {:name => params[:tag].downcase}).id]
+        if tags
+          opts[:joins] = <<-END
+            INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id
+            INNER JOIN tags AS inner_tags ON tags.id = inner_posts_tags.tag_id
+          END
+          opts[:conditions] = [tags.map { 'inner_tags.name = ?' }.join(' OR '), *tags]
         end
 
         if params[:query]
@@ -92,5 +94,10 @@ class PostsController < ApplicationController
 
         Post.find(:all, opts)
       end
+  end
+
+  def tags
+    return if params[:tag].nil? && params[:tags].nil?
+    @tags ||= "#{params[:tag]},#{params[:tags]}".split(',').map(&:downcase).map(&:strip).reject(&:empty?)
   end
 end
