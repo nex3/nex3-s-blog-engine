@@ -31,6 +31,17 @@ describe PostsController do
     controller.stubs(:params).returns(:query => "term")
     controller.send(:current_objects)
   end
+
+  it "should filter the posts if a tag is given" do
+    tag = stub
+    Tag.expects(:find).with(:first, :conditions => {:name => 'stuff'}).returns(tag)
+    posts = stub
+    tag.stubs(:posts).returns(posts)
+
+    controller.stubs(:params).returns({:tag => 'Stuff'})
+    posts.expects(:find).with(:all, :order => 'posts.created_at DESC', :limit => 6, :include => :comments)
+    controller.send(:current_objects)
+  end
 end
 
 describe PostsController, "#date_link" do
@@ -106,6 +117,11 @@ describe PostsController, "#index" do
   it "should set the title for index with a query" do
     controller.expects(:title).with("Search results for \"foobar\"")
     get :index, :query => 'foobar'
+  end
+
+  it "should set the title for index with a tag" do
+    controller.expects(:title).with("Posts about Stuff")
+    get :index, :tag => 'stuff'
   end
 end
 

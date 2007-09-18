@@ -9,6 +9,8 @@ class PostsController < ApplicationController
     before :index do
       if params[:query]
         title "Search results for \"#{CGI::escapeHTML params[:query]}\""
+      elsif params[:tag]
+        title "Posts about " + params[:tag].titleize
       end
     end
 
@@ -66,13 +68,17 @@ class PostsController < ApplicationController
 
   def current_objects
     @current_objects ||=
-      if params[:query]
-        term = "%#{params[:query]}%"
-        Post.find(:all, :order => 'posts.created_at DESC', :include => :comments,
-                  :conditions => ['posts.content LIKE ? OR posts.title LIKE ?', term, term])
-      else
-        Post.find(:all, :order => 'posts.created_at DESC',
-                  :limit => 6, :include => :comments)
+      begin
+        model = params[:tag].nil? ? Post : Tag.find(:first, :conditions => {:name => params[:tag].downcase}).posts
+
+        if params[:query]
+          term = "%#{params[:query]}%"
+          model.find(:all, :order => 'posts.created_at DESC', :include => :comments,
+                    :conditions => ['posts.content LIKE ? OR posts.title LIKE ?', term, term])
+        else
+          model.find(:all, :order => 'posts.created_at DESC',
+                    :limit => 6, :include => :comments)
+        end
       end
   end
 end
