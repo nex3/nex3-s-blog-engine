@@ -69,16 +69,27 @@ class PostsController < ApplicationController
   def current_objects
     @current_objects ||=
       begin
-        model = params[:tag].nil? ? Post : Tag.find(:first, :conditions => {:name => params[:tag].downcase}).posts
+        opts = {:order => 'posts.created_at DESC', :limit => 6, :include => [:comments, :tags]}
+
+        if params[:tag]
+          opts[:conditions] = ['posts_tags.tag_id = ?',
+                               Tag.find(:first, :conditions => {:name => params[:tag].downcase}).id]
+        end
 
         if params[:query]
           term = "%#{params[:query]}%"
-          model.find(:all, :order => 'posts.created_at DESC', :include => :comments,
-                    :conditions => ['posts.content LIKE ? OR posts.title LIKE ?', term, term])
-        else
-          model.find(:all, :order => 'posts.created_at DESC',
-                    :limit => 6, :include => :comments)
+          cond = "posts.content LIKE ? OR posts.title LIKE ?"
+
+          opts.delete :limit
+          if opts[:conditions]
+            opts[:conditions][0] << " AND (#{cond})"
+            opts[:conditions] << term << term
+          else
+            opts[:conditions] = [cond, term, term]
+          end
         end
+
+        Post.find(:all, opts)
       end
   end
 end

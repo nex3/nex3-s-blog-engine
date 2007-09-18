@@ -2,7 +2,7 @@
   .side_links
     = delete_link
     = edit_link
-- unless @post.tags(true).empty?
+- unless @post.tags.empty?
   .tags
     = @post.tags.map { |t| link_to t.name.titleize, posts_path(:tag => t.name) }.join ", "
     .label Tags

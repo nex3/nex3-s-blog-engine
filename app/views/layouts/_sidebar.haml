@@ -11,9 +11,9 @@
 .sect.tags
   %h2 Tags
   %ul
-    = list_of Tag.find(:all) do |tag|
+    = list_of Tag.all_with_postcount do |tag|
       = link_to h(tag.name.titleize), posts_path(:tag => tag.name)
-      == &ndash; #{tag.posts.size}
+      == &ndash; #{tag.post_count}
 .sect.search
   %h2 Search
   - form_tag "/posts", :method => :get do

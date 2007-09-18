@@ -1,7 +1,14 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PostsController do
-  before(:each) { controller.stubs(:params).returns({}) }
+  before(:each) do
+    @params = {}
+    controller.stubs(:params).returns(@params)
+
+    @tag = stub('Tag')
+    Tag.stubs(:find).returns @tag
+    @tag.stubs(:id).returns 12
+  end
 
   it "should accept URLs with additional text" do
     controller.stubs(:params).returns(:id => "1-foo-bar-baz")
@@ -19,27 +26,33 @@ describe PostsController do
     controller.send(:current_objects)
   end
 
-  it "should load comments for the posts" do
-    Post.expects(:find).with(anything, has_entry(:include, :comments))
+  it "should load comments and tags for the posts" do
+    Post.expects(:find).with(anything, has_entry(:include, [:comments, :tags]))
     controller.send(:current_objects)
   end
 
   it "should search for posts if a query is given" do
-    Post.expects(:find).with(:all, :order => 'posts.created_at DESC', :include => :comments,
+    Post.expects(:find).with(:all, :order => 'posts.created_at DESC', :include => [:comments, :tags],
                              :conditions => ['posts.content LIKE ? OR posts.title LIKE ?',
                                              "%term%", "%term%"])
-    controller.stubs(:params).returns(:query => "term")
+    @params[:query] = "term"
     controller.send(:current_objects)
   end
 
   it "should filter the posts if a tag is given" do
-    tag = stub
-    Tag.expects(:find).with(:first, :conditions => {:name => 'stuff'}).returns(tag)
-    posts = stub
-    tag.stubs(:posts).returns(posts)
+    Post.expects(:find).with(:all, :limit => 6, :order => 'posts.created_at DESC', :include => [:comments, :tags],
+                             :limit => 6, :conditions => ['posts_tags.tag_id = ?', 12])
+    @params[:tag] = "Stuff"
+    Tag.expects(:find).with(:first, :conditions => {:name => 'stuff'}).returns(@tag)
+    controller.send(:current_objects)
+  end
 
-    controller.stubs(:params).returns({:tag => 'Stuff'})
-    posts.expects(:find).with(:all, :order => 'posts.created_at DESC', :limit => 6, :include => :comments)
+  it "should filter search results if both a tag and a query are given" do
+    Post.expects(:find).with(:all, :order => 'posts.created_at DESC', :include => [:comments, :tags],
+                             :conditions => ['posts_tags.tag_id = ? AND (posts.content LIKE ? OR posts.title LIKE ?)',
+                                             12, "%term%", "%term%"])
+    @params[:query] = "term"
+    @params[:tag] = "stuff"
     controller.send(:current_objects)
   end
 end
