@@ -3,7 +3,7 @@ require 'redcloth'
 class Post < ActiveRecord::Base
   validates_presence_of :title, :content
   has_many :comments, :dependent => :destroy, :order => 'created_at'
-  has_and_belongs_to_many :tags, :order => 'name'
+  has_and_belongs_to_many :tags, :order => 'name', :before_remove => :destroy_dangling_tag
 
   def render
     render_string content
@@ -149,6 +149,10 @@ class Post < ActiveRecord::Base
   end
 
   private
+
+  def destroy_dangling_tag(tag)
+    tag.destroy if tag.posts.count == 1
+  end
 
   def next_or_prev(op, order)
     Post.find(:first, :conditions => ["created_at #{op} ?", created_at],

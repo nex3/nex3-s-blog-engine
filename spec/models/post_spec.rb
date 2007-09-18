@@ -310,6 +310,10 @@ describe Post, " with new tags set via #tag_string=" do
   it "should create a new tag with a new name" do
     @post.tags.to_a.find { |t| t.name == "fungy" }.should be_a_new_record
   end
+
+  it "should destroy orphaned tags" do
+    proc { tags(:awesome) }.should raise_error(ActiveRecord::RecordNotFound)
+  end
 end
 
 describe Post, " with strangely formatted tags set via #tag_string=" do
