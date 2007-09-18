@@ -2,10 +2,10 @@
 = xml_stylesheet 'main'
 = xml_stylesheet 'coderay'
 %feed{:xmlns => "http://www.w3.org/2005/Atom", 'xml:base' => feed[:url]}
-  - unless params[:tag]
+  - unless tags
     %title Blog Posts : Nex3
   - else
-    %title== Blog Posts About #{params[:tag].titleize} : Nex3
+    %title== Blog Posts About #{tags.map(&:titleize).to_sentence} : Nex3
   %id= feed[:url]
   %updated= @posts[-1].created_at.xmlschema
   %icon= image_path('favicon.png')
@@ -28,6 +28,8 @@
         %name= feed[:name]
         %email= feed[:email]
         %uri= feed[:url]
+      - for tag in post.tags
+        %category{:term => tag.name, :label => tag.name.titleize}/
       %content{:type => 'xhtml'}
         #content{:xmlns => "http://www.w3.org/1999/xhtml"}
           = stylesheet_link_tag 'main'
