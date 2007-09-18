@@ -72,7 +72,8 @@ class PostsController < ApplicationController
         opts = {:order => 'posts.created_at DESC', :limit => 6, :include => [:comments, :tags]}
 
         if params[:tag]
-          opts[:conditions] = ['posts_tags.tag_id = ?',
+          opts[:joins] = 'INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id'
+          opts[:conditions] = ['inner_posts_tags.tag_id = ?',
                                Tag.find(:first, :conditions => {:name => params[:tag].downcase}).id]
         end
 
