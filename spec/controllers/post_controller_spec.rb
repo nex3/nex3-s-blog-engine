@@ -38,7 +38,7 @@ describe PostsController do
   it "should filter the posts if a tag is given" do
     joins = <<-END
             INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id
-            INNER JOIN tags AS inner_tags ON tags.id = inner_posts_tags.tag_id
+            INNER JOIN tags AS inner_tags ON inner_tags.id = inner_posts_tags.tag_id
     END
     Post.expects(:find).with(:all, :limit => 6, :order => 'posts.created_at DESC', :include => [:comments, :tags],
                              :joins => joins, :limit => 6, :conditions => ['inner_tags.name = ?', 'stuff'])
@@ -49,7 +49,7 @@ describe PostsController do
   it "should filter the posts if multiple tags are given" do
     joins = <<-END
             INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id
-            INNER JOIN tags AS inner_tags ON tags.id = inner_posts_tags.tag_id
+            INNER JOIN tags AS inner_tags ON inner_tags.id = inner_posts_tags.tag_id
     END
     Post.expects(:find).with(:all, :limit => 6, :order => 'posts.created_at DESC', :include => [:comments, :tags],
                              :joins => joins, :limit => 6,
@@ -63,7 +63,7 @@ describe PostsController do
   it "should filter search results if both a tag and a query are given" do
     joins = <<-END
             INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id
-            INNER JOIN tags AS inner_tags ON tags.id = inner_posts_tags.tag_id
+            INNER JOIN tags AS inner_tags ON inner_tags.id = inner_posts_tags.tag_id
     END
     Post.expects(:find).with(:all, :order => 'posts.created_at DESC', :include => [:comments, :tags], :joins => joins,
                              :conditions => ['inner_tags.name = ? AND (posts.content LIKE ? OR posts.title LIKE ?)',

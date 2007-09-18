@@ -74,7 +74,7 @@ class PostsController < ApplicationController
         if tags
           opts[:joins] = <<-END
             INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id
-            INNER JOIN tags AS inner_tags ON tags.id = inner_posts_tags.tag_id
+            INNER JOIN tags AS inner_tags ON inner_tags.id = inner_posts_tags.tag_id
           END
           opts[:conditions] = [tags.map { 'inner_tags.name = ?' }.join(' OR '), *tags]
         end
@@ -100,4 +100,5 @@ class PostsController < ApplicationController
     return if params[:tag].nil? && params[:tags].nil?
     @tags ||= "#{params[:tag]},#{params[:tags]}".split(',').map(&:downcase).map(&:strip).reject(&:empty?)
   end
+  helper_method :tags
 end
