@@ -2,7 +2,10 @@
 = xml_stylesheet 'main'
 = xml_stylesheet 'coderay'
 %feed{:xmlns => "http://www.w3.org/2005/Atom", 'xml:base' => feed[:url]}
-  %title Blog Posts : Nex3
+  - unless params[:tag]
+    %title Blog Posts : Nex3
+  - else
+    %title== Blog Posts About #{params[:tag].titleize} : Nex3
   %id= feed[:url]
   %updated= @posts[-1].created_at.xmlschema
   %icon= image_path('favicon.png')
