@@ -3,7 +3,7 @@ require 'redcloth'
 class Post < ActiveRecord::Base
   validates_presence_of :title, :content
   has_many :comments, :dependent => :destroy, :order => 'created_at'
-  has_and_belongs_to_many :tags, :order => 'name', :before_remove => :destroy_dangling_tag
+  has_and_belongs_to_many :tags, :order => 'name', :after_remove => :destroy_dangling_tag
 
   def render
     render_string content
@@ -53,10 +53,11 @@ class Post < ActiveRecord::Base
 
   def tag_string=(tags)
     tags = tags.split(',').map { |t| t.strip.downcase }
+
+    self.tags.clear
     models = Tag.find(:all, :order => 'name', :conditions => [tags.map { "name = ?" }.join(" OR "), *tags])
     models = models.inject({}) { |memo, model| memo[model.name] = model; memo }
 
-    self.tags.clear
     tags.each { |tag| models[tag] ? self.tags << models[tag] : self.tags.build(:name => tag) }
   end
 
@@ -153,7 +154,7 @@ class Post < ActiveRecord::Base
   private
 
   def destroy_dangling_tag(tag)
-    tag.destroy if tag.posts.count == 1
+    tag.destroy if tag.posts.count == 0
   end
 
   def next_or_prev(op, order)

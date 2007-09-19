@@ -324,6 +324,19 @@ describe Post, " with new tags set via #tag_string=" do
   end
 end
 
+describe Post, " with similar tags set via #tag_string=" do
+  fixtures :posts, :posts_tags, :tags
+
+  before :each do
+    @post = posts(:first)
+    @post.tag_string = "emacs, fungy"
+  end
+
+  it "should return the same string with #tag_string" do
+    @post.tag_string.should == "emacs, fungy"
+  end
+end
+
 describe Post, " with strangely formatted tags set via #tag_string=" do
   fixtures :posts, :posts_tags, :tags
 
