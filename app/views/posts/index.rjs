@@ -1,5 +1,9 @@
 if @posts.empty?
-  page["search_results"].replace("<div id='search_results' class='fail'>No results found for <strong>#{h params[:query]}</strong></div>")
+  if params[:query]
+    page["search_results"].replace("<div id='search_results' class='fail'>No results found for <strong>#{h params[:query]}</strong></div>")
+  else
+    page["search_results"].replace("<div id='search_results'></div>")
+  end
 else
   page["search_results"].replace("<ul id='search_results'>" + @posts.map do |post|
                                    "<li class='#{cycle('even', 'odd')}'>#{link_to h(post.title), post_url(post)}</li>"

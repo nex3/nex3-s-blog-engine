@@ -70,7 +70,7 @@ class PostsController < ApplicationController
     @current_objects ||=
       Post.find(:all, {
                   :order => 'posts.created_at DESC', :limit => 6, :include => [:comments, :tags],
-                  :offset => page * 6, :tags => tags, :query => params[:query],
+                  :offset => page * 6, :tags => tags, :query => params.include?(:query) ? params[:query] || "" : nil,
                 })
   end
 
