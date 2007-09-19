@@ -17,6 +17,12 @@ describe PostsController do
     controller.send(:current_objects)
   end
 
+  it "should find any number of posts if it's a Javascript request" do
+    @params[:format] = 'js'
+    Post.expects(:find).with(anything, has_entry(:limit, nil))
+    controller.send(:current_objects)
+  end
+
   it "should order posts by creation time" do
     Post.expects(:find).with(anything, has_entry(:order, 'posts.created_at DESC'))
     controller.send(:current_objects)

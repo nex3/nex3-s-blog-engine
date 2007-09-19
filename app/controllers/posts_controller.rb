@@ -69,7 +69,7 @@ class PostsController < ApplicationController
   def current_objects
     @current_objects ||=
       Post.find(:all, {
-                  :order => 'posts.created_at DESC', :limit => 6, :include => [:comments, :tags],
+                  :order => 'posts.created_at DESC', :limit => params[:format] == 'js' ? nil : 6, :include => [:comments, :tags],
                   :offset => page * 6, :tags => tags, :query => params.include?(:query) ? params[:query] || "" : nil,
                 })
   end
