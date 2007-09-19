@@ -107,39 +107,18 @@ class Post < ActiveRecord::Base
         end
     end
 
-    def find_with_tags(*args)
-      handle_option(:tags, args) do |options, tags|
-        options[:select] ||= 'posts.*'
-        options[:joins]  ||= ''
-        options[:joins]  << <<-END
-          INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id
-          INNER JOIN tags AS inner_tags ON inner_tags.id = inner_posts_tags.tag_id
-        END
-        add_to_conditions(options, tags.map { 'inner_tags.name = ?' }.join(' OR '), *tags)
-      end
-    end
-    alias_method_chain :find, :tags
+    protected
 
-    def find_with_query(*args)
-      handle_option(:query, args) do |options, query|
-        if query.empty?
-          add_to_conditions(options, 'false')
-        else
-          term = "%#{query}%"
-          add_to_conditions(options, "posts.content LIKE ? OR posts.title LIKE ?", term, term)
+    def handle_find_option(name, &block)
+      eigenclass = class << self; self; end
+      eigenclass.send :define_method, "find_with_#{name}_handled" do |*args|
+        options = extract_options_from_args!(args)
+        if option = options.delete(name)
+          block[options, option]
         end
+        send("find_without_#{name}_handled", *(args + [options]))
       end
-    end
-    alias_method_chain :find, :query
-
-    private
-
-    def handle_option(name, args)
-      options = extract_options_from_args!(args)
-      if option = options.delete(name)
-        yield options, option
-      end
-      send("find_without_#{name}", *(args + [options]))
+      eigenclass.send :alias_method_chain, :find, "#{name}_handled"
     end
 
     def add_to_conditions(options, condition, *args)
@@ -149,6 +128,25 @@ class Post < ActiveRecord::Base
       else
         options[:conditions] = sanitize_sql(options[:conditions]) + " AND (#{sanitize_sql(condition)})"
       end
+    end
+  end
+
+  handle_find_option(:tags) do |options, tags|
+    options[:select] ||= 'posts.*'
+    options[:joins]  ||= ''
+    options[:joins]  << <<-END
+      INNER JOIN posts_tags AS inner_posts_tags ON posts.id = inner_posts_tags.post_id
+      INNER JOIN tags AS inner_tags ON inner_tags.id = inner_posts_tags.tag_id
+    END
+    add_to_conditions(options, tags.map { 'inner_tags.name = ?' }.join(' OR '), *tags)
+  end
+
+  handle_find_option(:query) do |options, query|
+    if query.empty?
+      add_to_conditions(options, 'false')
+    else
+      term = "%#{query}%"
+      add_to_conditions(options, "posts.content LIKE ? OR posts.title LIKE ?", term, term)
     end
   end
 
