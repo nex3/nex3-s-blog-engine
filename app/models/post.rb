@@ -122,8 +122,12 @@ class Post < ActiveRecord::Base
 
     def find_with_query(*args)
       handle_option(:query, args) do |options, query|
-        term = "%#{query}%"
-        add_to_conditions(options, "posts.content LIKE ? OR posts.title LIKE ?", term, term)
+        if query.empty?
+          add_to_conditions(options, 'false')
+        else
+          term = "%#{query}%"
+          add_to_conditions(options, "posts.content LIKE ? OR posts.title LIKE ?", term, term)
+        end
       end
     end
     alias_method_chain :find, :query

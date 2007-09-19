@@ -124,6 +124,10 @@ describe Post, ".find_with_query" do
     Post.find(:all, :query => "the three ordered posts", :order => 'created_at DESC').should ==
       [posts(:end), posts(:mid), posts(:start)]
   end
+
+  it "should return an empty array if query is empty" do
+    Post.find(:all, :query => "").should be_empty
+  end
 end
 describe Post, "with a normal configuration" do
   fixtures :posts
