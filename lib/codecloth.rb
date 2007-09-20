@@ -63,7 +63,7 @@ module CodeCloth
 
   def syntaxify(text, scanner)
     text.gsub!(SYNTAXLESS_CODE_RE) do
-      escape_pre scanner.new(CGI::unescapeHTML($1)).tokenize.html(HTML_OPTIONS)
+      escape_pre scanner.new(CGI::unescapeHTML($1)).tokenize.html(HTML_OPTIONS).gsub('&amp;', '&#38;')
     end
     text
   end
