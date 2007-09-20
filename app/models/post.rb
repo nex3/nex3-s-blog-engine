@@ -52,6 +52,11 @@ class Post < ActiveRecord::Base
   end
 
   def tag_string=(tags)
+    if tags.empty?
+      self.tags.clear
+      return
+    end
+
     tags = tags.split(',').map { |t| t.strip.downcase }
 
     self.tags.clear

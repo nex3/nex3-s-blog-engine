@@ -296,6 +296,11 @@ describe Post, " with a couple tags" do
   it "should return a comma-separated list with #tag_string" do
     posts(:first).tag_string.should == "awesome, emacs"
   end
+
+  it "should empty the tags when #tag_string is set to an empty string" do
+    posts(:first).tag_string = ""
+    posts(:first).tags.should be_empty
+  end
 end
 
 describe Post, " with new tags set via #tag_string=" do
