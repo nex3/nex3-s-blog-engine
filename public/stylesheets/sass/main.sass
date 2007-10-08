@@ -323,11 +323,15 @@ a img
     :top 1em
     :left = !comment_line_out
     :right = !comment_line_out
-  #new_comment .textile
-    :font-size 0.8em
-    :position absolute
-    :left 23em
-    :margin-top -1.5em
+  #new_comment
+    .textile
+      :font-size 0.8em
+      :position absolute
+      :left 23em
+      :margin-top -1.5em
+    .email
+      // Anti-spam!
+      :display none
 
 .model.comment
   :border-bottom

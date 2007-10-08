@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
 
   def params_with_ip_and_agent
     ps = params_without_ip_and_agent
-    
+
     if ps[:user] 
       ps[:user][:ip]       = request.remote_ip              if ps[:user][:ip].nil?
       ps[:user][:agent]    = request.env['HTTP_USER_AGENT'] if ps[:user][:agent].nil?

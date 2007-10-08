@@ -118,3 +118,62 @@ describe Comment, "with a poster who is an admin" do
     @rendered.should include('<p id')
   end
 end
+
+describe Comment, " with potentially spammy content" do
+  fixtures :comments, :users
+
+  before(:each) do
+    @akismet_info = ["129.67.12.100",
+      "Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.8.1.6) Gecko/20070919 Ubuntu/7.10 (gutsy) Firefox/2.0.0.6",
+      nil, "", "comment", "Bob", "bob@bob.com", "http://www.google.com", "I... love... comments!", {}]
+    @comment = comments(:two)
+  end
+
+  it "should check with Akismet when spam? is asked" do
+    AkismetInstance.expects(:commentCheck).with(*@akismet_info).returns(true)
+    @comment.should be_spam
+  end
+
+  it "should cache a positive spam? result" do
+    AkismetInstance.expects(:commentCheck).times(1).returns(true)
+    @comment.should be_spam
+    @comment.should be_spam
+  end
+
+  it "should cache a negative spam? result" do
+    AkismetInstance.expects(:commentCheck).times(1).returns(false)
+    @comment.should_not be_spam
+    @comment.should_not be_spam
+  end
+
+  it "should notify Akismet when spam! is declared" do
+    AkismetInstance.expects(:submitSpam).with(*@akismet_info)
+    @comment.spam!
+  end
+
+  it "should cache a spam! declaration" do
+    AkismetInstance.stubs(:submitSpam)
+    AkismetInstance.expects(:commentCheck).never
+    @comment.spam!
+    @comment.should be_spam
+  end
+
+  it "should notify Akismet when ham! is declared" do
+    AkismetInstance.expects(:submitHam).with(*@akismet_info)
+    @comment.ham!
+  end
+
+  it "should cache a ham! declaration" do
+    AkismetInstance.stubs(:submitHam)
+    AkismetInstance.expects(:commentCheck).never
+    @comment.ham!
+    @comment.should_not be_spam
+  end
+
+  it "shouldn't validate if it's spammy" do
+    @comment = Comment.new(@comment.attributes)
+    AkismetInstance.stubs(:submitSpam)
+    @comment.spam!
+    @comment.should have(1).error_on(:content)
+  end
+end

@@ -12,6 +12,9 @@
     .user_site
       %label{:for => 'user_link'} Website (also optional)
       = text_field_tag 'user[link]', h(current_user.link), :id => 'user_link'
+    .email
+      %label{:for => 'email'} Email (you shouldn't see this - if you do, let me know)
+      = text_field_tag 'email', '', :id => 'email'
     %p.textile
       Make your comments snazzy with
       = succeed '!' do

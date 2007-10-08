@@ -31,7 +31,8 @@ class Comment < ActiveRecord::Base
   alias_method_chain :user, :anon
 
   def spam?
-    @spam ||= AkismetInstance.commentCheck(*akismet_info)
+    @spam = AkismetInstance.commentCheck(*akismet_info) if @spam.nil?
+    @spam
   end
 
   def spam!

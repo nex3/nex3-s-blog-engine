@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
     belongs_to :post
 
     before(:create) do
+      @comment.spam! if params[:email] && !params[:email].empty?
       @user = current_user_if_same User.new(params[:user])
       @comment.user = @user
     end

@@ -82,6 +82,18 @@ describe CommentsController, "#create" do
     post :create, @params
     response.should redirect_to('http://back.host/')
   end
+
+  it "shouldn't mark the comment as spam if params[:email] is empty" do
+    @params[:email] = ""
+    @comment.expects(:spam!).never
+    post :create, @params
+  end
+
+  it "should mark the comment as spam if params[:email] is filled in" do
+    @params[:email] = "foo@bar.com"
+    @comment.expects(:spam!)
+    post :create, @params
+  end
 end
 
 describe CommentsController, "#new" do
