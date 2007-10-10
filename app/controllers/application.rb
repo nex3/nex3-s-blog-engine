@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :post_path, :post_url, :current_user, :admin?, :proper?
 
+  filter_parameter_logging :pass
+
   protected
 
   def self.title(title)
