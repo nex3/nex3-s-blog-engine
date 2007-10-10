@@ -25,4 +25,4 @@
           = stylesheet_link_tag 'main'
           = stylesheet_link_tag 'coderay'
           .content= find_and_preserve(comment.render)
-      %link{:rel => 'alternate', :href => object_path(comment)}/
+      %link{:rel => 'alternate', :href => comment_path(comment.post_id, comment)}/
