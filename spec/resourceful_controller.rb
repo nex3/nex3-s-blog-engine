@@ -2,7 +2,7 @@ module ResourcefulController
   def stub_index(models = 1)
     stub_generics
     
-    stubs = [instance_variable_set("@#{controller.instance_variable_name}", [])] * models
+    stubs = [instance_variable_set("@#{controller.instance_variable_name}", stub)] * models
     controller.stubs(:current_objects).returns(stubs)
   end
 
@@ -54,7 +54,7 @@ module ResourcefulController
 
   def stub_parents
     stubs = []
-    controller.parent_models.each do |parent|
+    (@parent_models || controller.parent_models).each do |parent|
       name = "@#{parent.to_s.underscore}"
       inst = stub(name)
       instance_variable_set(name, inst)

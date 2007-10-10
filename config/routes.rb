@@ -14,6 +14,8 @@ ActionController::Routing::Routes.draw do |map|
     p.resources :comments
   end
 
+  map.resources :comments, :name_prefix => "all_"
+
   map.connect '', :controller => 'posts'
 
   map.connect ':page', :controller => 'static', :action => 'show', :conditions => {:method => :get}

@@ -30,6 +30,7 @@ class CommentsController < ApplicationController
   layout false, :only => :edit
 
   before_filter :require_proper_user, :only => [:update, :edit, :destroy]
+  before_filter :ensure_post_exists, :except => :index
 
   def show
     redirect_to "#{post_path(Post.find(params[:post_id]))}#comment_#{params[:id]}"
@@ -37,7 +38,13 @@ class CommentsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.html { redirect_to post_path(Post.find(params[:post_id])) + '#comments' }
+      format.html do
+        if params[:post_id]
+          redirect_to post_path(@post) + '#comments'
+        else
+          redirect_to '/'
+        end
+      end
       format.atom do
         load_objects
         headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
@@ -47,6 +54,21 @@ class CommentsController < ApplicationController
   end
 
   def current_objects
-    @post.comments.find(:all, :order => 'created_at DESC')
+    current_model.find(:all, :order => 'created_at DESC', :limit => 10)
+  end
+
+  def parents
+    params[:post_id] ? super : []
+  end
+
+  def namespaces
+    params[:post_id] ? [] : [:all]
+  end
+
+  def ensure_post_exists
+    unless params[:post_id]
+      redirect_to '/'
+      false
+    end
   end
 end

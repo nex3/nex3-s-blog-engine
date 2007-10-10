@@ -1,17 +1,54 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe CommentsController, "#index" do
+describe CommentsController, "#index with a post" do
   include ResourcefulController
-  before(:each) { stub_index }
-
-  it "should redirect to the comments section of the appropriate post" do
+  before(:each) do
+    stub_view
+    stub_env
     @post = stub
+    Post.stubs(:find).returns(@post)
+  end
+
+  it "should redirect to the comments section of the appropriate post for an HTML request" do
     @post.stubs(:slug).returns("foobario")
     @post.stubs(:to_param).returns("16")
-    Post.stubs(:find).returns(@post)
 
     get :index, :post_id => 16
     response.should redirect_to('/posts/16-foobario#comments')
+  end
+
+  it "should display the ATOM feed for an ATOM request" do
+    controller.stubs(:load_objects)
+    controller.expect_render(:action => 'index', :layout => false)
+
+    get :index, :post_id => 16, :format => 'atom'
+    response.headers['Content-Type'].should == 'application/atom+xml; charset=utf-8'
+  end
+
+  it "should only find 10 comments scoped by the given post and order them by created_at DESC for ATOM" do
+    comments = stub("@post.comments")
+    @post.stubs(:comments).returns(comments)
+    comments.expects(:find).with(:all, :order => 'created_at DESC', :limit => 10)
+
+    get :index, :post_id => 16, :format => 'atom'
+  end
+end
+
+describe CommentsController, "#index without a post" do
+  include ResourcefulController
+  before(:each) do
+    stub_view
+    stub_env
+  end
+
+  it "should redirect to / for an HTML request" do
+    get :index
+    response.should redirect_to('/')
+  end
+
+  it "should only find 10 comments and order them by created_at DESC for ATOM" do
+    Comment.expects(:find).with(:all, :order => 'created_at DESC', :limit => 10)
+    get :index, :format => 'atom'
   end
 end
 
@@ -19,6 +56,7 @@ describe CommentsController, "#create" do
   include ResourcefulController
 
   before(:each) do
+    @parent_models = [Post]
     stub_create
 
     @params = {
@@ -94,12 +132,19 @@ describe CommentsController, "#create" do
     @comment.expects(:spam!)
     post :create, @params
   end
+
+  it "should redirect to / if there's no post_id" do
+    @params.delete :post_id
+    post :create, @params
+    response.should redirect_to('/')
+  end
 end
 
 describe CommentsController, "#new" do
   include ResourcefulController
 
   before(:each) do
+    @parent_models = [Post]
     stub_new
 
     @params = {:post_id => 42}
@@ -118,6 +163,12 @@ describe CommentsController, "#new" do
     controller.expects(:current_user_if_same).never
     get :new, @params
   end
+
+  it "should redirect to / if there's no post_id" do
+    @params.delete :post_id
+    post :new, @params
+    response.should redirect_to('/')
+  end
 end
 
 describe CommentsController, "#update" do
@@ -125,6 +176,7 @@ describe CommentsController, "#update" do
   include ApplicationSpecHelpers
 
   before :each do
+    @parent_models = [Post]
     stub_update
 
     @params = {
@@ -154,6 +206,7 @@ describe CommentsController, "#destroy" do
   include ApplicationSpecHelpers
 
   before :each do
+    @parent_models = [Post]
     stub_destroy
 
     @params = {
@@ -191,6 +244,7 @@ describe CommentsController, "#edit" do
   include ApplicationSpecHelpers
 
   before :each do
+    @parent_models = [Post]
     stub_edit
 
     @params = {

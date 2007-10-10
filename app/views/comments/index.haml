@@ -2,11 +2,15 @@
 = xml_stylesheet 'main'
 = xml_stylesheet 'coderay'
 %feed{:xmlns => "http://www.w3.org/2005/Atom"}
-  %title== #{h @post.title} : Comments : Nex3
-  %id= comments_url(@post)
-  %updated= (@comments[-1] || @post).created_at.xmlschema
+  %title
+    - if @post
+      == #{h @post.title} : 
+    Comments : Nex3
+  %id= objects_url
+  - unless @comments.empty? && @post.nil?
+    %updated= (@comments[-1] || @post).created_at.xmlschema
   %icon= image_path('favicon.png')
-  %link{:rel => 'self', :href => comments_path(@post) + '.atom'}/
+  %link{:rel => 'self', :href => objects_path + '.atom'}/
   - for comment in current_objects
     %entry
       %id= comment.uid
