@@ -14,7 +14,7 @@
   - for comment in current_objects
     %entry
       %id= comment.uid
-      %title= h truncate(comment.content, 50)
+      %title= h truncate(comment.content.gsub(/\s+/, ' '), 50)
       %updated= comment.updated_at.xmlschema
       %published= comment.created_at.xmlschema
       %author
