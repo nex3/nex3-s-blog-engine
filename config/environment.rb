@@ -24,7 +24,17 @@ end
 #
 #   blog: ...
 #   apikey: ...
-conf = YAML.load(File.read(File.join(RAILS_ROOT, "config", "akismet.yml")))
-AkismetInstance = Akismet.new(conf["apikey"], conf["blog"])
+file = File.join(RAILS_ROOT, "config", "akismet.yml")
+if File.exists?(file)
+  conf = YAML.load(File.read(file))
+  AkismetInstance = Akismet.new(conf["apikey"], conf["blog"])
+else
+  class Fakismet < Akismet
+    def initialize; super("", ""); end
+    def callAkismet(*whatever); false; end
+  end
+
+  AkismetInstance = Fakismet.new
+end
 
 %w{codecloth syntax/lisp syntax/javascript}.each(&method(:require))
