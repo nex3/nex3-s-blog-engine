@@ -3,23 +3,24 @@
     .flash
       .error= flash[:comment_errors]
   - form_for :comment, Comment.new, :url => comments_path(@post) do |f|
-    .user_name
-      %label{:for => 'user_name'} Name
-      = text_field_tag 'user[name]', h(current_user.name), :id => 'user_name'
-    .user_email
-      %label{:for => 'user_email'} Email (optional)
-      = text_field_tag 'user[email]', h(current_user.email), :id => 'user_email'
-    .user_site
-      %label{:for => 'user_link'} Website (also optional)
-      = text_field_tag 'user[link]', h(current_user.link), :id => 'user_link'
-    .email
-      %label{:for => 'email'} Email (you shouldn't see this - if you do, let me know)
-      = text_field_tag 'email', '', :id => 'email'
-    %p.textile
-      Make your comments snazzy with
-      = succeed '!' do
-        %a{:href => 'http://hobix.com/textile/quick.html'} Textile
-    #content_field~ f.text_area :content
-    = preview_button new_comment_path(current_object), 'preview'
-    = submit_tag 'Comment!', :class => 'button'
+    %fieldset
+      .user_name
+        %label{:for => 'user_name'} Name
+        = text_field_tag 'user[name]', h(current_user.name), :id => 'user_name'
+      .user_email
+        %label{:for => 'user_email'} Email (optional)
+        = text_field_tag 'user[email]', h(current_user.email), :id => 'user_email'
+      .user_site
+        %label{:for => 'user_link'} Website (also optional)
+        = text_field_tag 'user[link]', h(current_user.link), :id => 'user_link'
+      .email
+        %label{:for => 'email'} Email (you shouldn't see this - if you do, let me know)
+        = text_field_tag 'email', '', :id => 'email'
+      %p.textile
+        Make your comments snazzy with
+        = succeed '!' do
+          %a{:href => 'http://hobix.com/textile/quick.html'} Textile
+      #content_field~ f.text_area :content
+      = preview_button new_comment_path(current_object), 'preview'
+      = submit_tag 'Comment!', :class => 'button'
   #preview.content{:style => 'display: none'}
