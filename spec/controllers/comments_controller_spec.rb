@@ -25,10 +25,10 @@ describe CommentsController, "#index with a post" do
     response.headers['Content-Type'].should == 'application/atom+xml; charset=utf-8'
   end
 
-  it "should only find 10 comments scoped by the given post and order them by created_at DESC for ATOM" do
+  it "should only find 10 comments scoped by the given post, including users, and order them by created_at DESC for ATOM" do
     comments = stub("@post.comments")
     @post.stubs(:comments).returns(comments)
-    comments.expects(:find).with(:all, :order => 'created_at DESC', :limit => 10)
+    comments.expects(:find).with(:all, :order => 'created_at DESC', :limit => 10, :include => :user)
 
     get :index, :post_id => 16, :format => 'atom'
   end
@@ -46,8 +46,8 @@ describe CommentsController, "#index without a post" do
     response.should redirect_to('/')
   end
 
-  it "should only find 10 comments and order them by created_at DESC for ATOM" do
-    Comment.expects(:find).with(:all, :order => 'created_at DESC', :limit => 10)
+  it "should find the comments from the Comment model" do
+    Comment.expects(:find).with(:all, anything)
     get :index, :format => 'atom'
   end
 end
