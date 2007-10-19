@@ -70,3 +70,10 @@ adminny:
 
     fn1. Yes.
   created_at: 2007-04-02 00:00:00
+oneword:
+  id: 11
+  post_id: 3
+  user_id: 4
+  content: Cool!
+  created_at: 2007-04-02 00:00:00
+

@@ -8,6 +8,14 @@ describe Comment, "with empty content" do
   end
 end
 
+describe Comment, "with one-word content" do
+  fixtures :comments
+
+  it "should have one error on content" do
+    comments(:oneword).should have(1).error_on(:content)
+  end
+end
+
 describe Comment, "with nil content" do
   fixtures :comments
 

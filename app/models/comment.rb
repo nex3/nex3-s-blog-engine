@@ -1,7 +1,7 @@
 require 'redcloth'
 
 class Comment < ActiveRecord::Base
-  validates_presence_of :content
+  validate :content_has_multiple_words
   validates_presence_of :post_id
   belongs_to :post
   belongs_to :user
@@ -54,6 +54,12 @@ class Comment < ActiveRecord::Base
   def validate
     if user_without_anon && !user.save
       user.errors.each { |name, message| errors.add(name, message) }
+    end
+  end
+
+  def content_has_multiple_words
+    unless content && content.split(' ').size > 1
+      errors.add(:content, " must be longer than one word.")
     end
   end
 
