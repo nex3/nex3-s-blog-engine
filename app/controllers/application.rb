@@ -39,10 +39,10 @@ class ApplicationController < ActionController::Base
   end
   alias_method_chain :post_url, :slug
 
-  def comments_path_with_slug(post)
+  def post_comments_path_with_slug(post)
     "#{post_path(post)}#comments"
   end
-  alias_method_chain :comments_path, :slug
+  alias_method_chain :post_comments_path, :slug
 
   # ====
   # Login Management

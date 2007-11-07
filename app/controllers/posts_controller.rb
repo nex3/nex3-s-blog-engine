@@ -62,8 +62,8 @@ class PostsController < ApplicationController
     else nil end
   end
 
-  def current_param
-    params[:id].scan(/^(\d+)/)[0][0]
+  def current_object
+    @current_object ||= Post.find(params[:id].scan(/^(\d+)/)[0][0])
   end
 
   def current_objects

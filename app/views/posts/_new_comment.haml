@@ -2,7 +2,7 @@
   - if flash[:comment_errors]
     .flash
       .error= flash[:comment_errors]
-  - form_for :comment, Comment.new, :url => comments_path(@post) do |f|
+  - form_for :comment, Comment.new, :url => post_comments_path(@post) do |f|
     %fieldset
       .user_name
         %label{:for => 'user_name'} Name
@@ -21,6 +21,6 @@
         = succeed '!' do
           %a{:href => 'http://hobix.com/textile/quick.html'} Textile
       #content_field~ f.text_area :content
-      = preview_button new_comment_path(current_object), 'preview'
+      = preview_button new_post_comment_path(current_object), 'preview'
       = submit_tag 'Comment!', :class => 'button'
   #preview.content{:style => 'display: none'}

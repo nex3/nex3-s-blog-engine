@@ -37,19 +37,19 @@ module PostsHelper
 
   def spam_comment_link
     link_to(silk_tag('cross', :alt => 'Mark as spam'),
-            comment_path(@post, @comment) + '?spam=1',
+            post_comment_path(@post, @comment) + '?spam=1',
             :method => :delete, :confirm => 'Mark comment as spam and delete it?', :title => 'Mark as spam')
   end
 
   def delete_comment_link
     link_to(silk_tag('comment_delete', :alt => 'Delete comment'),
-            comment_path(@post, @comment),
+            post_comment_path(@post, @comment),
             :method => :delete, :confirm => 'Delete comment?', :title => 'Delete comment')
   end
 
   def edit_comment_link
     link_to_remote(silk_tag('comment_edit', :alt => 'Edit comment'),
-                   { :url => edit_comment_path(@post || @comment.post, @comment),
+                   { :url => edit_post_comment_path(@post || @comment.post, @comment),
                      :update => "comment_#{@comment.id}_content", :method => :get },
                    :title => 'Edit comment')
   end

@@ -82,7 +82,7 @@ describe ApplicationController, "#comments_path" do
 
   it "should follow post_path with a #comments anchor" do
     @post.stubs(:slug).returns('foobario')
-    controller.comments_path(@post).should == "/posts/42-foobario#comments"
+    controller.post_comments_path(@post).should == "/posts/42-foobario#comments"
   end
 end
 
