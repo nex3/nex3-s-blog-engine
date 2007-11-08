@@ -50,7 +50,7 @@ module ApplicationHelper
   # Stuff for the application-wide layout
 
   def glyph
-    '⊕'
+    '&#9731;'
   end
 
   def flash_display

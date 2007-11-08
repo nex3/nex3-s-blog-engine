@@ -35,6 +35,29 @@ a img
   :border-style none
   :vertical-align middle
 
+h1, h2, h3, h4, h5, h6
+  :font-weight normal
+
+h2, h3, h4, h5, h6
+  :font-variant small-caps
+
+h3, h4, h5, h6
+  :margin
+    :top 1.5em
+    :bottom -0.1em
+
+h1
+  :font-size 1.9em
+  :letter-spacing 0.1em
+  :font-family serif
+
+h2
+  :font-size 1.5em
+  :letter-spacing 0.1em
+  :margin
+    :top 1em
+    :bottom -0.1em
+
 .center
   :margin 0 auto
   :text-align center
@@ -58,18 +81,14 @@ a img
     :left -2%
 
 #content
-  :width 70%
+  :width 68%
   :float left
-  h1
-    :font
-      :weight normal
-      :size 1.5em
-    :text-align center
+  :margin-left 1%
 
 #full
   :width 100%
   :margin 0 auto
-  *
+  #main, #header
     :text-align left
 
 !header_bg = #23238E
@@ -102,6 +121,8 @@ a img
     :position relative
     :left 29em
     :top 1em
+    :font-variant small-caps
+    :letter-spacing 1px
 
 !flash_notice_color = #080
 !flash_error_color = #800
@@ -257,14 +278,39 @@ a img
     :margin 0 auto
       :top 0.2em
 
+p + .footnote
+  :margin-top 2em
+  :padding-top 1.5em
+  :border-top
+    :style dotted
+    :width 1px
+    :color #bbb
+.footnote + .footnote
+  :margin-top auto
+  :padding-top auto
+  :border-top-style none
+
 .content
+  :line-height 1.6em
   .footnote
     :font-size 0.8em
+  sup a
+    :text-decoration none
+    :border none !important
+  a
+    :text-decoration none
+    :border-bottom
+      :color #00f
+      :width 1px
+      :style dotted
+    &:hover
+      :border-bottom-style solid
+    &:visited
+      :border-color #551a8b
 
 .model.post
-  h2
-    :margin-bottom 0
-    :font-size 1.4em
+  h1
+    :margin-bottom 0.1em
     a
       :color #000
       :text-decoration none
@@ -279,9 +325,7 @@ a img
       :color #000000
   .posted
     :font-size 0.8em
-    :font-style italic
-    .small_date
-      :font-size 0.7em
+    :color #999
   .side_links
     :margin-top 4px
   .tags
@@ -301,7 +345,7 @@ a img
     :style dotted
     :width 1px
     :color #ccc
-  :padding-bottom 1em
+  :padding-bottom 2em
   .links
     a
       :width 11em
@@ -312,7 +356,7 @@ a img
       img
         :margin-right 0.3em
       &.more:hover:after
-        :content " >>"
+        :content " →"
 
 .model
   :position relative
@@ -398,6 +442,7 @@ body.posts
       :font-size 1.2em
 
 #signin
+  :font-size 2em
   :position absolute
   :top 0
   :right 0
@@ -412,7 +457,3 @@ body.posts
     :right 2em
     :top -0.2em
     :font-size 10em
-
-.static #content
-  h1
-    :font-weight normal

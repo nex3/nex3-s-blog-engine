@@ -146,13 +146,6 @@ describe ApplicationHelper, "#silk_tag" do
 end
 
 
-describe ApplicationHelper, "#glyph" do
-  it "should return the current glyph" do
-    glyph.should == '⊕'
-  end
-end
-
-
 describe ApplicationHelper, "#flash_display" do
   before :each do
     stubs(:flash).returns(:notice => "Yay!", :error => "Boo!")

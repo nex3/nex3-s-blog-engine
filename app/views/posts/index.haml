@@ -1,5 +1,5 @@
 - if params[:query]
-  %h1== Search results for "#{h params[:query]}"
+  %h1.center== Search results for "#{h params[:query]}"
 - for @post in @posts
   = render :partial => 'post_small'
 - if page != 0 || @posts.last != Post.oldest

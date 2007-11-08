@@ -3,12 +3,13 @@ class Tag < ActiveRecord::Base
   has_and_belongs_to_many :posts
 
   def self.all_with_postcount
-    self.find_by_sql <<-END
+    tags = self.find_by_sql <<-END
       SELECT tags.*, COUNT(posts_tags.post_id) AS post_count FROM tags
       LEFT OUTER JOIN posts_tags ON posts_tags.tag_id = tags.id
       GROUP BY posts_tags.tag_id
       ORDER BY post_count DESC
     END
+    tags.select { |tag| tag.post_count >= Post.count / 10 }
   end
 
   # Warning: returns nil if not retrieved with Tag.all_with_postcount

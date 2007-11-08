@@ -9,7 +9,7 @@ ActiveRecord::Schema.define(:version => 6) do
     t.column "content",    :text,     :default => "",                    :null => false
     t.column "created_at", :datetime
     t.column "post_id",    :integer
-    t.column "updated_at", :datetime, :default => '2007-08-27 19:19:16'
+    t.column "updated_at", :datetime, :default => '2007-09-03 22:42:42'
   end
 
   create_table "posts", :force => true do |t|
