@@ -6,4 +6,9 @@ module CommentsHelper
       :loading => "$('comment_#{@comment.id}_content').spin()",
       :failure => "$('comment_#{@comment.id}_content').update(\"<h3 class='failure'>Save Failed</h3>\")"
   end
+
+  def atom_title(comment)
+    h((params[:post_id] ? '' : "#{comment.post.title} : ") +
+      truncate(comment.content.gsub(/\s+/, ' '), 50))
+  end
 end

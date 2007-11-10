@@ -54,7 +54,8 @@ class CommentsController < ApplicationController
   end
 
   def current_objects
-    current_model.find(:all, :order => 'created_at DESC', :limit => 10, :include => :user)
+    current_model.find(:all, :order => 'comments.created_at DESC', :limit => 10,
+                       :include => params[:post_id] ? :user : [:user, :post])
   end
 
   def parents
