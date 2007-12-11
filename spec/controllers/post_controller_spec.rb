@@ -138,14 +138,9 @@ describe PostsController, "#index" do
     response.should render_template("index")
   end
 
-  it "should render the atom template on an atom request" do
-    get :index, :format => 'atom'
-    response.should render_template("index_atom")
-  end
-
   it "should render the atom template with the proper content-type" do
     get :index, :format => 'atom'
-    response.headers['Content-Type'].should == 'application/atom+xml; charset=utf-8'
+    response.headers['type'].should == 'application/atom+xml; charset=utf-8'
   end
 
   it "should set the title for index with a query" do
@@ -200,7 +195,7 @@ describe PostsController, "#new" do
   it "should render Javascript when called with format 'js'" do
     set_admin
     get :new, :format => 'js'
-    response.headers['Content-Type'].should == 'text/javascript; charset=utf-8'
+    response.headers['type'].should == 'text/javascript; charset=utf-8'
   end
 end
 

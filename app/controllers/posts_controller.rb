@@ -21,11 +21,8 @@ class PostsController < ApplicationController
 
     response_for :index do |format|
       format.html
-      format.js { render :template => 'posts/index.rjs' }
-      format.atom do
-        headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
-        render :action => 'index_atom', :layout => false
-      end
+      format.js
+      format.atom
     end
   end
 

@@ -118,7 +118,7 @@ class Post < ActiveRecord::Base
     def handle_find_option(name, &block)
       eigenclass = class << self; self; end
       eigenclass.send :define_method, "find_with_#{name}_handled" do |*args|
-        options = extract_options_from_args!(args)
+        options = args.extract_options!
         if option = options.delete(name)
           block[options, option]
         end

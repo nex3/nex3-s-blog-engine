@@ -22,7 +22,7 @@ describe CommentsController, "#index with a post" do
     controller.expect_render(:action => 'index', :layout => false)
 
     get :index, :post_id => 16, :format => 'atom'
-    response.headers['Content-Type'].should == 'application/atom+xml; charset=utf-8'
+    response.headers['type'].should == 'application/atom+xml; charset=utf-8'
   end
 
   it "should only find 10 comments scoped by the given post, including users, and order them by created_at DESC for ATOM" do
