@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
 
     response_for(:create) do
       self.current_user = @user
-      redirect_to post_path(@post) + "#comment_#{@comment.id}"
+      redirect_to "#{parent_path}#comment_#{@comment.id}"
     end
 
     response_for(:create_fails) do
@@ -33,14 +33,14 @@ class CommentsController < ApplicationController
   before_filter :ensure_post_exists, :except => :index
 
   def show
-    redirect_to "#{post_path(Post.find(params[:post_id]))}#comment_#{params[:id]}"
+    redirect_to "#{parent_path}#comment_#{params[:id]}"
   end
 
   def index
     respond_to do |format|
       format.html do
-        if params[:post_id]
-          redirect_to post_path(@post) + '#comments'
+        if parent?
+          redirect_to "#{parent_path}#comments"
         else
           redirect_to '/'
         end
@@ -55,21 +55,16 @@ class CommentsController < ApplicationController
 
   def current_objects
     current_model.find(:all, :order => 'comments.created_at DESC', :limit => 10,
-                       :include => params[:post_id] ? :user : [:user, :post])
-  end
-
-  def parents
-    params[:post_id] ? super : []
+                       :include => parent? ? :user : [:user, :post])
   end
 
   def namespaces
-    params[:post_id] ? [] : [:all]
+    parent? ? [] : [:all]
   end
 
   def ensure_post_exists
-    unless params[:post_id]
-      redirect_to '/'
-      false
-    end
+    return true if parent?
+    redirect_to '/'
+    false
   end
 end
