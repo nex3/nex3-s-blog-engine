@@ -47,20 +47,19 @@ module ResourcefulController
   end
 
   def stub_generics
-    stub_parents
+    stub_parent
     stub_view
     stub_env
   end
 
-  def stub_parents
-    stubs = []
-    (@parent_models || controller.parent_models).each do |parent|
-      name = "@#{parent.to_s.underscore}"
-      inst = stub(name)
-      instance_variable_set(name, inst)
-      stubs << inst
-    end
-    controller.stubs(:parent_objects).returns(stubs)
+  def stub_parent
+    return unless @parent_model || controller.parent?
+
+    parent = @parent_model || controller.parent_model
+    name = "@#{parent.to_s.underscore}"
+    inst = stub(name)
+    instance_variable_set(name, inst)
+    controller.stubs(:parent_object).returns(inst)
   end
 
   def stub_view

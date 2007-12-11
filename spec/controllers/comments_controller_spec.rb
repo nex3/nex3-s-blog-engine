@@ -28,7 +28,7 @@ describe CommentsController, "#index with a post" do
   it "should only find 10 comments scoped by the given post, including users, and order them by created_at DESC for ATOM" do
     comments = stub("@post.comments")
     @post.stubs(:comments).returns(comments)
-    comments.expects(:find).with(:all, :order => 'created_at DESC', :limit => 10, :include => :user)
+    comments.expects(:find).with(:all, :order => 'comments.created_at DESC', :limit => 10, :include => :user)
 
     get :index, :post_id => 16, :format => 'atom'
   end
@@ -56,7 +56,7 @@ describe CommentsController, "#create" do
   include ResourcefulController
 
   before(:each) do
-    @parent_models = [Post]
+    @parent_model = Post
     stub_create
 
     @params = {
@@ -144,7 +144,7 @@ describe CommentsController, "#new" do
   include ResourcefulController
 
   before(:each) do
-    @parent_models = [Post]
+    @parent_model = Post
     stub_new
 
     @params = {:post_id => 42}
@@ -176,7 +176,7 @@ describe CommentsController, "#update" do
   include ApplicationSpecHelpers
 
   before :each do
-    @parent_models = [Post]
+    @parent_model = Post
     stub_update
 
     @params = {
@@ -206,7 +206,7 @@ describe CommentsController, "#destroy" do
   include ApplicationSpecHelpers
 
   before :each do
-    @parent_models = [Post]
+    @parent_model = Post
     stub_destroy
 
     @params = {
@@ -244,7 +244,7 @@ describe CommentsController, "#edit" do
   include ApplicationSpecHelpers
 
   before :each do
-    @parent_models = [Post]
+    @parent_model = Post
     stub_edit
 
     @params = {
