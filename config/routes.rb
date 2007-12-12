@@ -7,13 +7,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users
 
+  map.connect ':page', :controller => 'static', :action => 'show', :conditions => {:method => :get}
+
   map.dates "posts/dates/:year/:month", :controller => 'posts', :action => 'dates', :conditions => {:method => :get}, :defaults => {:month => nil, :year => nil}
   map.resources :posts,    :new => { :new => :post } do |p|
     p.resources :comments, :new => { :new => :post }
   end
   map.resources :comments
 
-  map.connect '', :controller => 'posts'
-
-  map.connect ':page', :controller => 'static', :action => 'show', :conditions => {:method => :get}
+  map.root :controller => 'posts'
 end
