@@ -41,9 +41,10 @@ describe CommentsController, "#index without a post" do
     stub_env
   end
 
-  it "should redirect to / for an HTML request" do
+  it "should render a 422 error for an HTML request" do
     get :index
-    response.should redirect_to('/')
+    response.should_not be_success
+    response.code.should == '422'
   end
 
   it "should find the comments from the Comment model" do
@@ -133,10 +134,11 @@ describe CommentsController, "#create" do
     post :create, @params
   end
 
-  it "should redirect to / if there's no post_id" do
+  it "should render a 422 error there's no post_id" do
     @params.delete :post_id
     post :create, @params
-    response.should redirect_to('/')
+    response.should_not be_success
+    response.code.should == '422'
   end
 end
 
@@ -162,12 +164,6 @@ describe CommentsController, "#new" do
     @comment.stubs(:user).returns(stub)
     controller.expects(:current_user_if_same).never
     get :new, @params
-  end
-
-  it "should redirect to / if there's no post_id" do
-    @params.delete :post_id
-    post :new, @params
-    response.should redirect_to('/')
   end
 end
 

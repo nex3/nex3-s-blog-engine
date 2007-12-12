@@ -30,20 +30,16 @@ class CommentsController < ApplicationController
   layout false, :only => :edit
 
   before_filter :require_proper_user, :only => [:update, :edit, :destroy]
-  before_filter :ensure_post_exists, :except => :index
+  before_filter :ensure_parent_exists, :only => :create
 
   def show
-    redirect_to "#{parent_path}#comment_#{params[:id]}"
+    redirect_to "#{post_path(current_object.post)}#comment_#{params[:id]}"
   end
 
   def index
     respond_to do |format|
       format.html do
-        if parent?
-          redirect_to "#{parent_path}#comments"
-        else
-          redirect_to '/'
-        end
+        redirect_to "#{parent_path}#comments" if ensure_parent_exists
       end
       format.atom do
         load_objects
@@ -56,15 +52,5 @@ class CommentsController < ApplicationController
   def current_objects
     current_model.find(:all, :order => 'comments.created_at DESC', :limit => 10,
                        :include => parent? ? :user : [:user, :post])
-  end
-
-  def namespaces
-    parent? ? [] : [:all]
-  end
-
-  def ensure_post_exists
-    return true if parent?
-    redirect_to '/'
-    false
   end
 end

@@ -49,8 +49,8 @@ module PostsHelper
 
   def edit_comment_link
     link_to_remote(silk_tag('comment_edit', :alt => 'Edit comment'),
-                   { :url => edit_post_comment_path(@post || @comment.post, @comment),
-                     :update => "comment_#{@comment.id}_content", :method => :get },
+                   { :url => edit_post_comment_path(@post || @comment.post, @comment) + '.html',
+                     :update => "comment_#{@comment.id}_content", :method => :get},
                    :title => 'Edit comment')
   end
 
