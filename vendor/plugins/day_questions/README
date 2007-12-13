@@ -1,0 +1,59 @@
+= day_questions
+
++day_questions+ adds helper methods for determining if a specified date/time was
+yesterday, today, or tomorrow.
+
+== Resources
+
+Announcement
+
+* http://www.pluginaweek.org/2006/12/10/7-and-8-date-and-time-get-a-little-extra-oomph
+
+Wiki
+
+* http://wiki.pluginaweek.org/Day_questions
+
+API
+
+* http://api.pluginaweek.org/day_questions
+
+Development
+
+* http://dev.pluginaweek.org/browser/trunk/plugins/ruby/time/day_questions
+
+Source
+
+* http://svn.pluginaweek.org/trunk/plugins/ruby/time/day_questions
+
+== Usage
+
+=== Predicate methods
+
+  >> 1.day.ago.yesterday?
+  => true
+  >> Time.now.today?
+  => true
+  >> 1.day.from_now.tomorrow?
+  => true
+  >> 1.day.from_now.around_today?
+  => true
+
+=== Date/Time formatting
+
+In addition to the predicate methods, there also exists a helper method to
+output a humanized version of the current day which will return "Yesterday",
+"Today", "Tomorrow" or a custom date format if it is outside the range of around
+today.  See <tt>PluginAWeek::CoreExtensions::Date::DayQuestions#human_day</tt> for more
+information.
+
+=== Tips
+
+With the addition of the interpolated_time_formats[http://wiki.pluginaweek.org/Interpolated_time_formats] plugin,
+you can output a string version of the time/date with +human_day+ like so:
+
+  >> Time.now.strftime('#{human_day} at #{hour}')
+  => "Today at 5"
+
+== Dependencies
+
+This plugin does not depend on the presence of any other plugins.
