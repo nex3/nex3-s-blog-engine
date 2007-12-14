@@ -69,9 +69,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= if session[:user_id]
+    @current_user ||= if !session[:user_id].blank?
                         self.current_user = User.find(session[:user_id])
-                      elsif cookies[:user_id]
+                      elsif !cookies[:user_id].blank?
                         self.current_user = User.find(cookies[:user_id])
                       elsif params[:admin]
                         if params[:admin][:name] && params[:admin][:pass] &&
