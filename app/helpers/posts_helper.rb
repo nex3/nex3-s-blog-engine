@@ -57,14 +57,11 @@ module PostsHelper
   # Feed helpers
 
   @@feed_info = {
-    :title => 'Blog Posts : Nex3',
-    :url => 'http://nex-3.com/',
+    :url => "http://#{Nex3::Config['blog']['site']}/",
     :desc => "#{Nex3::Config['author']['name']}'s blog, all about things that interest him.",
-    :lang => 'en-us',
     :name => Nex3::Config['author']['name'],
     :email => Nex3::Config['author']['email'],
     :ttl => 1440,
-#    :image => ?
   }
 
   def self.feed

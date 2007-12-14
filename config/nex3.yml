@@ -1,5 +1,9 @@
 ## Configuration for the blog engine.
 
+blog:
+  site: blog.tld
+  name: Up The Clock
+
 author:
   name:  Hickory Dawkins
   email: hickory@blog.tld

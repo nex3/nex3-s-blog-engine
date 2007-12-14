@@ -259,7 +259,7 @@ end
 describe ApplicationHelper, "#xml_stylesheet" do
   it "should return an XML stylesheet declaration" do
     expects(:stylesheet_path).with("name").returns("/path/to/name.css")
-    xml_stylesheet("name").should == '<?xml-stylesheet href="http://nex-3.com/path/to/name.css" type="text/css" ?>'
+    xml_stylesheet("name").should == "<?xml-stylesheet href=\"http://#{Nex3::Config['blog']['site']}/path/to/name.css\" type=\"text/css\" ?>"
   end
 end
 

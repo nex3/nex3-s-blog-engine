@@ -1,8 +1,7 @@
 require 'application_helper.rb'
 
 class ApplicationController < ActionController::Base
-  # Pick a unique cookie name to distinguish our session data from others'
-  session :session_key => '_nex3_session_id'
+  session :session_key => "_#{Nex3::Config['blog']['name'].downcase}_session_id"
 
   helper_method :post_path, :post_url, :current_user, :admin?, :proper?
 

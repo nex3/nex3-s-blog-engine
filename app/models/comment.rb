@@ -22,7 +22,7 @@ class Comment < ActiveRecord::Base
   end
 
   def uid
-    "nex-3.com,#{created_at.strftime('%Y-%m-%d')}:comments/#{id}"
+    "#{Nex3::Config['blog']['site']},#{created_at.strftime('%Y-%m-%d')}:comments/#{id}"
   end
 
   def user_with_anon

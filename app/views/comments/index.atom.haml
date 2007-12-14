@@ -1,11 +1,11 @@
 !!! XML
 = xml_stylesheet 'main'
 = xml_stylesheet 'coderay'
-%feed{:xmlns => "http://www.w3.org/2005/Atom", 'xml:base' => 'http://nex-3.com/'}
+%feed{:xmlns => "http://www.w3.org/2005/Atom", 'xml:base' => "http://#{Nex3::Config['blog']['site']}/"}
   %title
     - if @post
       == #{h @post.title} : 
-    Comments : Nex3
+    == Comments : #{Nex3::Config['blog']['name']}
   %id= objects_url
   - unless @comments.empty? && @post.nil?
     %updated= (@comments[-1] || @post).created_at.xmlschema

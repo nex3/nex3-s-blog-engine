@@ -1,5 +1,5 @@
 - content_for :head do
-  = auto_discovery_link_tag :atom, post_comments_url(@post) + '.atom', :title => 'Comments : Nex3'
+  = auto_discovery_link_tag :atom, post_comments_url(@post) + '.atom', :title => "Comments : #{Nex3::Config['blog']['name']}"
 = render :partial => 'post'
 #comments
   - for @comment in @post.comments_with_users
