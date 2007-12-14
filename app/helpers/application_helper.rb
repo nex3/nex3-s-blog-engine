@@ -49,10 +49,6 @@ module ApplicationHelper
 
   # Stuff for the application-wide layout
 
-  def glyph
-    '&#9731;'
-  end
-
   def flash_display
     flash.each do |type, content|
       open 'div', content, :class => type.to_s
@@ -79,6 +75,7 @@ module ApplicationHelper
     [
      ['About Me', 'user', {:controller => 'static', :action => 'show', :page => 'about'}],
      ['Feed', 'feed', posts_path + '.atom'],
+     ['Sign In', 'key', signin_path],
     ].each(&method(:sidebar_link))
   end
 
