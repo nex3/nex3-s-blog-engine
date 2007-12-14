@@ -138,49 +138,49 @@ describe Comment, " with potentially spammy content" do
   end
 
   it "should check with Akismet when spam? is asked" do
-    AkismetInstance.expects(:commentCheck).with(*@akismet_info).returns(true)
+    Nex3::Akismet.expects(:commentCheck).with(*@akismet_info).returns(true)
     @comment.should be_spam
   end
 
   it "should cache a positive spam? result" do
-    AkismetInstance.expects(:commentCheck).times(1).returns(true)
+    Nex3::Akismet.expects(:commentCheck).times(1).returns(true)
     @comment.should be_spam
     @comment.should be_spam
   end
 
   it "should cache a negative spam? result" do
-    AkismetInstance.expects(:commentCheck).times(1).returns(false)
+    Nex3::Akismet.expects(:commentCheck).times(1).returns(false)
     @comment.should_not be_spam
     @comment.should_not be_spam
   end
 
   it "should notify Akismet when spam! is declared" do
-    AkismetInstance.expects(:submitSpam).with(*@akismet_info)
+    Nex3::Akismet.expects(:submitSpam).with(*@akismet_info)
     @comment.spam!
   end
 
   it "should cache a spam! declaration" do
-    AkismetInstance.stubs(:submitSpam)
-    AkismetInstance.expects(:commentCheck).never
+    Nex3::Akismet.stubs(:submitSpam)
+    Nex3::Akismet.expects(:commentCheck).never
     @comment.spam!
     @comment.should be_spam
   end
 
   it "should notify Akismet when ham! is declared" do
-    AkismetInstance.expects(:submitHam).with(*@akismet_info)
+    Nex3::Akismet.expects(:submitHam).with(*@akismet_info)
     @comment.ham!
   end
 
   it "should cache a ham! declaration" do
-    AkismetInstance.stubs(:submitHam)
-    AkismetInstance.expects(:commentCheck).never
+    Nex3::Akismet.stubs(:submitHam)
+    Nex3::Akismet.expects(:commentCheck).never
     @comment.ham!
     @comment.should_not be_spam
   end
 
   it "shouldn't validate if it's spammy" do
     @comment = Comment.new(@comment.attributes)
-    AkismetInstance.stubs(:submitSpam)
+    Nex3::Akismet.stubs(:submitSpam)
     @comment.spam!
     @comment.should have(1).error_on(:content)
   end

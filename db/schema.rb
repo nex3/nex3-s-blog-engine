@@ -9,14 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 5) do
+ActiveRecord::Schema.define(:version => 6) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "post_id"
-    t.text     "content",    :default => "", :null => false
+    t.text     "content",    :default => "",                    :null => false
     t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "post_id"
+    t.datetime "updated_at", :default => '2007-09-03 22:42:42'
   end
 
   create_table "posts", :force => true do |t|

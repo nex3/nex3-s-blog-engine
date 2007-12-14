@@ -31,18 +31,18 @@ class Comment < ActiveRecord::Base
   alias_method_chain :user, :anon
 
   def spam?
-    @spam = AkismetInstance.commentCheck(*akismet_info) if @spam.nil?
+    @spam = Nex3::Akismet.commentCheck(*akismet_info) if @spam.nil?
     @spam
   end
 
   def spam!
     @spam = true
-    AkismetInstance.submitSpam(*akismet_info)
+    Nex3::Akismet.submitSpam(*akismet_info)
   end
 
   def ham!
     @spam = false
-    AkismetInstance.submitHam(*akismet_info)
+    Nex3::Akismet.submitHam(*akismet_info)
   end
 
   private

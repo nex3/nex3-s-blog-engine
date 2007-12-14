@@ -1,6 +1,6 @@
 = Nex3 Blogging Engine
 
-Yes, I named it after my own online alias.
+Yes, I named it after my own alias.
 I didn't anticipate that other people would want to use it.
 In fact, as far as I know, only one other person _does_ want to use it.
 If I'm wrong and you're not that person (you'll know if you are),
@@ -15,7 +15,7 @@ but getting it set up will require mucking around in script/console.
 If you want to change the behavior, hack the source.
 That sort of thing.
 
-So what's cool about Nex3? Hell if I know.
+So what's cool about this engine? I really don't know.
 I pretty much made it for fun.
 I haven't used other blogging frameworks,
 but to the best of my knowledge this doesn't have any features they don't.
@@ -23,7 +23,7 @@ I guess you could call it minimalistic,
 but I'm not really going out of my way to keep it simple.
 I pretty much just add features as I want them.
 
-At the moment I'm writing this, Nex3 comes with a few reasonably useful features.
+At the moment I'm writing this, it does comes with a few reasonably useful features.
 For those curious for a brief rundown, I'll list them here,
 although I don't by any means guarantee that this list will be kept up-to-date.
 
@@ -100,12 +100,15 @@ like create new posts and muck with users and log out.
 At this point, you might want to click the users icon
 and give yourself a link and an email.
 
-Once that's all working, change the layout.
-I love you, but I worked hard on that layout,
-and I don't really want other folks using it.
-It ticks me off whenever I see two people using the same layout.
-Use the creativity your favorite deity or force of nature gave you.
-
 Once that's all done, start posting.
 If you're feeling particularly generous, link back to me.
 If not, well, at least enjoy the engine.
+
+== Configuration
+
+Most of the configuration is done by getting your hands dirty.
+Mess with the code, change up the layout, that sort of thing.
+
+However, for common stuff, there's config/nex3.yml.
+This contains some variables you can set.
+It should be pretty self-explanitory.

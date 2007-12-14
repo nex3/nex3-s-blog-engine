@@ -1,0 +1,7 @@
+## Configuration for the blog engine.
+
+## Uncomment to configure Akismet support.
+## The support will simply be disabled if it's not set.
+akismet:
+#  blog: http://blog.wordpress.com
+#  apikey: Your Akismet API key
