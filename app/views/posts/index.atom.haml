@@ -15,9 +15,6 @@
     %uri= feed[:url]
   %link{:rel => 'self', :href => posts_path + '.atom'}/
   %link{:rel => 'alternate', :type => 'text/html', :href => 'posts'}/
-  %rights
-    All content available under a  Creative Commons Attribution-Share Alike 3.0 License
-    (http://creativecommons.org/licenses/by-sa/3.0/)
   - for post in @posts
     %entry
       %id= post.uid
