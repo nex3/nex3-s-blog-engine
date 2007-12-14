@@ -78,13 +78,4 @@ module ApplicationHelper
      ['Sign In', 'key', signin_path],
     ].each(&method(:sidebar_link))
   end
-
-  def bottom_links
-    [
-     ['Valid XHTML 1.1', 'http://validator.w3.org/check?uri=referer', 'xhtml'],
-     ['Valid CSS', 'http://jigsaw.w3.org/css-validator/check/referer', 'css'],
-     ['Legal Information',
-      {:controller => 'static', :action => 'show', :page => 'legal'}, 'information']
-    ].each(&method(:silk_link))
-  end
 end
