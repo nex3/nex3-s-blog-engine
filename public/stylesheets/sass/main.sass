@@ -88,38 +88,29 @@ h2
 #full
   :width 100%
   :margin 0 auto
-  #main, #header
+  #main
     :text-align left
 
-!header_bg = #23238E
-
 #header
-  :background-color = !header_bg
-  :color #fff
-  :height 5.3em
-  :position relative
-  :background
-    :image url(/images/grad.png)
-    :repeat repeat-x
-    :position top
-  .title
-    :position absolute
-    :bottom 0
-    :left 2em
-    :font
-      :size 3em
-      :weight bold
-    :text-decoration none
-    :color white
-
-  .citation
-    :display block
-    :width 20em
-    :position relative
-    :left 29em
-    :top 1em
-    :font-variant small-caps
-    :letter-spacing 1px
+  :border-bottom
+    :style solid
+    :color #ccc
+    :width 1px
+  :margin
+    :top 0
+    :bottom 0.5em
+    :left auto
+    :right auto
+  :padding-bottom 0.5em
+  :width 90%
+  h1
+    :font-size 2.5em
+    :margin-bottom 0
+    a
+      :color black
+      :text-decoration none
+  p
+    :margin 0
 
 !flash_notice_color = #080
 !flash_error_color = #800

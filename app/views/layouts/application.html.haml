@@ -5,8 +5,9 @@
   %body#body{:class => page_class}
     #full
       #header
-        %a.title{:href => '/'}= Nex3::Config['blog']['name']
-        .citation== By #{Nex3::Config['author']['name']}
+        %h1
+          %a{:href => '/'}= Nex3::Config['blog']['name']
+        %p== By #{Nex3::Config['author']['name']}
       #main
         #sidebar= render :partial => 'layouts/sidebar'
         #content
