@@ -1,5 +1,9 @@
 ## Configuration for the blog engine.
 
+author:
+  name:  Hickory Dawkins
+  email: hickory@blog.tld
+
 ## Uncomment to configure Akismet support.
 ## The support will simply be disabled if it's not set.
 akismet:

@@ -59,10 +59,10 @@ module PostsHelper
   @@feed_info = {
     :title => 'Blog Posts : Nex3',
     :url => 'http://nex-3.com/',
-    :desc => 'Nathan Weizenbaum\'s blog, all about things that interest him.',
+    :desc => "#{Nex3::Config['author']['name']}'s blog, all about things that interest him.",
     :lang => 'en-us',
-    :name => 'Nathan Weizenbaum',
-    :email => 'nex342@gmail.com',
+    :name => Nex3::Config['author']['name'],
+    :email => Nex3::Config['author']['email'],
     :ttl => 1440,
 #    :image => ?
   }
