@@ -218,6 +218,22 @@ describe PostsController, "#update" do
     put :update, :format => 'html', :id => 1
     response.should redirect_to('/posts/1-best-post-ever')
   end
+
+  it "should set the action to 'edit' on failure" do
+    set_admin
+    @post.stubs(:update_attributes).returns(false)
+    put :update, :format => 'html', :id => 1
+    controller.action_name.should == 'edit'
+    controller.params[:action].should == 'edit'
+  end
+
+  it "should render the edit template on failure" do
+    set_admin
+    @post.stubs(:update_attributes).returns(false)
+    put :update, :format => 'html', :id => 1
+    response.should_not be_success
+    response.should render_template('edit')
+  end
 end
 
 describe PostsController, "#create" do
@@ -235,6 +251,22 @@ describe PostsController, "#create" do
     controller.stubs(:post_path).returns('/posts/1-best-post-ever')
     post :create, :format => 'html'
     response.should redirect_to('/posts/1-best-post-ever')
+  end
+
+  it "should set the action to 'new' on failure" do
+    set_admin
+    @post.stubs(:save).returns(false)
+    post :create, :format => 'html'
+    controller.action_name.should == 'new'
+    controller.params[:action].should == 'new'
+  end
+
+  it "should render the edit template on failure" do
+    set_admin
+    @post.stubs(:save).returns(false)
+    post :create, :format => 'html'
+    response.should_not be_success
+    response.should render_template('edit')
   end
 end
 

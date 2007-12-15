@@ -24,6 +24,12 @@ class PostsController < ApplicationController
       format.js
       format.atom
     end
+
+    response_for(:create_fails, :update_fails) do
+      flash[:error] = view.error_messages_for('post')
+      @action_name = params[:action] = params[:action] == 'create' ? 'new' : 'edit'
+      render :action => 'edit', :status => 422
+    end
   end
 
   before_filter :require_admin, :only => [:new, :edit, :create, :update, :destroy]
