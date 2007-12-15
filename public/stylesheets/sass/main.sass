@@ -66,18 +66,6 @@ h2
   :text-align center
   :display block
 
-#preview
-  :border-top
-    :style double
-    :color #bbb
-  :width 104%
-  :padding
-    :left 2%
-    :right 2%
-  :margin
-    :bottom 1em
-    :left -2%
-
 #content
   :width 68%
   :float left
@@ -256,25 +244,16 @@ p + .footnote
 !comment_line_out = 2%
 
 #comments
-  :position relative
-  :border-top
-    :style dotted
-    :width 1px
-  :width = 100% + 2 * !comment_line_out
-  :margin-left = 0 - !comment_line_out
-  :padding
-    :top 1em
-    :left = !comment_line_out
-    :right = !comment_line_out
-  #new_comment
-    .textile
-      :font-size 0.8em
-      :position absolute
-      :left 23em
-      :margin-top -1.5em
-    .email
-      // Anti-spam!
-      :display none
+  :margin-top -2em
+  h2
+    :margin-bottom 0.5em
+    :margin-left -2em
+    :font-size 1.3em
+    a
+      :font-size 0.7em
+  #new_comment .email
+    // Anti-spam!
+    :display none
 
 !comment_attr_color = #777
 .model.comment

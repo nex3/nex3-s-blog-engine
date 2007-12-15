@@ -2,10 +2,9 @@
   = auto_discovery_link_tag :atom, post_comments_url(@post) + '.atom', :title => "Comments : #{Nex3::Config['blog']['name']}"
 = render :partial => 'post'
 #comments
+  %h2
+    Comments
+    = link_to '(Feed)', post_comments_url(@post) + '.atom'
   - for @comment in @post.comments_with_users
     = render :partial => 'comment'
-  .comment_feed
-    %a{:href => post_comments_url(@post) + '.atom'}
-      Comment Feed
-      = silk_tag 'feed', :alt => ''
   = render :partial => 'new_comment'
