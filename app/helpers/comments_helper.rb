@@ -4,7 +4,7 @@ module CommentsHelper
       :html => {:class => 'button'}, :method => :put,
       :submit => "comment_#{@comment.id}_content_field",
       :loading => "$('comment_#{@comment.id}_content').spin()",
-      :failure => "$('comment_#{@comment.id}_content').update(\"<h3 class='failure'>Save Failed</h3>\")"
+      :failure => "$('comment_#{@comment.id}_content').update(#{failure_html('Save Failed').to_json})"
   end
 
   def atom_title(comment)

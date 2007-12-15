@@ -36,7 +36,13 @@ module ApplicationHelper
     submit_to_remote 'submit', 'Preview', :url => path + '.js',
       :html => {:class => 'button'}, :method => :post,
       :loading => "$(#{element.to_json}).spin()",
-      :failure => "$(#{element.to_json}).update(\"<h3 class='failure'>Preview Failed</h3>\")"
+      :failure => "$(#{element.to_json}).update(#{failure_html('Preview Failed').to_json})"
+  end
+
+  def failure_html(text)
+    capture_haml do
+      open(:div, :class => 'flash') { open(:div, :class => 'error') { open :h2, text } }
+    end
   end
 
   def xml_stylesheet(name)
