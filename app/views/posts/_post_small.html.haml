@@ -1,8 +1,6 @@
 .model[@post]
   = render :partial => 'post_common'
   .content~ absolute_anchors(@post.render_small, post_url(@post))
-  .links
-    = link_to silk_tag('comments', :alt => 'Comments') + pluralize(@post.comment_count, 'Comment'), |
-        post_comments_path(@post), :class => 'comments' |
-    - if @post.paragraphs.size > 3
-      = link_to silk_tag('page_white_text', :alt => 'More') + 'More', post_path(@post), :class => 'more'
+  %ul.links
+    %li= link_to pluralize(@post.comment_count, 'Comment'), post_comments_path(@post)
+    %li= link_to 'More', post_path(@post), :class => 'more' if @post.paragraphs.size > 3

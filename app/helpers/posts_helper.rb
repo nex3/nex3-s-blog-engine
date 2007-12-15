@@ -10,14 +10,7 @@ module PostsHelper
   end
 
   def delete_link
-    link_to silk_tag('page_white_delete', :alt => 'Delete post.'),
-      post_path(@post), :method => :delete, :confirm => "Really delete #{@post.title}?",
-      :title => 'Delete post'
-  end
-
-  def edit_link
-    link_to silk_tag('page_white_edit', :alt => 'Edit post.'),
-      edit_post_path(@post), :title => 'Edit post'
+    link_to 'Delete', post_path(@post), :method => :delete, :confirm => "Really delete #{@post.title}?"
   end
 
   def post_content(post)

@@ -1,12 +1,9 @@
-- if admin?
-  .side_links
-    = delete_link
-    = edit_link
-- unless @post.tags.empty?
-  .tags
-    = @post.tags.map { |t| link_to t.name.titleize, posts_path(:tag => t.name) }.join ", "
-    .label Tags
 %h1= link_to h(@post.title), post_path(@post)
-.posted
-  == Posted #{@post.created_at.human_day('%B %e, %Y')}
-
+%ul.attrs
+  %li== Posted: #{@post.created_at.human_day('%B %e, %Y')}
+  - unless @post.tags.empty?
+    %li
+      Tags:
+      = @post.tags.map { |t| link_to t.name.titleize, posts_path(:tag => t.name) }.join ", "
+  - if admin?
+    %li== Admin: #{delete_link}, #{link_to 'Edit', edit_post_path(@post)}
