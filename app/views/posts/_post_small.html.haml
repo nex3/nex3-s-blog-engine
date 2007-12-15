@@ -2,5 +2,5 @@
   = render :partial => 'post_common'
   .content~ absolute_anchors(@post.render_small, post_url(@post))
   %ul.links
+    %li= link_to 'More...', post_path(@post), :class => 'more' if @post.paragraphs.size > 3
     %li= link_to pluralize(@post.comment_count, 'Comment'), post_comments_path(@post)
-    %li= link_to 'More', post_path(@post), :class => 'more' if @post.paragraphs.size > 3

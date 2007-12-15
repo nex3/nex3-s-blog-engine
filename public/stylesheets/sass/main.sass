@@ -38,15 +38,13 @@ a img
 h1, h2, h3, h4, h5, h6
   :font-weight normal
 
-h2, h3, h4, h5, h6
-  :font-variant small-caps
-
 h3, h4, h5, h6
   :margin
     :top 1.5em
     :bottom -0.1em
 
 h1
+  :font-variant small-caps
   :font-size 1.9em
   :letter-spacing 0.1em
   :font-family serif
@@ -180,6 +178,7 @@ h2
       :text-decoration underline
   h2
     :font-size 1.1em
+    :font-variant small-caps
   .sect
     :margin-bottom 1em
   ul
@@ -229,7 +228,6 @@ p + .footnote
   :padding-bottom 2em
   h1
     :margin-bottom 0.1em
-    :font-weight bold
     a
       :color #000
       :text-decoration none
@@ -247,6 +245,10 @@ p + .footnote
     :margin 0
       :left 2em
     :padding 0
+    a
+      :text-decoration none
+      &:hover
+        :text-decoration underline
     
 .model
   :position relative
