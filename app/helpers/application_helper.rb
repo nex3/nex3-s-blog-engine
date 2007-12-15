@@ -55,27 +55,19 @@ module ApplicationHelper
     end
   end
 
-  def silk_link(title, url, icon, attrs = {})
-    puts link_to(silk_tag(icon, :alt => title), url, attrs.merge(:title => title))
-  end
-
-  def sidebar_link(name, icon, url)
-    puts link_to(silk_tag(icon, :alt => name) + name, url)
-  end
-
   def sidebar_admin_links
     [
-     ['New Post', new_post_url, 'page_white_add', {:class => 'new'}],
-     ['Manage Users', users_url, 'group', {:class => 'users'}],
-     ['Sign Out', signout_url, 'door_in', {:class => 'signout', :method => :delete}]
-    ].each(&method(:silk_link))
+     ['New Post', new_post_url],
+     ['Manage Users', users_url],
+     ['Sign Out', signout_url, {:method => :delete}]
+    ]
   end
 
   def sidebar_links
     [
-     ['About Me', 'user', {:controller => 'static', :action => 'show', :page => 'about'}],
-     ['Feed', 'feed', posts_path + '.atom'],
-     ['Sign In', 'key', signin_path],
-    ].each(&method(:sidebar_link))
+     ['About Me', {:controller => 'static', :action => 'show', :page => 'about'}],
+     ['Feed', posts_path + '.atom'],
+     ['Sign In', signin_path],
+    ] + (admin? ? sidebar_admin_links : [])
   end
 end

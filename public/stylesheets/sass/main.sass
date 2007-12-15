@@ -170,76 +170,30 @@ h2
   :width 80%
   :margin 0 auto
 
-!sidebar_bg = #ffd
 #sidebar
   :float right
-  :border
-    :style solid
-    :width 1px
-    :color #ccc
+  :text-align right
   :width 20%
-  :padding 0.5em
-    :top 2em
-    :left 2.5em
-  :margin-top -1.1em
-  :background-color = !sidebar_bg
   a
     :text-decoration none
     &:hover
       :text-decoration underline
-  .admin a
-    :opacity 0.5
-    :margin-right 0.7em
-    &:hover
-      :text-decoration none
-      :opacity 1
   h2
     :font-size 1.1em
-    :font-weight normal
-    :margin 0
-      :left -1em
   .sect
     :margin-bottom 1em
   ul
     :list-style none
     :padding-left 0
     :margin 0
-    li
-      :position relative
-  .links a
-    :margin-top 0.5em
-    :display block
-    img
-      :margin-right 0.4em
-  .tags .feed
-    :position absolute
-    :top -3px
-    :left -15px
-    :height 13px
-    :overflow hidden
   .search
     input
-      :width 65%
+      :width 75%
       &.button
         :width 20%
         :float right
-        :margin-right 10%
     #search_results.fail
       :text-align center
-      :margin-right 10%
-    ul
-      :margin-left -1em
-      a
-        :display block
-        :padding 0.2em
-          :left 1em
-        &:hover
-          :background-color = !sidebar_bg - #002
-      li
-        &.odd
-          :background-color = !sidebar_bg - #222
-          a:hover
-            :background-color = !sidebar_bg - #224
 
 p + .footnote
   :margin-top 2em

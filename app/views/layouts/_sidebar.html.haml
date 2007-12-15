@@ -1,8 +1,7 @@
-- if admin?
-  .sect.admin
-    - sidebar_admin_links
 .sect.links
-  - sidebar_links
+  %ul
+    = list_of sidebar_links do |name, url, opts|
+      = link_to name, url, opts
 .sect.archives
   %h2 Archives
   %ul
@@ -12,13 +11,12 @@
   %h2 Tags
   %ul
     = list_of Tag.all_with_postcount do |tag|
-      = link_to silk_tag('bullet_feed', :alt => 'Feed'), {:controller => 'posts', :action => 'index', :format => 'atom', :tag => tag.name}, :title => "Feed for #{tag.name}", :class => 'feed'
       = link_to h(tag.name.titleize), posts_path(:tag => tag.name)
       == &ndash; #{tag.post_count}
+      = link_to '(Feed)', :controller => 'posts', :action => 'index', :format => 'atom', :tag => tag.name
 .sect.search
-  %h2 Search
   - form_tag "/posts", :method => :get do
     %fieldset
-      = submit_tag "Go", :class => 'button'
+      = submit_tag "Search", :class => 'button'
       = text_field_tag "query"
   #search_results

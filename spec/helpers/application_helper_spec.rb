@@ -164,50 +164,6 @@ describe ApplicationHelper, "#flash_display" do
 end
 
 
-describe ApplicationHelper, "#silk_tag" do
-  before :each do
-    stubs(:link_to).returns("{link}")
-    stubs(:silk_tag).returns("{image}")
-    stubs(:puts)
-  end
-
-  it "should create a silk image with the given icon" do
-    expects(:silk_tag).with("{icon}", anything)
-    silk_link("{title}", "{url}", "{icon}")
-  end
-
-  it "should use the title as alt text for the silk image" do
-    expects(:silk_tag).with(anything, has_entry(:alt, "{title}"))
-    silk_link("{title}", "{url}", "{icon}")    
-  end
-
-  it "should use the silk image as the content of the link" do
-    expects(:link_to).with("{image}", anything, anything)
-    silk_link("{title}", "{url}", "{icon}")
-  end
-
-  it "should pass url as the url for the link" do
-    expects(:link_to).with(anything, "{url}", anything)
-    silk_link("{title}", "{url}", "{icon}")
-  end
-
-  it "should pass title as the title for the link" do
-    expects(:link_to).with(anything, anything, has_entry(:title, "{title}"))
-    silk_link("{title}", "{url}", "{icon}")
-  end
-
-  it "should pass along any additional attributes" do
-    expects(:link_to).with(anything, anything, :title => "{title}", :attr1 => "{attr1}")
-    silk_link("{title}", "{url}", "{icon}", :attr1 => "{attr1}")
-  end
-
-  it "should directly output the result" do
-    expects(:puts).with("{link}")
-    silk_link("{title}", "{url}", "{icon}")
-  end
-end
-
-
 describe ApplicationHelper, "#absolute_anchors" do
   it "should prepend footnotes in text with url" do
     absolute_anchors("<a href=\"#baz\">baz</baz>", "/page").should ==
@@ -260,38 +216,5 @@ describe ApplicationHelper, "#xml_stylesheet" do
   it "should return an XML stylesheet declaration" do
     expects(:stylesheet_path).with("name").returns("/path/to/name.css")
     xml_stylesheet("name").should == "<?xml-stylesheet href=\"http://#{Nex3::Config['blog']['site']}/path/to/name.css\" type=\"text/css\" ?>"
-  end
-end
-
-describe ApplicationHelper, "#sidebar_link" do
-  before :each do
-    stubs(:link_to).returns("{link}")
-    stubs(:silk_tag).returns("{image}")
-    stubs(:puts)
-  end
-
-  it "should create a silk image with the given icon" do
-    expects(:silk_tag).with("{icon}", anything).returns("{image}")
-    sidebar_link("{name}", "{icon}", "{url}")
-  end
-
-  it "should use the name as alt text for the silk image" do
-    expects(:silk_tag).with(anything, has_entry(:alt, "{name}")).returns("{image}")
-    sidebar_link("{name}", "{icon}", "{url}")
-  end
-
-  it "should use the silk image and the name as the content of the link" do
-    expects(:link_to).with("{image}{name}", anything)
-    sidebar_link("{name}", "{icon}", "{url}")
-  end
-
-  it "should pass url as the url for the link" do
-    expects(:link_to).with(anything, "{url}")
-    sidebar_link("{name}", "{icon}", "{url}")
-  end
-
-  it "should directly output the result" do
-    expects(:puts).with("{link}")
-    sidebar_link("{name}", "{url}", "{icon}")
   end
 end
