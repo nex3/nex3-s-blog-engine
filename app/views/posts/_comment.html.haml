@@ -1,11 +1,11 @@
 .model[@comment]
-  - if admin? || current_user == @comment.user
-    .side_links
-      - if admin?
-        = spam_comment_link
-      = delete_comment_link
-      = edit_comment_link
-  .posted
-    %span.name= link_to_if @comment.user.link, h(@comment.user.name), h(@comment.user.href)
-    == said #{@comment.created_at.human_day('%B %d, %Y')}:
+  .attrs
+    %strong= link_to_if @comment.user.link, h(@comment.user.name), h(@comment.user.href)
+    = @comment.created_at.human_day('%B %d, %Y')
   .content{:id => "comment_#{@comment.id}_content"}~ @comment.render
+  - if admin? || current_user == @comment.user
+    .actions
+      - if admin?
+        == #{spam_comment_link},
+      == #{delete_comment_link}, #{edit_comment_link}    
+

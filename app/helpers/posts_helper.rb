@@ -29,22 +29,19 @@ module PostsHelper
   end
 
   def spam_comment_link
-    link_to(silk_tag('cross', :alt => 'Mark as spam'),
-            post_comment_path(@post, @comment) + '?spam=1',
-            :method => :delete, :confirm => 'Mark comment as spam and delete it?', :title => 'Mark as spam')
+    link_to('Spam', post_comment_path(@post, @comment) + '?spam=1',
+            :method => :delete, :confirm => 'Mark comment as spam and delete it?')
   end
 
   def delete_comment_link
-    link_to(silk_tag('comment_delete', :alt => 'Delete comment'),
-            post_comment_path(@post, @comment),
-            :method => :delete, :confirm => 'Delete comment?', :title => 'Delete comment')
+    link_to 'Delete', post_comment_path(@post, @comment), :method => :delete, :confirm => 'Delete comment?'
   end
 
   def edit_comment_link
-    link_to_remote(silk_tag('comment_edit', :alt => 'Edit comment'),
-                   { :url => edit_post_comment_path(@post || @comment.post, @comment) + '.html',
-                     :update => "comment_#{@comment.id}_content", :method => :get},
-                   :title => 'Edit comment')
+    link_to_remote('Edit', {
+                     :url => edit_post_comment_path(@post || @comment.post, @comment) + '.html',
+                     :update => "comment_#{@comment.id}_content", :method => :get
+                   }, :title => 'Edit comment')
   end
 
   # Feed helpers

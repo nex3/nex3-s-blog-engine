@@ -235,11 +235,6 @@ p + .footnote
       :text-decoration none
       &:hover
         :color #777
-  ul.attrs
-    :list-style none
-    :margin 0
-    :padding 0
-    :font-size 0.8em
   blockquote, q
     :font-family Times, serif
     :font-size 1.2em
@@ -279,18 +274,26 @@ p + .footnote
       // Anti-spam!
       :display none
 
+!comment_attr_color = #777
 .model.comment
-  :border-bottom
-    :style dotted
-    :width 1px
-    :color #ccc
   :margin-bottom 1.4em
-  .content
-    :margin-bottom -0.8em
-  .posted
+  .attrs
     :font-size 0.8em
-  .name
-    :font-weight bold
+    :margin-bottom -1em
+    :color = !comment_attr_color
+    strong
+      :color black
+  .content
+    :margin 0
+  .actions
+    :margin-top -1em
+    :color = !comment_attr_color
+    :font-size 0.8em
+    a
+      :color = !comment_attr_color
+      :text-decoration none
+      &:hover
+        :text-decoration underline
 
 .comment_feed
   :float right
@@ -299,16 +302,11 @@ p + .footnote
     img
       :margin-left 0.5em
 
-.side_links
-  :text-align right !important
-  :position absolute
-  :top -2px
-  :width 10%
-  :left -11%
-  a
-    :opacity 0.5
-    &:hover
-      :opacity 1
+ul.attrs
+  :list-style none
+  :margin 0
+  :padding 0
+  :font-size 0.8em
 
 body.posts
   &.dates
