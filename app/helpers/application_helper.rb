@@ -67,7 +67,6 @@ module ApplicationHelper
     [
      ['About Me', {:controller => 'static', :action => 'show', :page => 'about'}],
      ['Feed', posts_path + '.atom'],
-     ['Sign In', signin_path],
-    ] + (admin? ? sidebar_admin_links : [])
+    ] + (admin? ? sidebar_admin_links : [['Sign In', signin_path]])
   end
 end
