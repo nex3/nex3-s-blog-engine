@@ -5,7 +5,7 @@
 - if page != 0 || @posts.last != Post.oldest
   .nav
     - if page != 0
-      = link_to silk_tag('arrow_left',  :alt => "<") + " Newer Posts", params.merge(:page => page - 1), :class => 'prev'
+      = link_to "&larr; Newer Posts", params.merge(:page => page - 1), :class => 'prev'
     - if @posts.last != Post.oldest
-      = link_to silk_tag('arrow_right', :alt => ">") + " Older Posts", params.merge(:page => page + 1), :class => 'next'
+      = link_to "Older Posts &rarr;", params.merge(:page => page + 1), :class => 'next'
   

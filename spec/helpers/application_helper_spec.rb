@@ -133,19 +133,6 @@ describe ApplicationHelper, "#restful_form" do
 end
 
 
-describe ApplicationHelper, "#silk_tag" do
-  it "should call image_tag with the silk icon location" do
-    expects(:image_tag).with("silk/foo.png", anything)
-    silk_tag 'foo'
-  end
-
-  it "should pass options on to image_tag" do
-    expects(:image_tag).with(anything, :alt => 'Foo!', :bar => 'Baz')
-    silk_tag 'foo', :alt => 'Foo!', :bar => 'Baz'
-  end
-end
-
-
 describe ApplicationHelper, "#flash_display" do
   before :each do
     stubs(:flash).returns(:notice => "Yay!", :error => "Boo!")

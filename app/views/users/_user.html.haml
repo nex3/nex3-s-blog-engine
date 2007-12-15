@@ -1,15 +1,9 @@
 .model[@user]
-  .side_links
-    = delete_link
-    = edit_link
-  %h3= h @user.name
-  - if @user.email
-    .email
-      Email:
-      = link_to h(@user.email), "mailto:#{h @user.email}", :class => 'email'
-  - if @user.link
-    .link
-      Link:
-      = link_to h(@user.link), h(@user.href), :class => 'link'
-  %p.comments
-    == #{@user.comment_count} comments.
+  %h2= h @user.name
+  %ul.attrs
+    - if @user.email
+      %li== Email: #{link_to h(@user.email), "mailto:#{h @user.email}", :class => 'email'}
+    - if @user.link
+      %li== Link: #{link_to h(@user.link), h(@user.href), :class => 'link'}
+    %li== Comments: #{@user.comment_count}
+    %li== Admin: #{delete_link}, #{link_to 'Edit', edit_user_path(@user)}

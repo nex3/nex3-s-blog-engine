@@ -101,30 +101,8 @@ describe PostsController, "#date_link" do
     controller.send(:date_link, @post, '', true)
   end
 
-  it "should use the 'book_next' icon for the 'Next' link" do
-    @view.expects(:silk_tag).with('book_next', :alt => 'Next')
-    controller.send(:date_link, @post, '', false)
-  end
-
-  it "should use the 'book_previous' icon for the 'Previous' link" do
-    @view.expects(:silk_tag).with('book_previous', :alt => 'Previous')
-    controller.send(:date_link, @post, '', true)
-  end
-
   it "should include the formatted date" do
     @view.expects(:link_to).with(includes( 'August 1990'), anything)
-    controller.send(:date_link, @post, '%B %Y', true)
-  end
-
-  it "should have the date before the icon for the 'Next' link" do
-    @view.expects(:silk_tag).returns('ICON')
-    @view.expects(:link_to).with { |text, url| text =~ /August 1990\s*ICON/ }
-    controller.send(:date_link, @post, '%B %Y', false)
-  end
-
-  it "should have the date after the icon for the 'Previous' link" do
-    @view.expects(:silk_tag).returns('ICON')
-    @view.expects(:link_to).with { |text, url| text =~ /ICON\s*August 1990/ }
     controller.send(:date_link, @post, '%B %Y', true)
   end
 end

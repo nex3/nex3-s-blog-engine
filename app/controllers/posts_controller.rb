@@ -53,9 +53,8 @@ class PostsController < ApplicationController
       url = url_for(:action => :dates, :year => date.year,
                     :month => params[:month] && date.month)
 
-      parts = [view.silk_tag("book_#{prev ? 'previous' : 'next'}", :alt => prev ? 'Previous' : 'Next'), date.strftime(format)]
-      parts.reverse! unless prev
-      view.link_to parts.join, url
+      link = date.strftime(format)
+      view.link_to prev ? "&larr; #{link}" : "#{link} &rarr;", url
     else nil end
   end
 

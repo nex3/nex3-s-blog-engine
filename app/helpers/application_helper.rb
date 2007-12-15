@@ -28,10 +28,6 @@ module ApplicationHelper
     end
   end
 
-  def silk_tag(name, opts = {})
-    image_tag("silk/#{name}.png", opts)
-  end
-
   def absolute_anchors(text, url)
     text.gsub(/href=(["'])#/) { "href=#{$1}#{url}#" }
   end

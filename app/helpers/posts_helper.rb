@@ -1,12 +1,10 @@
 module PostsHelper
   def prev_link_text
-    silk_tag('arrow_left', :alt => 'Previous Post') + ' ' +
-      h(@post.prev.title)
+    "&larr; #{h(@post.prev.title)}"
   end
 
   def next_link_text
-    h(@post.next.title) + ' ' +
-      silk_tag('arrow_right', :alt => 'Next Post')
+    "#{h(@post.next.title)} &rarr;"
   end
 
   def delete_link
