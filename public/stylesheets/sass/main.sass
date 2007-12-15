@@ -33,7 +33,6 @@ form
 
 a img
   :border-style none
-  :vertical-align middle
 
 h1, h2, h3, h4, h5, h6
   :font-weight normal
@@ -83,15 +82,15 @@ h2
     :color #ccc
     :width 1px
   :margin
-    :top 0
+    :top 0.5em
     :bottom 0.5em
     :left auto
     :right auto
   :padding-bottom 0.5em
   :width 90%
   h1
-    :font-size 2.5em
-    :margin-bottom 0
+    :font-size 2em
+    :margin 0
     a
       :color black
       :text-decoration none
@@ -182,35 +181,12 @@ h2
     #search_results.fail
       :text-align center
 
-p + .footnote
-  :margin-top 2em
-  :padding-top 1.5em
-  :border-top
-    :style dotted
-    :width 1px
-    :color #bbb
-.footnote + .footnote
-  :margin-top auto
-  :padding-top auto
-  :border-top-style none
-
 .content
   :line-height 1.6em
   .footnote
     :font-size 0.8em
   sup a
     :text-decoration none
-    :border none !important
-  a
-    :text-decoration none
-    :border-bottom
-      :color #00f
-      :width 1px
-      :style dotted
-    &:hover
-      :border-bottom-style solid
-    &:visited
-      :border-color #551a8b
 
 .model.post
   :padding-bottom 2em
@@ -221,18 +197,9 @@ p + .footnote
       :text-decoration none
       &:hover
         :color #777
-  blockquote, q
-    :font-family Times, serif
-    :font-size 1.2em
-    :font-style italic
-    :color #76797C
-    a
-      :color #000000
   ul.links
     :list-style none
     :margin 0
-      :left 2em
-    :padding 0
     a
       :text-decoration none
       &:hover
@@ -240,8 +207,6 @@ p + .footnote
     
 .model
   :position relative
-
-!comment_line_out = 2%
 
 #comments
   :margin-top -2em
@@ -276,13 +241,6 @@ p + .footnote
       &:hover
         :text-decoration underline
 
-.comment_feed
-  :float right
-  a
-    :text-decoration none
-    img
-      :margin-left 0.5em
-
 ul.attrs
   :list-style none
   :margin 0
@@ -305,10 +263,6 @@ body.posts
         :opacity 0.5
         &:hover
           :opacity 1
-        img
-          :margin
-            :left 0.4em
-            :right 0.4em
   &.new, &.edit
     .content textarea
       :height 20em
