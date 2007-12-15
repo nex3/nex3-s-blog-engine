@@ -133,24 +133,6 @@ describe ApplicationHelper, "#restful_form" do
 end
 
 
-describe ApplicationHelper, "#flash_display" do
-  before :each do
-    stubs(:flash).returns(:notice => "Yay!", :error => "Boo!")
-    stubs(:open)
-  end
-
-  it "should create a div to display the message" do
-    expects(:open).with('div', 'Yay!', :class => 'notice')
-    flash_display
-  end
-
-  it "should create a div for each message" do
-    expects(:open).times(2)
-    flash_display
-  end
-end
-
-
 describe ApplicationHelper, "#absolute_anchors" do
   it "should prepend footnotes in text with url" do
     absolute_anchors("<a href=\"#baz\">baz</baz>", "/page").should ==

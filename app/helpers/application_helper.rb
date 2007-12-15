@@ -46,9 +46,8 @@ module ApplicationHelper
   # Stuff for the application-wide layout
 
   def flash_display
-    flash.each do |type, content|
-      open 'div', content, :class => type.to_s
-    end
+    open 'div', flash[:error], :class => 'error' if flash[:error]
+    open('h2') { open 'div', flash[:notice], :class => 'notice' } if flash[:notice]
   end
 
   def sidebar_admin_links

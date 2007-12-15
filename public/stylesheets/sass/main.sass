@@ -97,29 +97,13 @@ h2
   p
     :margin 0
 
-!flash_notice_color = #080
-!flash_error_color = #800
-
 .flash
-  :margin 0 auto
-  :width 70%
-  .notice, .error
-    :border
-      :style solid
-      :width 4px
-    :padding 0.5em
-    :font-weight bold
-    :font-size 1.05em
   h2
-    :font-size 1.2em
+    :font-weight bold
   .notice
-    :background-color = !flash_notice_color + #969
-    :border-color = !flash_notice_color
-    :color = !flash_notice_color - #030
+    :color green
   & .error, .failure
-    :background-color = !flash_error_color + #966
-    :border-color = !flash_error_color
-    :color = !flash_error_color - #300
+    :color = red - #333
 
 .failure
   :text-align center !important
