@@ -1,7 +1,8 @@
 if save_succeeded?
   page["comment_#{current_object.id}_content"].update current_object.render
 else
+  page["comment_#{current_object.id}_content"].update controller.send(:render_to_string, :template => 'comments/edit.html.haml')
   prev = page["comment_#{current_object.id}_preview"]
-  prev.update error_messages_for('comment')
+  prev.update "<div class='flash'><div class='error'>#{error_messages_for('comment')}</div></div>"
   prev.show
 end
