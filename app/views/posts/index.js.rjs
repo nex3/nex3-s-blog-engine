@@ -1,5 +1,5 @@
 if @posts.empty?
-  if params[:query]
+  unless params[:query].blank?
     page["search_results"].replace("<div id='search_results' class='fail'>No results found for <strong>#{h params[:query]}</strong></div>")
   else
     page["search_results"].replace("<div id='search_results'></div>")
