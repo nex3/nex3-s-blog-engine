@@ -4,4 +4,5 @@
   = f.hidden_field :user_id
   = preview_button new_object_path, "comment_#{@comment.id}_preview"
   = comment_edit_save_button
+  %input.button{:type => 'button', :value => 'Cancel', :name => 'submit', :onclick => comment_edit_cancel_action}
 .content{:style => 'display: none', :id => "comment_#{@comment.id}_preview"}

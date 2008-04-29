@@ -263,3 +263,27 @@ describe CommentsController, "#edit" do
     response.should render_template('edit')
   end
 end
+
+describe CommentsController, '#show' do
+  include ResourcefulController
+  include ApplicationSpecHelpers
+
+  before(:each) do
+    @parent_model = Post
+    stub_show
+
+    @comment.stubs(:post).returns(@post)
+    @post.stubs(:to_param).returns(17)
+    @post.stubs(:slug).returns('foo-bar-baz')
+  end
+
+  it "should redirect to the post path on an HTML request" do
+    get :show, :id => 12
+    response.should redirect_to('/posts/17-foo-bar-baz#comment_12')
+  end
+
+  it "should render the comment-updating JS on a JS request" do
+    get :show, :id => 12, :format => 'js'
+    response.should render_template('show')
+  end
+end

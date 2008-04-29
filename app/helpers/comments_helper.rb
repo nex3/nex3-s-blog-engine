@@ -7,6 +7,12 @@ module CommentsHelper
       :failure => "$('comment_#{@comment.id}_content').update(#{failure_html('Save Failed').to_json})"
   end
 
+  def comment_edit_cancel_action
+    remote_function :url => object_path + '.js', :method => :get,
+      :loading => "$('comment_#{@comment.id}_content').spin()",
+      :failure => "$('comment_#{@comment.id}_content').update(#{failure_html('Failed').to_json})"
+  end
+
   def atom_title(comment)
     h((params[:post_id] ? '' : "#{comment.post.title} : ") +
       truncate(comment.content.gsub(/\s+/, ' '), 50))

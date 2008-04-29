@@ -1,0 +1,1 @@
+page["comment_#{current_object.id}_content"].update current_object.render

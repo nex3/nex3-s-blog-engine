@@ -33,7 +33,12 @@ class CommentsController < ApplicationController
   before_filter :ensure_parent_exists, :only => :create
 
   def show
-    redirect_to "#{post_path(current_object.post)}#comment_#{params[:id]}"
+    respond_to do |format|
+      format.html do
+        redirect_to "#{post_path(current_object.post)}#comment_#{params[:id]}"
+      end
+      format.js
+    end
   end
 
   def index
