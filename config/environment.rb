@@ -8,16 +8,6 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run { |config| config.action_controller.session_store = :active_record_store }
 
-# Adding this so it doesn't break on my remote host.
-# I have no idea why it's necessary.
-class ActionController::AbstractRequest
-  alias_method :old_method, :method
-  def method
-    @env['REQUEST_METHOD'] ||= 'get'
-    old_method
-  end
-end
-
 module Nex3
   conf_loc = File.join(RAILS_ROOT, "config", "nex3.yml")
   unless File.exists?(conf_loc)
