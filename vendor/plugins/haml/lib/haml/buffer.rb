@@ -6,17 +6,53 @@ module Haml
   class Buffer
     include Haml::Helpers
 
-    # Set the maximum length for a line to be considered a one-liner.
-    # Lines <= the maximum will be rendered on one line,
-    # i.e. <tt><p>Hello world</p></tt>
-    ONE_LINER_LENGTH     = 50
-
     # The string that holds the compiled XHTML. This is aliased as
     # _erbout for compatibility with ERB-specific code.
     attr_accessor :buffer
 
     # The options hash passed in from Haml::Engine.
     attr_accessor :options
+
+    # The Buffer for the enclosing Haml document.
+    # This is set for partials and similar sorts of nested templates.
+    # It's nil at the top level (see #toplevel?).
+    attr_accessor :upper
+
+    # See #active?
+    attr_writer :active
+
+    # True if the format is XHTML
+    def xhtml?
+      not html?
+    end
+
+    # True if the format is any flavor of HTML
+    def html?
+      html4? or html5?
+    end
+
+    # True if the format is HTML4
+    def html4?
+      @options[:format] == :html4
+    end
+
+    # True if the format is HTML5
+    def html5?
+      @options[:format] == :html5
+    end
+
+    # True if this buffer is a top-level template,
+    # as opposed to a nested partial.
+    def toplevel?
+      upper.nil?
+    end
+
+    # True if this buffer is currently being used to render a Haml template.
+    # However, this returns false if a subtemplate is being rendered,
+    # even if it's a subtemplate of this buffer's template.
+    def active?
+      @active
+    end
 
     # Gets the current tabulation of the document.
     def tabulation
@@ -30,9 +66,13 @@ module Haml
     end
 
     # Creates a new buffer.
-    def initialize(options = {})
+    def initialize(upper = nil, options = {})
+      @active = true
+      @upper = upper
       @options = {
-        :attr_wrapper => "'"
+        :attr_wrapper => "'",
+        :ugly => false,
+        :format => :xhtml
       }.merge options
       @buffer = ""
       @tabulation = 0
@@ -44,122 +84,140 @@ module Haml
 
     # Renders +text+ with the proper tabulation. This also deals with
     # making a possible one-line tag one line or not.
-    def push_text(text, tab_change = 0)
-      if(@tabulation > 0)
-        # Have to push every line in by the extra user set tabulation
-        text.gsub!(/^/m, '  ' * @tabulation)
+    def push_text(text, dont_tab_up = false, tab_change = 0)
+      if @tabulation > 0 && !@options[:ugly]
+        # Have to push every line in by the extra user set tabulation.
+        # Don't push lines with just whitespace, though,
+        # because that screws up precompiled indentation.
+        text.gsub!(/^(?!\s+$)/m, tabs)
+        text.sub!(tabs, '') if dont_tab_up
       end
-      
-      @buffer << "#{text}"
+
+      @buffer << text
       @real_tabs += tab_change
+      @dont_tab_up_next_line = false
     end
 
     # Properly formats the output of a script that was run in the
     # instance_eval.
-    def push_script(result, flattened, close_tag = nil)
+    def push_script(result, preserve_script, in_tag = false, preserve_tag = false,
+                    escape_html = false, nuke_inner_whitespace = false)
       tabulation = @real_tabs
-      
-      if flattened
+
+      if preserve_tag
+        result = Haml::Helpers.preserve(result)
+      elsif preserve_script
         result = Haml::Helpers.find_and_preserve(result)
       end
-      
-      result = result.to_s
-      while result[-1] == ?\n
-        # String#chomp is slow
-        result = result[0...-1]
-      end
-      
-      if close_tag && Buffer.one_liner?(result)
+
+      result = result.to_s.rstrip
+      result = html_escape(result) if escape_html
+
+      has_newline = result.include?("\n")
+      if in_tag && (@options[:ugly] || !has_newline || preserve_tag)
         @buffer << result
-        @buffer << "</#{close_tag}>\n"
         @real_tabs -= 1
-      else
-        if close_tag
-          @buffer << "\n"
-        end
-        
-        result = result.gsub(/^/m, tabs(tabulation))
-        @buffer << "#{result}\n"
-        
-        if close_tag
-          @buffer << "#{tabs(tabulation-1)}</#{close_tag}>\n"
-          @real_tabs -= 1
-        end
+        return
+      end
+
+      @buffer << "\n" if in_tag && !nuke_inner_whitespace
+
+      # Precompiled tabulation may be wrong
+      if @tabulation > 0 && !in_tag
+        result = tabs + result
+      end
+
+      if has_newline && !@options[:ugly]
+        result = result.gsub "\n", "\n" + tabs(tabulation)
+
+        # Add tabulation if it wasn't precompiled
+        result = tabs(tabulation) + result if in_tag && !nuke_inner_whitespace
+      end
+      @buffer << "#{result}"
+      @buffer << "\n" unless nuke_inner_whitespace
+
+      if in_tag && !nuke_inner_whitespace
+        # We never get here if @options[:ugly] is true
+        @buffer << tabs(tabulation-1)
+        @real_tabs -= 1
       end
       nil
     end
 
     # Takes the various information about the opening tag for an
     # element, formats it, and adds it to the buffer.
-    def open_tag(name, atomic, try_one_line, class_id, obj_ref, content, attributes_hash)
+    def open_tag(name, self_closing, try_one_line, preserve_tag, escape_html, class_id,
+                 nuke_outer_whitespace, nuke_inner_whitespace, obj_ref, content, *attributes_hashes)
       tabulation = @real_tabs
-      
+
       attributes = class_id
-      if attributes_hash
+      attributes_hashes.each do |attributes_hash|
         attributes_hash.keys.each { |key| attributes_hash[key.to_s] = attributes_hash.delete(key) }
         self.class.merge_attrs(attributes, attributes_hash)
       end
       self.class.merge_attrs(attributes, parse_object_ref(obj_ref)) if obj_ref
 
-      if atomic
-        str = " />\n"
-      elsif try_one_line
-        str = ">"
+      if self_closing
+        str = " />" + (nuke_outer_whitespace ? "" : "\n")
       else
-        str = ">\n"
+        str = ">" + (try_one_line || preserve_tag || nuke_inner_whitespace ? "" : "\n")
       end
-      @buffer << "#{tabs(tabulation)}<#{name}#{Precompiler.build_attributes(@options[:attr_wrapper], attributes)}#{str}"
+
+      attributes = Precompiler.build_attributes(html?, @options[:attr_wrapper], attributes)
+      @buffer << "#{nuke_outer_whitespace || @options[:ugly] ? '' : tabs(tabulation)}<#{name}#{attributes}#{str}"
+
       if content
-        if Buffer.one_liner?(content)
-          @buffer << "#{content}</#{name}>\n"
-        else
-          @buffer << "\n#{tabs(@real_tabs+1)}#{content}\n#{tabs(@real_tabs)}</#{name}>\n"
-        end
-      else
-        @real_tabs += 1
+        @buffer << "#{content}</#{name}>" << (nuke_outer_whitespace ? "" : "\n")
+        return
       end
+
+      @real_tabs += 1 unless self_closing || nuke_inner_whitespace
     end
 
     def self.merge_attrs(to, from)
       if to['id'] && from['id']
         to['id'] << '_' << from.delete('id')
+      elsif to['id'] || from['id']
+        from['id'] ||= to['id']
       end
 
       if to['class'] && from['class']
         # Make sure we don't duplicate class names
         from['class'] = (from['class'].split(' ') | to['class'].split(' ')).join(' ')
+      elsif to['class'] || from['class']
+        from['class'] ||= to['class']
       end
 
       to.merge!(from)
     end
 
+    private
+
     # Some of these methods are exposed as public class methods
     # so they can be re-used in helpers.
 
-    # Returns whether or not the given value is short enough to be rendered
-    # on one line.
-    def self.one_liner?(value)
-      value.length <= ONE_LINER_LENGTH && value.scan(/\n/).empty?
-    end
-
-    private
-
     @@tab_cache = {}
     # Gets <tt>count</tt> tabs. Mostly for internal use.
-    def tabs(count)
+    def tabs(count = 0)
       tabs = count + @tabulation
-      '  ' * tabs
       @@tab_cache[tabs] ||= '  ' * tabs
     end
 
     # Takes an array of objects and uses the class and id of the first
     # one to create an attributes hash.
+    # The second object, if present, is used as a prefix,
+    # just like you can do with dom_id() and dom_class() in Rails
     def parse_object_ref(ref)
+      prefix = ref[1]
       ref = ref[0]
       # Let's make sure the value isn't nil. If it is, return the default Hash.
       return {} if ref.nil?
       class_name = underscore(ref.class)
       id = "#{class_name}_#{ref.id || 'new'}"
+      if prefix
+        class_name = "#{ prefix }_#{ class_name}"
+        id = "#{ prefix }_#{ id }"
+      end
 
       {'id' => id, 'class' => class_name}
     end

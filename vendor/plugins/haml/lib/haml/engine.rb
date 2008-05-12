@@ -3,7 +3,6 @@ require 'haml/buffer'
 require 'haml/precompiler'
 require 'haml/filters'
 require 'haml/error'
-require 'haml/util'
 
 module Haml
   # This is the class where all the parsing and processing of the Haml
@@ -20,38 +19,76 @@ module Haml
     # Allow reading and writing of the options hash
     attr :options, true
 
+    # This string contains the source code that is evaluated
+    # to produce the Haml document.
+    attr :precompiled, true
+
+    # True if the format is XHTML
+    def xhtml?
+      not html?
+    end
+
+    # True if the format is any flavor of HTML
+    def html?
+      html4? or html5?
+    end
+
+    # True if the format is HTML4
+    def html4?
+      @options[:format] == :html4
+    end
+
+    # True if the format is HTML5
+    def html5?
+      @options[:format] == :html5
+    end
+
     # Creates a new instace of Haml::Engine that will compile the given
     # template string when <tt>render</tt> is called.
-    # See README for available options.
+    # See README.rdoc for available options.
     #
     #--
     # When adding options, remember to add information about them
-    # to README!
+    # to README.rdoc!
     #++
     #
     def initialize(template, options = {})
       @options = {
         :suppress_eval => false,
         :attr_wrapper => "'",
-        :autoclose => ['meta', 'img', 'link', 'br', 'hr', 'input', 'area'],
+
+        # Don't forget to update the docs in lib/haml.rb if you update these
+        :autoclose => %w[meta img link br hr input area param col base],
+        :preserve => %w[textarea pre],
+
         :filters => {
-          'sass' => Sass::Engine,
+          'sass' => Haml::Filters::Sass,
           'plain' => Haml::Filters::Plain,
+          'javascript' => Haml::Filters::Javascript,
+          'escaped' => Haml::Filters::Escaped,
           'preserve' => Haml::Filters::Preserve,
           'redcloth' => Haml::Filters::RedCloth,
           'textile' => Haml::Filters::Textile,
           'markdown' => Haml::Filters::Markdown },
-        :filename => '(haml)'
+        :filename => '(haml)',
+        :line => 1,
+        :ugly => false,
+        :format => :xhtml,
+        :escape_html => false
       }
-      @options.rec_merge! options
+      @options[:filters].merge! options.delete(:filters) if options[:filters]
+      @options.merge! options
+
+      unless [:xhtml, :html4, :html5].include?(@options[:format])
+        raise Haml::Error, "Invalid format #{@options[:format].inspect}"
+      end
 
       unless @options[:suppress_eval]
         @options[:filters].merge!({
-          'erb' => ERB,
+          'erb' => Haml::Filters::ERB,
           'ruby' => Haml::Filters::Ruby
         })
       end
-      @options[:filters].rec_merge! options[:filters] if options[:filters]
 
       if @options[:locals]
         warn <<END
@@ -61,16 +98,17 @@ Use the locals option for Haml::Engine#render instead.
 END
       end
 
-      @template = template.strip #String
+      @template = template.rstrip #String
       @to_close_stack = []
       @output_tabs = 0
       @template_tabs = 0
       @index = 0
       @flat_spaces = -1
+      @newlines = 0
 
       precompile
     rescue Haml::Error
-      $!.backtrace.unshift "#{@options[:filename]}:#{@index}"
+      $!.backtrace.unshift "#{@options[:filename]}:#{@index + $!.line_offset + @options[:line] - 1}" if @index
       raise
     end
 
@@ -80,7 +118,7 @@ END
     # If it's a Binding or Proc object,
     # Haml uses it as the second argument to Kernel#eval;
     # otherwise, Haml just uses its #instance_eval context.
-    # 
+    #
     # Note that Haml modifies the evaluation context
     # (either the scope object or the "self" object of the scope binding).
     # It extends Haml::Helpers, and various instance variables are set
@@ -111,7 +149,7 @@ END
     # they won't work.
     def render(scope = Object.new, locals = {}, &block)
       locals = (@options[:locals] || {}).merge(locals)
-      buffer = Haml::Buffer.new(options_for_buffer)
+      buffer = Haml::Buffer.new(scope.instance_variable_get('@haml_buffer'), options_for_buffer)
 
       if scope.is_a?(Binding) || scope.is_a?(Proc)
         scope_object = eval("self", scope)
@@ -125,17 +163,14 @@ END
 
       scope_object.instance_eval do
         extend Haml::Helpers
-        @haml_stack ||= Array.new
-        @haml_stack.push(buffer)
-        @haml_is_haml = true
+        @haml_buffer = buffer
       end
 
-      eval(@precompiled, scope, @options[:filename], 0)
+      eval(@precompiled, scope, @options[:filename], @options[:line])
 
       # Get rid of the current buffer
       scope_object.instance_eval do
-        @haml_stack.pop
-        @haml_is_haml = false
+        @haml_buffer = buffer.upper
       end
 
       buffer.buffer
@@ -172,7 +207,7 @@ END
       end
 
       eval("Proc.new { |*_haml_locals| _haml_locals = _haml_locals[0] || {};" +
-           precompiled_with_ambles(local_names) + "}\n", scope, @options[:filename], 0)
+           precompiled_with_ambles(local_names) + "}\n", scope, @options[:filename], @options[:line])
     end
 
     # Defines a method on +object+
@@ -189,7 +224,7 @@ END
     #
     #   Haml::Engine.new(".upcased= upcase").def_method(String, :upcased_div)
     #   "foobar".upcased_div #=> "<div class='upcased'>FOOBAR</div>\n"
-    # 
+    #
     # The first argument of the defined method is a hash of local variable names to values.
     # However, due to an unfortunate Ruby quirk,
     # the local variables which can be assigned must be pre-declared.
@@ -205,7 +240,7 @@ END
     #   obj = Object.new
     #   Haml::Engine.new("%p= foo").def_method(obj, :render)
     #   obj.render(:foo => "Hello!") #=> NameError: undefined local variable or method `foo'
-    # 
+    #
     # Note that Haml modifies the evaluation context
     # (either the scope object or the "self" object of the scope binding).
     # It extends Haml::Helpers, and various instance variables are set
@@ -214,7 +249,7 @@ END
       method = object.is_a?(Module) ? :module_eval : :instance_eval
 
       object.send(method, "def #{name}(_haml_locals = {}); #{precompiled_with_ambles(local_names)}; end",
-                  @options[:filename], 0)
+                  @options[:filename], @options[:line])
     end
 
     private
@@ -226,9 +261,15 @@ END
     end
 
     # Returns a hash of options that Haml::Buffer cares about.
-    # This should remain loadable form #inspect.
+    # This should remain loadable from #inspect.
     def options_for_buffer
-      {:attr_wrapper => @options[:attr_wrapper]}
+      {
+        :autoclose => @options[:autoclose],
+        :preserve => @options[:preserve],
+        :attr_wrapper => @options[:attr_wrapper],
+        :ugly => @options[:ugly],
+        :format => @options[:format]
+      }
     end
   end
 end

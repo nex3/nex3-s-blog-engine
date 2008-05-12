@@ -1,20 +1,15 @@
 #!/usr/bin/env ruby
-
-require 'rubygems'
-require 'active_support'
-require 'action_controller'
-require 'action_view'
-
-require 'test/unit'
-require File.dirname(__FILE__) + '/../../lib/haml'
+require File.dirname(__FILE__) + '/test_helper'
 require 'haml/template'
 
 class HelperTest < Test::Unit::TestCase
   include Haml::Helpers
+  Post = Struct.new('Post', :body)
   
   def setup
     @base = ActionView::Base.new
     @base.controller = ActionController::Base.new
+    @base.instance_variable_set('@post', Post.new("Foo bar\nbaz"))
   end
 
   def render(text, options = {})
@@ -27,14 +22,14 @@ class HelperTest < Test::Unit::TestCase
   end
 
   def test_flatten
-    assert_equal(flatten("FooBar"), "FooBar")
+    assert_equal("FooBar", flatten("FooBar"))
 
-    assert_equal(flatten("Foo\rBar"), "FooBar")
+    assert_equal("FooBar", flatten("Foo\rBar"))
 
-    assert_equal(flatten("Foo\nBar"), "Foo&#x000A;Bar")
+    assert_equal("Foo&#x000A;Bar", flatten("Foo\nBar"))
 
-    assert_equal(flatten("Hello\nWorld!\nYOU ARE \rFLAT?\n\rOMGZ!"),
-                         "Hello&#x000A;World!&#x000A;YOU ARE FLAT?&#x000A;OMGZ!")
+    assert_equal("Hello&#x000A;World!&#x000A;YOU ARE FLAT?&#x000A;OMGZ!",
+                 flatten("Hello\nWorld!\nYOU ARE \rFLAT?\n\rOMGZ!"))
   end
 
   def test_list_of_should_render_correctly
@@ -85,9 +80,32 @@ class HelperTest < Test::Unit::TestCase
     should_be = "<form action=\"foo\" method=\"post\">\n  <p>bar</p>\n  <strong>baz</strong>\n</form>\n"
     assert_equal(should_be, result)
   end
+
+  def test_text_area
+    assert_equal(%(<textarea id="body" name="body">Foo&#x000A;Bar&#x000A; Baz&#x000A;   Boom</textarea>\n),
+                 render('= text_area_tag "body", "Foo\nBar\n Baz\n   Boom"', :action_view))
+
+    assert_equal(%(<textarea cols="40" id="post_body" name="post[body]" rows="20">Foo bar&#x000A;baz</textarea>\n),
+                 render('= text_area :post, :body', :action_view))    
+
+    assert_equal(%(<pre>Foo bar&#x000A;   baz</pre>\n),
+                 render('= content_tag "pre", "Foo bar\n   baz"', :action_view))    
+  end
   
   def test_capture_haml
     assert_equal("\"<p>13</p>\\n\"\n", render("- foo = capture_haml(13) do |a|\n  %p= a\n= foo.dump"))
+  end
+  
+  def test_haml_tag_attribute_html_escaping
+    assert_equal("<p id='foo&amp;bar'>baz</p>\n", render("%p{:id => 'foo&bar'} baz", :escape_html => true))
+  end
+
+  def test_haml_tag_autoclosed_tags_are_closed
+    assert_equal("<br class='foo' />\n", render("- haml_tag :br, :class => 'foo'"))
+  end
+
+  def test_haml_tag_non_autoclosed_tags_arent_closed
+    assert_equal("<p>\n</p>\n", render("- haml_tag :p"))
   end
 
   def test_is_haml
@@ -122,6 +140,16 @@ class HelperTest < Test::Unit::TestCase
     assert_equal("1\n\n2\n\n3\n\n", render("- trc([1, 2, 3]) do |i|\n  = i.inspect"))
   end
 
+  def test_find_and_preserve_with_block
+    assert_equal("<pre>Foo&#x000A;Bar</pre>\nFoo\nBar\n",
+                 render("= find_and_preserve do\n  %pre\n    Foo\n    Bar\n  Foo\n  Bar"))
+  end
+
+  def test_preserve_with_block
+    assert_equal("<pre>Foo&#x000A;Bar</pre>&#x000A;Foo&#x000A;Bar\n",
+                 render("= preserve do\n  %pre\n    Foo\n    Bar\n  Foo\n  Bar"))
+  end
+
   def test_init_haml_helpers
     context = Object.new
     class << context
@@ -130,12 +158,30 @@ class HelperTest < Test::Unit::TestCase
     context.init_haml_helpers
 
     result = context.capture_haml do
-      context.open :p, :attr => "val" do
+      context.haml_tag :p, :attr => "val" do
         context.puts "Blah"
       end
     end
 
     assert_equal("<p attr='val'>\n  Blah\n</p>\n", result)
+  end
+
+  def test_non_haml
+    assert_equal("false\n", render("= non_haml { is_haml? }"))
+  end
+  
+  class ActsLikeTag
+    # We want to be able to have people include monkeypatched ActionView helpers
+    # without redefining is_haml?.
+    # This is accomplished via Object#is_haml?, and this is a test for it.
+    include ActionView::Helpers::TagHelper
+    def to_s
+      content_tag :p, 'some tag content'
+    end
+  end
+
+  def test_random_class_includes_tag_helper
+    assert_equal "<p>some tag content</p>", ActsLikeTag.new.to_s
   end
 end
 

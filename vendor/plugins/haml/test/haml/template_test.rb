@@ -1,19 +1,12 @@
 #!/usr/bin/env ruby
-
-require 'test/unit'
-require 'rubygems'
-require 'action_pack'
-
-require File.dirname(__FILE__) + '/../../lib/haml'
+require File.dirname(__FILE__) + '/test_helper'
 require 'haml/template'
 require File.dirname(__FILE__) + '/mocks/article'
 
-class TestFilter
-  def initialize(text)
-    @text = text
-  end
+module TestFilter
+  include Haml::Filters::Base
 
-  def render
+  def render(text)
     "TESTING HAHAHAHA!"
   end
 end
@@ -22,7 +15,7 @@ class TemplateTest < Test::Unit::TestCase
   @@templates = %w{       very_basic        standard    helpers
     whitespace_handling   original_engine   list        helpful
     silent_script         tag_parsing       just_stuff  partials
-    filters }
+    filters               nuke_outer_whitespace         nuke_inner_whitespace }
 
   def setup
     Haml::Template.options = { :filters => { 'test'=>TestFilter } }

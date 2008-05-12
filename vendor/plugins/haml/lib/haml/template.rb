@@ -1,19 +1,16 @@
 require 'haml/engine'
-require 'rubygems'
-require 'active_support'
-require 'action_view'
 
 module Haml
   class Template
     class << self
       @@options = {}
 
-      # Gets various options for Haml. See README for details.
+      # Gets various options for Haml. See README.rdoc for details.
       def options
         @@options
       end
 
-      # Sets various options for Haml. See README for details.
+      # Sets various options for Haml. See README.rdoc for details.
       def options=(value)
         @@options = value
       end
@@ -28,4 +25,19 @@ if defined?(ActionView::TemplateHandler)
   require 'haml/template/plugin'
 else
   require 'haml/template/patch'
+end
+
+if defined?(RAILS_ROOT)
+  # Update init.rb to the current version
+  # if it's out of date.
+  #
+  # We can probably remove this as of v1.9,
+  # because the new init file is sufficiently flexible
+  # to not need updating.
+  rails_init_file = File.join(RAILS_ROOT, 'vendor', 'plugins', 'haml', 'init.rb')
+  haml_init_file = Haml.scope('init.rb')
+  if File.exists?(rails_init_file)
+    require 'fileutils'
+    FileUtils.cp(haml_init_file, rails_init_file) unless FileUtils.cmp(rails_init_file, haml_init_file)
+  end
 end
