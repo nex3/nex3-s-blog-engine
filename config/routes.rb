@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
 
   map.dates "posts/dates/:year/:month", :controller => 'posts', :action => 'dates', :conditions => {:method => :get}, :defaults => {:month => nil, :year => nil}
+  map.connect "posts/:id.", :controller => 'posts', :action => 'show', :conditions => {:method => :get}
   map.resources :posts,    :new => { :new => :post } do |p|
     p.resources :comments, :new => { :new => :post }
   end
